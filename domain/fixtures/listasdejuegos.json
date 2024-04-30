@@ -1,0 +1,107 @@
+[
+    {
+      "model": "domain.ListaDeJuegos",
+      "fields": {
+        "name": "Juegos Jugados en 2023",
+        "descripcion": "Esta lista contiene juegos jugados en el año 2023.",
+        "creator": 1
+      }
+    },
+    {
+      "model": "domain.ListaDeJuegos",
+      "fields": {
+        "name": "Juegos con Mecánicas Innovadoras",
+        "descripcion": "Lista de juegos con mecánicas innovadoras.",
+        "creator": 2
+      }
+    },
+    {
+      "model": "domain.ListaDeJuegos",
+      "fields": {
+        "name": "Mis Favoritos de Todos los Tiempos",
+        "descripcion": "Lista personal de juegos favoritos.",
+        "creator": 3
+      }
+    },
+    {
+      "model": "domain.ListaDeJuegos",
+      "fields": {
+        "name": "Juegos para Relajarse",
+        "descripcion": "Lista de juegos para relajarse.",
+        "creator": 4
+      }
+    },
+    {
+      "model": "domain.ListaDeJuegos",
+      "fields": {
+        "name": "Juegos para Desafiar",
+        "descripcion": "Lista de juegos desafiantes.",
+        "creator": 5
+      }
+    },
+    {
+      "model": "domain.ListaDeJuegos",
+      "fields": {
+        "name": "Juegos con Historias Profundas",
+        "descripcion": "Lista de juegos con historias profundas.",
+        "creator": 6
+      }
+    },
+    {
+      "model": "domain.ListaDeJuegos",
+      "fields": {
+        "name": "Juegos para Disfrutar en Familia",
+        "descripcion": "Lista de juegos para disfrutar en familia.",
+        "creator": 7
+      }
+    },
+    {
+      "model": "domain.ListaDeJuegos",
+      "fields": {
+        "name": "Juegos para Rompecabezas",
+        "descripcion": "Lista de juegos con rompecabezas.",
+        "creator": 8
+      }
+    },
+    {
+      "model": "domain.ListaDeJuegos",
+      "fields": {
+        "name": "Juegos con Gráficos Asombrosos",
+        "descripcion": "Lista de juegos con gráficos asombrosos.",
+        "creator": 9
+      }
+    },
+    {
+      "model": "domain.ListaDeJuegos",
+      "fields": {
+        "name": "Juegos de Estrategia",
+        "descripcion": "Lista de juegos de estrategia.",
+        "creator": 10
+      }
+    },
+    {
+      "model": "domain.ListaDeJuegos",
+      "fields": {
+        "name": "Juegos para Sumergirse en el Mundo",
+        "descripcion": "Lista de juegos para sumergirse en el mundo.",
+        "creator": 11
+      }
+    },
+    {
+      "model": "domain.ListaDeJuegos",
+      "fields": {
+        "name": "Juegos para Desconectar",
+        "descripcion": "Lista de juegos para desconectar.",
+        "creator": 12
+      }
+    },
+    {
+      "model": "domain.ListaDeJuegos",
+      "fields": {
+        "name": "Juegos Indie Favoritos",
+        "descripcion": "Lista de juegos indie favoritos.",
+        "creator": 13
+      }
+    }
+  ]
+  
