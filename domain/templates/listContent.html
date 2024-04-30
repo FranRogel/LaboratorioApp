@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>{{myList.name}}</h1>
+  
+<ul>
+  {% for x in contenido %}
+    <li><a href="game/{{x.content.id}}">{{ x.videojuego }}</a></li>
+  {% endfor %}
+</ul>
+
+</body>
+</html>

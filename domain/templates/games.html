@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>JUEGOS</h1>
+  
+<ul>
+  {% for x in myGames %}
+    <li><a href="gameInfo/{{x.id}}">{{ x.name }}</a></li>
+  {% endfor %}
+</ul>
+
+</body>
+</html>

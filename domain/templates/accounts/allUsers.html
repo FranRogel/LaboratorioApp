@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>USUARIOS</h1>
+  
+<ul>
+  {% for x in myUsers %}
+    <li><a href="profile/{{x.id}}">{{ x.nickname }}</a></li>
+  {% endfor %}
+</ul>
+
+</body>
+</html>

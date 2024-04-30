@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+<h1>{{ myuser.nickname }} </h1>
+  
+<p>Listas: {{ misListas.name }}</p>
+<ul>
+  {% for lista in misListas %}
+    <li><a href="listContent/{{ lista.id }}">{{ lista.name }}</a></li>
+    <ul>
+      {% for juego in lista.contenido.all %}
+        <li>{{ juego.videojuego.name }}</li>
+      {% endfor %}
+    </ul>
+  {% endfor %}
+</ul>
+
+<p>Back to <a href="/users">Users</a></p>
+
+</body>
+</html>
