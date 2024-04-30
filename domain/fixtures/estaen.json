@@ -1,0 +1,556 @@
+[
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 1,
+        "lista": 3
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 2,
+        "lista": 4
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 3,
+        "lista": 3
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 4,
+        "lista": 7
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 5,
+        "lista": 3
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 6,
+        "lista": 5
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 7,
+        "lista": 3
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 8,
+        "lista": 9
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 9,
+        "lista": 11
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 10,
+        "lista": 4 
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 11,
+        "lista": 3
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 12,
+        "lista": 3
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 13,
+        "lista": 3
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 14,
+        "lista": 3
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 15,
+        "lista": 3
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 16,
+        "lista": 4
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 17,
+        "lista": 4
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 18,
+        "lista": 4
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 19,
+        "lista": 4
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 20,
+        "lista": 4
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 21,
+        "lista": 5
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 22,
+        "lista": 5
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 23,
+        "lista": 5
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 24,
+        "lista": 5
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 25,
+        "lista": 5
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 26,
+        "lista": 6
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 27,
+        "lista": 6
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 28,
+        "lista": 6
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 29,
+        "lista": 6
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 30,
+        "lista": 6
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 31,
+        "lista": 7
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 32,
+        "lista": 7
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 33,
+        "lista": 7
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 34,
+        "lista": 7
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 35,
+        "lista": 7
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 36,
+        "lista": 8
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 37,
+        "lista": 8
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 38,
+        "lista": 8
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 39,
+        "lista": 8
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 40,
+        "lista": 8
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 41,
+        "lista": 9
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 42,
+        "lista": 9
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 43,
+        "lista": 9
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 44,
+        "lista": 9
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 45,
+        "lista": 9
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 46,
+        "lista": 10
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 47,
+        "lista": 10
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 48,
+        "lista": 10
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 49,
+        "lista": 10
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 50,
+        "lista": 10
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 51,
+        "lista": 11
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 52,
+        "lista": 11
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 53,
+        "lista": 11
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 54,
+        "lista": 11
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 1,
+        "lista": 12
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 2,
+        "lista": 12
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 3,
+        "lista": 12
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 4,
+        "lista": 12
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 5,
+        "lista": 12
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 6,
+        "lista": 13
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 7,
+        "lista": 13
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 8,
+        "lista": 13
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 9,
+        "lista": 13
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 10,
+        "lista": 13
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 11,
+        "lista": 14
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 12,
+        "lista": 14
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 13,
+        "lista": 14
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 14,
+        "lista": 14
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 15,
+        "lista": 14
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 16,
+        "lista": 15
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 17,
+        "lista": 15
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 18,
+        "lista": 15
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 19,
+        "lista": 15
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 20,
+        "lista": 15
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 21,
+        "lista": 16
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 22,
+        "lista": 16
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 23,
+        "lista": 16
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 24,
+        "lista": 16
+      }
+    },
+    {
+      "model": "domain.EstaEn",
+      "fields": {
+        "videojuego": 25,
+        "lista": 16
+      }
+    }
+  ]
+  
