@@ -12,6 +12,15 @@
         <li>{{ myGame.release_Date }}</li>
         <li>{{ myGame.plataforms }}</li>
     </ul>
+    <p>Reseñas</p>
+    <ul>
+        {% for x in reseñas %}
+        <li>{{ x.title }}</li>
+        <p>{{x.writer}} tag {{x.tag}}</p>
+        <p>{{ x.content }}</p>
+        {% endfor %}
+    </ul>    
+    
     
     <p>Back to <a href="/users">Users</a></p>
     <p>Back to <a href="/games">Games</a></p>

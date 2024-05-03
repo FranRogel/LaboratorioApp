@@ -75,8 +75,10 @@ def listContent(request,id):
 
 def gameInfo(request, id):
   myGame = Videojuego.objects.get(id=id)
+  resenias = Reseña.objects.filter(game = myGame)
   template = loader.get_template("gameInfo.html")
   context={
     'myGame' : myGame,
+    'reseñas' : resenias 
   }
   return HttpResponse(template.render(context,request))
