@@ -6,7 +6,7 @@
   
 <ul>
   {% for x in myGames %}
-    <li><a href="gameInfo/{{x.id}}">{{ x.name }}</a></li>
+    <li><a href="{% url 'game' id=x.id %}">{{ x.name }}</a></li>
   {% endfor %}
 </ul>
 
