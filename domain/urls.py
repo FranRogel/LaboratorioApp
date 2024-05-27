@@ -1,12 +1,27 @@
 from django.urls import path
-from . import views
+from .import views
+from .views import *
 
 urlpatterns = [
-    path('', views.main, name='main'),
-    path('register/', views.registerPage, name='register'),
-    path('games/', views.games, name='games'),
-    path('gameInfo/<int:id>/', views.gameInfo, name='game'),
-    path('users/', views.users, name='users'),
-    path('users/profile/<int:id>', views.profile, name='profile'),
-    path('users/profile/listContent/<int:id>', views.listContent, name='listContent'), #Preguntar como hago para evitar que se alargue la url
+    path('', MainController.as_view(), name='main'),
+    path('register/', RegistroView.as_view(), name='register'),
+    path('login/', LoginView.as_view(), name='login'),
+    path('logout/', CustomLogoutView.as_view(), name='logout'),
+    path('games/', GamesController.as_view(), name='games'),
+    path('lists/',ListController.as_view(), name='lists'),
+    path('users/', UsersController.as_view(), name='users'),
+    path('gameInfo/<int:id>/', GameInfoAndReseñaController.as_view(), name='game'),
+    path('yourGames/<int:id_usuario>/', YourGamesController.as_view(), name='yourGames'),
+    path('yourList/<int:id_usuario>/', YourListController.as_view(),name='yourLists'),
+    path('listForm/', listFormController.as_view(),name='listForm'),
+    path('listForm/<int:lista_id>/', listFormController.as_view(),name='listFormEdit'),
+    path('profile/<int:id>', ProfileController.as_view(), name='profile'),
+    path('seguir/<int:usuario_id>/', SiguenController.as_view(), name='seguir_usuario'),
+    path('dejarDeSeguir/<int:usuario_id>/', DejarDeSeguirController.as_view(), name='dejarSeguirUsuario'),
+    path('borrarLista/<int:lista_id>/', ListaDeleteFormController.as_view(), name='borrarlista'),
+    path('borrarReseña/<int:id>', BorrarReseñaController.as_view(), name='borrarReseña'),
+    path('listContent/<int:id>', ListInfoController.as_view(), name='listContent'),
+    path('followers/<int:id>', SeguidoresController.as_view(), name="followers"),
+    path('follow/<int:id>', SeguidosController.as_view(),name='follow')
+    
 ]

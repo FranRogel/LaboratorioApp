@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Reseña</title>
+</head>
+<body>
+    <!-- Formulario para crear reseña -->
+    <h2>Agrega tu reseña</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Enviar reseña</button>
+    </form>
+    <br>
+    {% if existe%}
+    <form method="post" action="{% url 'borrarReseña' id=myGame.id %}">
+        {% csrf_token %}
+        <button type="submit">Borrar reseña</button>
+    </form>
+    {% endif %}
+</body>
+</html>

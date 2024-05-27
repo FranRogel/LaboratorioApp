@@ -1,23 +1,28 @@
 <!DOCTYPE html>
 <html>
+{% extends "main.html"%}
 
-<body>
+{%block profile%}
+{% include "navs/profile_nav.html" %}
+{% endblock %}
 
-<h1>{{ myuser.nickname }} </h1>
-  
-<p>Listas: {{ misListas.name }}</p>
+{% block content%}
+<p>Juegos Favoritos</p>
 <ul>
-  {% for lista in misListas %}
-    <li><a href="listContent/{{ lista.id }}">{{ lista.name }}</a></li>
-    <ul>
-      {% for juego in lista.contenido.all %}
-        <li>{{ juego.videojuego.name }}</li>
-      {% endfor %}
-    </ul>
+  {% for juego in juegosFavoritos %}
+    <li><img src="{{ juego.game.portada.url}}" alt="Portada de {{ juego.game.name }}" style="width: 200px; height: auto;"></li>
+    <li><a href="{% url 'game' id=juego.game.id %}">{{ juego.game }}</a></li>
+  {% endfor %}
+</ul>
+<p>Reseñas</p>
+<ul>
+  {% for reseña in reseñas%}
+  <li>{{reseña.game}} : {{reseña.title}}</li>
+  <li>{{reseña.puntuacion}}</li>
   {% endfor %}
 </ul>
 
 <p>Back to <a href="/users">Users</a></p>
+{% endblock %}
 
-</body>
 </html>

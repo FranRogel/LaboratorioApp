@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+{% extends 'accounts/profile.html' %}
+{% block content%}
+<table>
+    <tr>
+        <th>Nombre</th>
+        <th>Juegos</th>
+        <th>Listas</th>
+        {% if request.user.is_authenticated %}
+        <th></th>
+        {% endif %}
+    </tr>
+    {% for seguidor in seguidores %}
+    <tr>
+        <td>
+        <a href="{% url 'profile' id=seguidor.id %}">{{ seguidor.nickname }}</a>
+        </td>
+        <td>{{ seguidor.cantJuegosJugados }}</td>
+        <td>{{ seguidor.cantListasDeJuegos }}</td>
+        
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
+</html>

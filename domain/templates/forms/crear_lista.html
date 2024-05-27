@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'main.html' %}
+
+{% block profile %}
+    {{ block.super }}
+{% endblock %}
+{% block content%}
+<h2>Llena tu lista</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}    
+    <p>Agregar juegos</p>
+    {% for contenido in contenidos %}
+    <img src="{{ contenido.videojuego.portada.url }}" alt="{{contenido.videojuego.name}}"  style="width: 200px; height: auto;"> 
+  {% endfor %}
+    {{ estaEn_form.as_p }}
+    <button type="submit">Agregar</button>
+    </form>
+    {% if borrar %}
+    <br>
+    <form method="post" action="{% url 'borrarlista' lista_id=lista.id %}">
+    {% csrf_token %}
+        <button type="submit">Borrar</button>
+    </form>
+    {% endif %}
+{% endblock %}
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+{% extends 'accounts/profile.html' %}
+{% block content%}
+<table>
+    <tr>
+        <th>Nombre</th>
+        <th>Juegos</th>
+        <th>Listas</th>
+    </tr>
+    {% for seguido in seguidos %}
+    <tr>
+       <td>
+       <a href="{% url 'profile' id=seguido.id %}">{{ seguido.nickname }}</a>
+       </td>
+        <td>{{ seguido.cantJuegosJugados }}</td>
+        <td>{{ seguido.cantListasDeJuegos }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+{% extends 'accounts/profile.html' %}
+{% block profile %}
+    {{ block.super }}
+{% endblock %}
+{% block content%}
+<h1>Listas</h1>
+<ul>
+{% for item in listas %}
+  <a href="{% url 'listContent' id=item.lista.id %}">
+    <img src="{{ item.imagen_url }}" alt="{{ item.nombre_videojuego }}" style="width: 200px; height: auto;">
+  </a>
+  <li>{{ item.lista.name }}</li>
+  {% if session %}
+  <li><a href="{% url 'listFormEdit' lista_id=item.lista.id %}">editar</a></li>
+  {% endif %}
+{% endfor %}
+</ul>
+{% if session %}
+<p><a href="{% url 'listForm' %}">Crear una nueva lista</a></p>
+{% endif %}
+{% endblock %}
+</html>

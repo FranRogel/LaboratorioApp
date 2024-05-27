@@ -2,13 +2,37 @@
 <html>
 <body>
 
-<h1>USUARIOS</h1>
-  
-<ul>
-  {% for x in myUsers %}
-    <li><a href="profile/{{x.id}}">{{ x.nickname }}</a></li>
+{% extends "main.html"%}
+
+{% block content%}
+<h1>POPULARES</h1>
+{% for x in top_usuarios %}
+<li>
+   {% if x.foto %}
+    <img src="{{ x.foto.url }}" alt="{{ x.nickname }} foto">
+   {% endif %}
+    <a href="{% url 'profile' id=x.id %}">{{ x.nickname }}</a>
+    <a>juegos jugados: {{x.cantJuegosJugados}}</a>
+    <a href="{% url 'profile' id=x.id %}">listas: {{x.cantListasDeJuegos}}</a>
+    <a>Seguidores {{x.cantSeguidores}}</a>
+    <ul>
+      {% for reseña in x.reseñas.all|slice:":3" %}
+      <li>{{reseña.game.name}}: {{ reseña.title }}</li>
+      {% endfor %}
+  </ul>
+</li>
+{% endfor %}
+
+  {% for x in usuarios  %}
+    <li>
+        <a href="{% url 'profile' id=x.id %}">{{ x.nickname }}</a>
+        <a>juegos jugados: {{x.cantJuegosJugados}}</a>
+        <a href="{% url 'profile' id=x.id %}">listas: {{x.cantListasDeJuegos}}</a>
+    </li>
   {% endfor %}
-</ul>
+
+{% endblock %}
+
 
 </body>
 </html>

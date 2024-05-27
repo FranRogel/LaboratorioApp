@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+{% extends "main.html"%}
+
+{% block profile %}
+{% include "navs/profile_nav.html" %}
+<p>Reseñas</p>
+<ul>
+  {% for reseña in reseñas%}
+  <li>{{reseña.game}} : {{reseña.title}}</li>
+  <li>{{reseña.puntuacion}}</li>
+  {% endfor %}
+</ul>
+<p>Back to <a href="/users">Users</a></p>
+{% endblock %}
+
+</html>

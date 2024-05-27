@@ -1,17 +1,16 @@
-<!DOCTYPE html>
-<html>
-<body>
+<!-- register.html -->
 
-<h1>Register</h1>
-<form method="POST" action="">
-{% csrf_token %}
-<ul>
-  {% for field in form %}
-    <li>{{ field.label}}</li>
-   {{field}}
-  {% endfor %}
-</ul>
-    <input type="submit" name="Create User">
-</form>
+{% extends "main.html"%}
+{% block content %}
+<body>
+    <h2>Registro</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h3>Cuenta</h3>
+        {{ form.as_p }}
+        <h3>Usuario</h3>
+        {{ usuario_form.as_p }}
+        <button type="submit">Registrarse</button>
+    </form>
 </body>
-</html>
+{% endblock %}

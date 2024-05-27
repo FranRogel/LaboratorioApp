@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+{% extends 'main.html' %}
+
+{% block content%}
+<h1>JUEGOS</h1>
+<p>Populares</p>
+<ul>
+  {% for x in top_videojuegos %}
+    <li><a href="{% url 'game' id=x.id %}">{{ x.name }}</a></li>
+    <a>Jugadores: {{ x.cantJugadores }}</a>
+    <a>Puntuacion: {{x.puntuacionPromedio}}</a>
+    <a>Apariciones en listas: {{x.cantAparicionesLista}}</a>
+  {% endfor %}
+</ul>
+<p>Al azar</p>
+<ul>
+  {% for x in videojuegos %}
+    <li><a href="{% url 'game' id=x.id %}">{{ x.name }}</a></li>
+  {% endfor %}
+</ul>
+{% endblock %}
+
+</html>

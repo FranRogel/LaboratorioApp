@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    {% extends "main.html"%}
+
+    {% block content %}
+    <h2>Populares</h2>
+    <ul>
+      {% for lista in top_listas %}
+        {% for contenido in lista.contenido.all|slice:":3" %}
+        <img src="{{ contenido.videojuego.portada.url}}" alt="Portada de {{ contenido.videojuego.name }}" 
+        style="width: 200px; height: auto;">
+      
+        {% endfor %}
+      <li>
+       <a href="{% url 'listContent' id=lista.id %}">{{lista.name}}</a> 
+      </li>
+      <li>
+        Creador: {{lista.creator}} Likes:{{lista.cantMeGustan}}
+      </li>
+      {% endfor %}
+    </ul>
+    
+    <h3>Al azar</h3>
+    <ul>
+        {% for lista in listas %}
+          {% for contenido in lista.contenido.all|slice:":3" %}
+          <img src="{{ contenido.videojuego.portada.url}}" alt="Portada de {{ contenido.videojuego.name }}" 
+          style="width: 200px; height: auto;">
+          {% endfor %}
+        <li>
+         <a href="{% url 'listContent' id=lista.id %}">{{lista.name}}</a> 
+        </li>
+        <li>
+          Creador: {{lista.creator}} Likes:{{lista.cantMeGustan}}
+        </li>
+        {% endfor %}
+      </ul>
+      {% endblock %}
+</html>

@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html>
-<body>
-
+{% extends "main.html"%}
+{% block content%}
     <h1>{{ myGame }} </h1>
-      
+
+    <img src="{{ myGame.portada.url}}" alt="Portada de {{ myGame.name }}" style="width: 200px; height: auto;">
+
+    <p>{{myGame.descripcion}}</p>
+
     <p>Details</p>
     <ul>
         <li>{{ myGame.name}}</li>
@@ -20,10 +24,11 @@
         <p>{{ x.content }}</p>
         {% endfor %}
     </ul>    
-    
-    
+    {% if request.user.is_authenticated %}
+    {% include "forms/crear_reseña.html" %}
+    {% endif %}
     <p>Back to <a href="/users">Users</a></p>
-    <p>Back to <a href="/games">Games</a></p>
+    <p>Back to <a href="/games">Games</a></p> 
     
-    </body>
+{% endblock %}
 </html>

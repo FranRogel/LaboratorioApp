@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  {% extends 'accounts/profile.html' %}
+
+{% block profile %}
+    {{ block.super }}
+{% endblock %}
+
+{% block content%}
+<h1>JUEGOS</h1>
+<ul>
+  {% for x in juegos %}
+    <li><a href="{% url 'game' id=x.id %}">
+    <img src="{{ x.portada.url}}" alt="Portada de {{ x.name }}" style="width: 200px; height: auto;">
+    </a>
+    </li>
+  {% endfor %}
+</ul>
+{% endblock %}
+</html>

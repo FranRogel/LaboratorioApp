@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+{% extends "main.html"%}
+
+{% block content %}
+<p>Lista por: {{myList.creator}}</p>
+<p>Me gustan: {{myList.cantMeGustan}}</p>
+<h2>{{myList.name}}</h2>
+<p>{{myList.descripcion}}</p>
+<ul>
+  {% for contenido in myList.contenido.all %}
+  <li>
+   <a href="{% url 'game' id=contenido.videojuego.id %}">
+    <img src="{{ contenido.videojuego.portada.url}}" alt="Portada de {{ contenido.videojuego.name }}" 
+    style="width: 200px; height: auto;"> 
+   </a>
+  </li>
+  {% endfor %}
+</ul>
+
+{% endblock %}
+
+
+</html>

@@ -1,15 +1,43 @@
 <!DOCTYPE html>
 <html>
+<head>
+        <title>{% block title %}LaboratorioApp{% endblock %}</title>
+</head>
 <body>
-
-<h1>Laboratorio APP</h1>
-  
-<ul>
-    <h3>Usuarios</h3>
-        <p>Revisa nuestros <a href="users/">usuarios</a></p>
-    <h3>Juegos</h3>
-        <p>Revisa nuestros <a href="games/">juegos</a></p></p>
-</ul>
+ {% block nav %}
+<header>
+    <h1>Laboratorio APP</h1>
+</header>
+<nav>
+    <ul>
+    {% if request.user.is_authenticated %}
+        <li><a href="{% url 'profile' id=myuser.id %}">Mi Perfil</a></li>
+        <li>
+            <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: none;">
+                {% csrf_token %}
+            </form>
+            <a href="#" onclick="document.getElementById('logout-form').submit();">Cerrar Sesión</a>
+        </li>
+    {% else %}
+        <li><a href="{% url 'login' %}">Iniciar Sesión</a></li>
+    {% endif %}
+        <li><a href="{% url 'main' %}">Inicio</a></li>
+        <li><a href="{% url 'games' %}">Juegos</a></li>
+        <li><a href="{% url 'lists' %}">Listas de juegos</a></li>
+        <li><a href="{% url 'users' %}">Usuarios</a></li>
+    </ul>
+</nav>
+{% endblock %}
+{% block profile %}
+{% endblock %}
+{% block content%}
+<p>JUEGOS REGISTRADOS</p>
+    <p>{{juegosCount}}</p>
+<p>USUARIOS REGISTRADOS</p>
+    <p>{{usuariosCount}}</p>
+<p>LISTAS CREADAS</p>
+    <p>{{listasCount}}</p>
+{% endblock %}
 
 </body>
 </html>
