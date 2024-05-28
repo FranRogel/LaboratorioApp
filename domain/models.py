@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db.models import Count
+from django.db.models.functions import Random
 
 class CuentaManager(BaseUserManager):
     def create_user(self, email_Address, password, **extra_fields):
@@ -58,6 +59,7 @@ class UsuarioManager(models.Manager):
             cuenta=cuenta,
             foto=foto
         )
+
         usuario.save(using=self._db)
         return usuario
 
@@ -72,10 +74,20 @@ class UsuarioManager(models.Manager):
     def get_usuarios_populares(self):
         usuarios = self.annotate(num_seguidores=Count('seguido_por')).order_by('-num_seguidores')
         return usuarios
-    
-    def usuario_sigue_a(self,seguidor,seguido):
-        self.
 
+    def get_random_usuarios(self, count=1):
+        return self.order_by(Random())[:count]
+
+    def get_remaining_random_usuarios(self, num, exclude_queryset):
+        exclude_ids = exclude_queryset.values_list('id', flat=True)
+        return self.get_random_usuarios(num).exclude(id__in=exclude_ids)
+
+    def sesion_perfil_match(self,user_session,user):
+        session=False
+        if user_session:
+            session = user == user_session
+        return session
+    
     def cant_listas_de_juegos(self, usuario):
         return usuario.listas_de_juegos.count()
 
@@ -91,18 +103,41 @@ class UsuarioManager(models.Manager):
     def verificar_nickname_unico(self, nickname):
         return not self.filter(nickname=nickname).exists()
 
-    def verificar_nickname_length(nickname):
+    def verificar_nickname_length(self,nickname):
         return not ((nickname.len() > 2) and (nickname.len() <= 30))
     
-
-
 class Usuario(models.Model):
     nickname = models.CharField(max_length=30, unique=True)
     foto = models.FileField(upload_to="media/uploads/", null=True, default="media/usuarios/yu_foto_perfil.jpg")
     cuenta = models.OneToOneField(Cuenta, on_delete=models.CASCADE)
     objects = UsuarioManager()
 
+class VideojuegoManager(models.Manager):
+    def get_random_videojuegos(self, count=1):
+        return self.order_by(Random())[:count]
+    
+    def cant_jugadores(self, videojuego):
+        return videojuego.reseñas.count()
+    
+    def get_juegos_populares(self):
+        juegos = self.annotate(num_reseñas=models.Count('reseñas')).order_by('-num_reseñas')
+        return juegos
+    
+    def get_random_juegos(self, count=1):
+        return self.order_by(Random())[:count]
 
+    def get_remaining_random_juegos(self, num, exclude_queryset):
+        exclude_ids = exclude_queryset.values_list('id', flat=True)
+        return self.get_random_juegos(num).exclude(id__in=exclude_ids)
+
+    def puntuacion_promedio(self, videojuego):
+        puntuacion_total = sum(reseña.puntuacion for reseña in videojuego.reseñas.all())
+        reseña_count = videojuego.reseñas.count()
+        return puntuacion_total / reseña_count if reseña_count != 0 else 0
+    
+    def cant_apariciones_lista(self, videojuego):
+        return videojuego.listas.count()
+    
 class Videojuego(models.Model):
     name = models.CharField(max_length=30, unique=True)
     producer = models.CharField(max_length=30)
@@ -110,33 +145,62 @@ class Videojuego(models.Model):
     release_Date = models.DateField()
     plataforms = models.CharField(max_length=250) 
     portada = models.FileField(upload_to="media/uploads/",null=True)
-    descripcion = models.CharField(max_length=350, null=True)
-    
+    descripcion = models.CharField(max_length=1500, null=True)
+    objects = VideojuegoManager()
+
     def __str__(self):
         return self.name
+
     
-    def cantJugadores(self):
-        return self.reseñas.count()
+class ListaDeJuegosManager(models.Manager):
+    def verificar_name(self,nombre):
+        return ((nombre.len() > 2) and (nombre.len <= 30))
+
+    def verificar_descripcion(self,descripcion):
+        return ((descripcion > 2) and (descripcion <= 300))
     
-    def puntuacionPromedio(self):
-        puntuacionTotal = 0
-        reseñas = self.reseñas.all()
-        for reseña in reseñas:
-            puntuacionTotal =  puntuacionTotal + reseña.puntuacion
-        reseñaCount = self.reseñas.count()
-        if (reseñaCount != 0):
-            return puntuacionTotal / reseñaCount
-        else:
-            return 0
+    def create_lista_de_juegos(self,nombre,descripcion,creator):
+        if not self.verificar_name(nombre):
+            raise ValueError("El nombre debe tener de 2 a 30 caracteres")
+        
+        if not self.verificar_descripcion(descripcion):
+            raise ValueError("La descripcion debe tener de 2 a 300 caracteres")
+        
+        if self.filter(nombre = nombre, creator = creator):
+            raise ValueError("Ya creaste una lista con ese nombre")
+
+        lista = self.model(
+            name = nombre,
+            descripcion = descripcion,
+            creator = creator
+        )
+
+        lista.save(using=self._db)
+        return lista
+
+    def cant_me_gustan_lista(self,lista):
+        return lista.me_gustan.count()
     
-    def cantAparicionesLista(self):
-        return self.listas.count()
+    def get_listas_populares(self):
+        listas = self.annotate(num_me_gustan=models.Count('me_gustan')).order_by('-me_gustan')
+        return listas
     
+    def get_random_listas(self, count=1):
+        return self.order_by(Random())[:count]
+
+    def get_remaining_random_listas(self, num, exclude_queryset):
+        exclude_ids = exclude_queryset.values_list('id', flat=True)
+        return self.get_random_listas(num).exclude(id__in=exclude_ids)
+
 class ListaDeJuegos(models.Model):
     name = models.CharField(max_length=30)
-    descripcion = models.CharField(max_length=255)
+    descripcion = models.CharField(max_length=300)
     creator = models.ForeignKey(Usuario, on_delete=models.CASCADE,related_name='listas_de_juegos') #Quiero que las listas sean reconocidas por name+creator preguntarle al profe
-    
+    objects = ListaDeJuegosManager()
+
+    class Meta:
+        unique_together = (('name', 'creator'))
+
     def __str__(self):
         return self.name + " " + self.creator.nickname
     
