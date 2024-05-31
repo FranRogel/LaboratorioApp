@@ -7,6 +7,9 @@
 <body>
     <!-- Formulario para crear reseña -->
     <h2>Agrega tu reseña</h2>
+    {% if form.field.errors %}
+    <div class="error">{{ form.field.errors }}</div>
+    {% endif %}
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}

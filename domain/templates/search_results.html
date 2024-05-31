@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+{% extends "main.html"%}
+{% block content%}
+<h2>RESULTADOS</h2>
+{% if games %}
+<h3>Juegos</h3>
+  <ul>
+    {% for resultado_juego in games %}
+      <img src="{{ resultado_juego.portada.url}}" alt="Portada de {{ resultado_juego.name }}" 
+      style="width: 200px; height: auto;">
+      <li>{{ resultado_juego }} {{resultado_juego.release_Date}}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+{% if users %}
+<h3>Usuarios</h3>
+  <ul>
+    {% for resultado_usuario in users %}
+      {% if resultado_usuario.foto.%}
+        <img src="{{ resultado_usuario.foto.url}}" alt="Foto de perfil {{ resultado_usuario.nickname }}" 
+        style="width: 200px; height: auto;">
+      {% endif %}
+      <li>{{ resultado_usuario }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+{% if lists %}
+<h3>Listas de juegos</h3>
+  <ul>
+    {% for resultado_lista in lists %}
+      <img src="{{ resultado_lista.primer_juego.portada.url}}" alt="Juego en {{ resultado_lista.name}}" 
+      style="width: 200px; height: auto;">
+      <li>{{ resultado_lista.name }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+
+    
+{% endblock %}
+</html>

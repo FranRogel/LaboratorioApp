@@ -8,12 +8,14 @@
 <h1>Listas</h1>
 <ul>
 {% for item in listas %}
-  <a href="{% url 'listContent' id=item.lista.id %}">
+  <a href="{% url 'listContent' id=item.id %}">
     <img src="{{ item.imagen_url }}" alt="{{ item.nombre_videojuego }}" style="width: 200px; height: auto;">
   </a>
-  <li>{{ item.lista.name }}</li>
+  <a a href="{% url 'listContent' id=item.id %}">
+    <li>{{ item.name }}</li>
+  </a>
   {% if session %}
-  <li><a href="{% url 'listFormEdit' lista_id=item.lista.id %}">editar</a></li>
+  <li><a href="{% url 'listFormEdit' pk=item.id %}">editar</a></li>
   {% endif %}
 {% endfor %}
 </ul>

@@ -5,17 +5,15 @@
 </head>
 <body>
     {% if session %}
-
     <h2>{{ userinfo.nickname }}</h2>
       <ul>
-        <li><a href="{% url 'yourGames' id_usuario=userinfo.id %}">Juegos:{{ userinfo.cantJuegosJugados }}</a></li>
-        <li><a href="{% url 'yourLists' id_usuario=userinfo.id %}">Listas:{{ userinfo.cantListasDeJuegos }}</a></li>
-        <a href="{% url 'followers' id=userinfo.id %}"><li>Seguidores:{{userinfo.cantSeguidores}}</li></a>
-        <a href="{% url 'follow' id=userinfo.id %}"><li>Seguidos:{{userinfo.cantSeguidos}}</li></a>
+        <li><a href="{% url 'yourGames' id_usuario=user_session.id %}">Juegos:{{ userinfo.cant_juegos_jugados }}</a></li>
+        <li><a href="{% url 'yourLists' id_usuario=user_session.id %}">Listas:{{ userinfo.cant_listas_de_juegos }}</a></li>
+        <a href="{% url 'followers' id=user_session.id %}"><li>Seguidores:{{userinfo.cant_seguidores}}</li></a>
+        <a href="{% url 'follow' id=user_session.id %}"><li>Seguidos:{{userinfo.cant_seguidos}}</li></a>
       </ul>
-  
     {% else %}
-    <h2>{{ userinfo.nickname }} </h2>
+    <h2>{{ userinfo.nickname }}</h2>
     {% if request.user.is_authenticated %}
       {% if not losigue %}
       <form method="post" action="{% url 'seguir_usuario' usuario_id=userinfo.id %}">
@@ -30,13 +28,11 @@
       {% endif %}
     {% endif %}
     <ul>
-      <li><a href="{% url 'yourGames' id_usuario=userinfo.id %}">Juegos:{{ userinfo.cantJuegosJugados }}</a></li>
-      <li><a href="{% url 'yourLists' id_usuario=userinfo.id %}">Listas:{{ userinfo.cantListasDeJuegos }}</a></li>
-      <a href="{% url 'followers' id=userinfo.id %}"><li>Seguidores:{{userinfo.cantSeguidores}}</li></a>
-      <a href="{% url 'follow' id=userinfo.id %}"><li>Seguidos:{{userinfo.cantSeguidos}}</li></a>
+      <li><a href="{% url 'yourGames' id_usuario=userinfo.id %}">Juegos:{{ userinfo.cant_juegos_jugados }}</a></li>
+      <li><a href="{% url 'yourLists' id_usuario=userinfo.id %}">Listas:{{ userinfo.cant_listas_de_juegos }}</a></li>
+      <a href="{% url 'followers' id=userinfo.id %}"><li>Seguidores:{{userinfo.cant_seguidores}}</li></a>
+      <a href="{% url 'follow' id=userinfo.id %}"><li>Seguidos:{{userinfo.cant_seguidos}}</li></a>
     </ul>
     {% endif %}
-  
-  
 </body>
 </html>

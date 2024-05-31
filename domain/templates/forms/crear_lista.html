@@ -9,20 +9,23 @@
 <h2>Llena tu lista</h2>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}    
+        {{ form.as_p }}  
+{% if not update %}  
+    <button type="submit">Crear</button>
+{% endif %}
+{% if update %}
     <p>Agregar juegos</p>
     {% for contenido in contenidos %}
     <img src="{{ contenido.videojuego.portada.url }}" alt="{{contenido.videojuego.name}}"  style="width: 200px; height: auto;"> 
   {% endfor %}
     {{ estaEn_form.as_p }}
-    <button type="submit">Agregar</button>
+    <button type="submit">Editar</button>
     </form>
-    {% if borrar %}
     <br>
     <form method="post" action="{% url 'borrarlista' lista_id=lista.id %}">
     {% csrf_token %}
         <button type="submit">Borrar</button>
     </form>
-    {% endif %}
+{% endif %}
 {% endblock %}
 </html>

@@ -1,11 +1,9 @@
-from django.contrib.auth.hashers import make_password
 from .models import *
 from django.views.generic.base import *
-from django.contrib.auth.hashers import make_password
-from django.views.generic import FormView,ListView
+from django.views.generic import FormView
 from .forms import *
 from django.urls import reverse_lazy
-from django.contrib.auth import login,logout
+from django.contrib.auth import login
 from django.contrib.auth.hashers import check_password
 from django.shortcuts import render, redirect
 import random
@@ -21,8 +19,7 @@ class RegistroView(FormView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        if 'usuario_form' not in context:
-            context['usuario_form'] = self.second_form_class()
+        context['usuario_form'] = self.second_form_class()
         return context
 
     def post(self, request, *args, **kwargs):
@@ -70,20 +67,23 @@ class LoginView(FormView):
         except Cuenta.DoesNotExist:
             return self.form_invalid(form)
 
-#class CustomLogoutView(SuccessMessageMixin, LogoutView):
-    #template_name = 'accounts/logout.html'  # Opcional: define una plantilla para mostrar un mensaje de confirmación de logout
-    #success_message = "Has cerrado sesión con éxito."
-    #next_page = 'login'  # Redirige a la página de inicio de sesión después del logout
+class CustomLogoutView(SuccessMessageMixin, LogoutView):
+    template_name = 'accounts/logout.html'  # Opcional: define una plantilla para mostrar un mensaje de confirmación de logout
+    success_message = "Has cerrado sesión con éxito."
+    next_page = 'login'  # Redirige a la página de inicio de sesión después del logout
 
 class MainController(TemplateView):
     template_name = 'main.html'
-    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['myuser'] = Usuario.objects.get_user_from_request(self.request)
+        context['user_session'] = Usuario.objects.get_user_from_request(self.request)
         context['usuariosCount'] = Usuario.objects.count()
         context['juegosCount'] = Videojuego.objects.count()
         context['listasCount'] = ListaDeJuegos.objects.count()
+        context['juegos'] = Videojuego.objects.get_random_juegos()[:5]
+        context['usuarios'] = Usuario.objects.get_random_usuarios()[:5]
+        context['listas'] = ListaDeJuegos.objects.get_random_listas()[:5]
+        context['reseñas'] = Reseña.objects.get_random_reseñas()[:5]
         return context
 
 class GamesController(TemplateView):
@@ -91,8 +91,8 @@ class GamesController(TemplateView):
    def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
     games_sorted =  Videojuego.objects.get_juegos_populares()[:3]
-    games_random = Videojuego.objects.get_remaining_random_juegos(10,games_sorted)
-    context['myuser'] = Usuario.objects.get_user_from_request(self.request)
+    games_random = Videojuego.objects.get_remaining_random_juegos(games_sorted)
+    context['user_session'] = Usuario.objects.get_user_from_request(self.request)
     context['top_videojuegos'] = games_sorted
     context['videojuegos'] = games_random
     return context
@@ -102,10 +102,10 @@ class UsersController(TemplateView):
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
     usuarios_populares = Usuario.objects.get_usuarios_populares()[:3]
-    usuarios = Usuario.objects.get_remaining_random_usuarios(10,usuarios_populares)
+    usuarios = Usuario.objects.get_remaining_random_usuarios(usuarios_populares)[:10]
     context['top_usuarios'] = usuarios_populares
     context['usuarios'] = usuarios
-    context['myuser'] = Usuario.objects.get_user_from_request(self.request)
+    context['user_session'] = Usuario.objects.get_user_from_request(self.request)
     return context
 
 class ProfileController(TemplateView):
@@ -115,13 +115,8 @@ class ProfileController(TemplateView):
     id_usuario = kwargs.get("id")
     myuser = Usuario.objects.get(id=id_usuario)
     user_session = Usuario.objects.get_user_from_request(self.request)
-    session = Usuario.objects.session_perfil_match(user_session, myuser)
-    loSigue = False  # Inicializamos loSigue como False por defecto
-    if session:
-            try:
-                loSigue = True  
-            except Siguen.DoesNotExist:
-                loSigue = False
+    session = Usuario.objects.sesion_perfil_match(user_session, myuser)
+    loSigue = Siguen.objects.filter(seguidor=user_session, seguido=myuser).exists()
     susListas = myuser.listas_de_juegos.all()
     reseñas = myuser.reseñas.all()
     reseñas_sorted = random.sample(list(reseñas), min(5,reseñas.count()))
@@ -129,10 +124,11 @@ class ProfileController(TemplateView):
     juegosFavoritos = myuser.reseñas.filter(puntuacion__gte=3).order_by('-puntuacion')[:3]
     context['reseñas'] = reseñas_sorted
     context['juegosFavoritos'] = juegosFavoritos
-    context['myuser'] = user_session
+    context['session'] = session
+    context['myuser'] = myuser
     context['userinfo'] = myuser
     context['misListas'] = susListas
-    context['session'] = user_session
+    context['user_session'] = user_session
     context['losigue'] = loSigue
     return context
 
@@ -141,8 +137,8 @@ class ListController(TemplateView):
    def get_context_data(self, **kwargs):
       context = super().get_context_data(**kwargs)
       listas_sorted = ListaDeJuegos.objects.get_listas_populares()[:4]
-      random_listas = ListaDeJuegos.objects.get_remaining_random_listas(10,listas_sorted)
-      context['myuser'] = Usuario.objects.get_user_from_request(self.request)
+      random_listas = ListaDeJuegos.objects.get_remaining_random_listas(listas_sorted)[:10]
+      context['user_session'] = Usuario.objects.get_user_from_request(self.request)
       context['top_listas'] = listas_sorted
       context['listas'] = random_listas
       return context
@@ -154,58 +150,65 @@ class ListInfoController(TemplateView):
       list_id = self.kwargs.get('id')
       myList = ListaDeJuegos.objects.get(id=list_id)
       content = EstaEn.objects.filter(lista = myList.id)
+      user_session = Usuario.objects.get_user_from_request(self.request)
+      like = Reseña.objects.usuario_le_gusta_lista(myList,user_session)
       context['myList'] = myList
       context['contenido'] = content
-      context['myuser'] = Usuario.objects.get_user_from_request(self.request)
+      context['user_session'] = user_session
+      context['like'] = like
       return context
 
 class GameInfoAndReseñaController(View):
     template_name = 'games/gameInfo.html'
-    
+
     def get(self, request, *args, **kwargs):
-        game_id = self.kwargs.get('id')
-        game = Videojuego.objects.get(id=game_id)
-        reseñas = Reseña.objects.filter(game=game)
-        usuario = Usuario.objects.get_user_from_request(self.request)
-        reseñaExiste = False
-        # Verificar si el usuario ya escribió una reseña para este juego
-        try:
-            reseña_existente = Reseña.objects.get(game=game, writer=usuario)
-            # Si existe una reseña, cargar los datos en el formulario
-            reseña_form = ReseñaForm(instance=reseña_existente)
-            reseñaExiste = True
-        except Reseña.DoesNotExist:
-            # Si no existe una reseña, crear un formulario vacío
-            reseña_form = ReseñaForm()
-        
-        return render(request, self.template_name, {'myuser' : usuario, 
-        'myGame': game, 'reseñas': reseñas, 
-        'form': reseña_form, 'existe' : reseñaExiste})
+        return self.render_with_form(request)
 
     def post(self, request, *args, **kwargs):
         game_id = self.kwargs.get('id')
         game = Videojuego.objects.get(id=game_id)
-        reseñas = Reseña.objects.filter(game=game)
-        usuario = Usuario.objects.get_user_from_request(self.request)
+        usuario = Usuario.objects.get_user_from_request(request)
         reseña_form = ReseñaForm(request.POST)
         
         if reseña_form.is_valid():
-            # Verificar si el usuario ya escribió una reseña para este juego
+            titulo = reseña_form.cleaned_data['title']
+            contenido = reseña_form.cleaned_data['content']
+            tag = reseña_form.cleaned_data['tag']
+            puntuacion = reseña_form.cleaned_data['puntuacion']
+            
             try:
                 reseña_existente = Reseña.objects.get(game=game, writer=usuario)
-                # Si existe una reseña, actualizarla con los nuevos datos
-                reseña_form = ReseñaForm(request.POST, instance=reseña_existente)
+                Reseña.objects.update_reseña(reseña_existente, titulo,contenido,puntuacion,tag)
             except Reseña.DoesNotExist:
-                pass
-            
-            reseña = reseña_form.save(commit=False)
-            reseña.game = game
-            reseña.writer = usuario
-            reseña.save()
-            return redirect('game', id=game_id)  # Ajusta esto según tu lógica
-        else:
-            return render(request, self.template_name, {'myuser' : usuario,'myGame': game, 'reseñas': reseñas, 'form': reseña_form})
+                Reseña.objects.create_reseña(titulo, contenido, puntuacion, tag, usuario, game)
+                
+        return self.render_with_form(request, reseña_form)
 
+    def render_with_form(self, request, reseña_form=None):
+        game_id = self.kwargs.get('id')
+        game = Videojuego.objects.get(id=game_id)
+        reseñas = Reseña.objects.filter(game=game)
+        usuario = Usuario.objects.get_user_from_request(request)
+        reseñaExiste = False
+        
+        if reseña_form is None:
+            try:
+                reseña_existente = Reseña.objects.get(game=game, writer=usuario)
+                reseña_form = ReseñaForm(instance=reseña_existente)
+                reseñaExiste = True
+            except Reseña.DoesNotExist:
+                reseña_form = ReseñaForm()
+                
+        context = {
+            'user_session': usuario,
+            'myGame': game,
+            'reseñas': reseñas,
+            'form': reseña_form,
+            'existe': reseñaExiste
+        }
+        
+        return render(request, self.template_name, context)   
+            
 class YourGamesController(TemplateView):
    template_name = 'session/your_games.html'
    def get_context_data(self, **kwargs):
@@ -216,8 +219,8 @@ class YourGamesController(TemplateView):
     session = Usuario.objects.sesion_perfil_match(user_session,usuario)
     juegos = Videojuego.objects.filter(reseñas__writer=usuario)
     context['juegos'] = juegos
-    context['myuser'] = user_session
     context['userinfo'] = usuario
+    context['user_session'] = user_session
     context['session'] = session
     return context
 
@@ -231,10 +234,10 @@ class YourListController(TemplateView):
         user_session = Usuario.objects.get_user_from_request(self.request)
         session = Usuario.objects.sesion_perfil_match(user_session,usuario)
         listas = usuario.listas_de_juegos.all()
-        lista_con_contenido = self.get_lista_con_contenido(listas)
-        context['myuser'] = user_session
+        #lista_con_contenido = self.get_lista_con_contenido(listas)
+        context['user_session'] = user_session
         context['userinfo'] = usuario
-        context['listas'] = lista_con_contenido
+        context['listas'] = listas
         context['session'] = session
         return context
 
@@ -248,74 +251,111 @@ class YourListController(TemplateView):
                     'imagen_url': contenido.videojuego.portada.url,
                     'nombre_videojuego': contenido.videojuego.name,
                 })
+        print(lista_con_contenido)
         return lista_con_contenido
     
-class listFormController(FormView):
+class ListCreateFormController(FormView):
     template_name = 'forms/crear_lista.html'
     form_class = ListaForm
-    second_form_class = EstaEnForm
-    success_url = reverse_lazy('yourLists')
-
-    def get_initial(self):
-        initial = super().get_initial()
-        # Si hay una lista existente, cargar los datos iniciales del formulario con esos valores
-        lista_id = self.kwargs.get('lista_id')
-        if lista_id:
-            lista = ListaDeJuegos.objects.get(id=lista_id)
-            self.success_url = reverse_lazy('listFormEdit', kwargs={'lista_id': lista_id})
-            initial = lista.__dict__
-        return initial
-
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # Pasar el usuario autenticado como argumento adicional al formulario
         usuario = Usuario.objects.get_user_from_request(self.request)
-        context['myuser'] = usuario
-        context['estaEn_form'] = self.second_form_class()
-        lista_id = self.kwargs.get('lista_id')
-        esPosibleBorrar = False
-        if lista_id:
-            lista = ListaDeJuegos.objects.get(id=lista_id)
-            contenido = lista.contenido.all()[:3]
-            context['lista'] = lista
-            context['contenidos'] = contenido
-            esPosibleBorrar = True
-        context['borrar'] = esPosibleBorrar    
+        self.success_url = reverse_lazy('yourList', kwargs={'id_usuario': usuario.id})
+        context['user_session'] = usuario
+        context['update'] = False
         return context
     
     def post(self, request, *args, **kwargs):
-        self.object = None
         lista_form = self.get_form()
-        estaEn_form = self.second_form_class(request.POST)
-        errores = []
         try:
-            if lista_form.is_valid() and estaEn_form.is_valid():
-                return self.form_valid(lista_form, estaEn_form)
+            if lista_form.is_valid():
+                return self.form_valid(lista_form)
             else:
                 return self.form_invalid(lista_form)
         except forms.ValidationError as e:
-            errores.append(e)
+            lista_form.add_error(None, str(e))
+            return self.form_invalid(lista_form)
         except ValueError as e:
-            errores.append(e)
+            lista_form.add_error(None, str(e))
+            return self.form_invalid(lista_form)
 
-    def form_valid(self, lista_form,estaEn_form):
-        # Guardar la Lista
-        lista_id = self.kwargs.get('lista_id')
-        if lista_id:
-            # Si hay un ID de lista, significa que estamos editando una lista existente
-            lista = ListaDeJuegos.objects.get(id=lista_id)
-            lista_form.instance = lista
-        else:
-            # Si no hay un ID de lista, estamos creando una nueva lista
-            lista = lista_form.save(commit=False)
-            usuario = Usuario.objects.get(cuenta=self.request.user)
-            lista.creator = usuario
+    def form_valid(self, lista_form):
+        nombre = lista_form.cleaned_data['name']
+        descripcion = lista_form.cleaned_data['descripcion']
+        creator = Usuario.objects.get_user_from_request(self.request)
+        ListaDeJuegos.objects.create_lista_de_juegos(nombre,descripcion,creator)
+        usuario = Usuario.objects.get_user_from_request(self.request)
+        return redirect('yourLists', id_usuario=usuario.id)
 
-        lista.save()
-        estaEn_form.instance.lista = lista
-        EstaEn.objects.create(videojuego=estaEn_form.instance.videojuego, lista=lista)
+    def form_invalid(self, lista_form):
+        return self.render_to_response(
+            self.get_context_data(form=lista_form)
+        )
+
+class ListEditFormController(FormView):
+    template_name = 'forms/crear_lista.html'
+    form_class = ListaForm
+    second_form_class = EstaEnForm
+
+    def get_initial(self):
+        initial = super().get_initial()
+        lista_id = self.kwargs.get('pk')
+        lista = ListaDeJuegos.objects.get(id=lista_id)
+        self.success_url = reverse_lazy('listFormEdit', kwargs={'pk': lista_id})
+        initial.update(lista.__dict__)
+        return initial
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        usuario = Usuario.objects.get_user_from_request(self.request)
+        lista_id = self.kwargs.get('pk')
+        lista = ListaDeJuegos.objects.get(id=lista_id)
+        self.second_form_class = EstaEnForm()
+        #Hacer esto en el manager EstaEn
+        videojuegos_excluidos = EstaEn.objects.filter(lista=lista).values_list('videojuego_id', flat=True)
+        videojuegos_queryset = Videojuego.objects.exclude(id__in=videojuegos_excluidos)
+        self.second_form_class.fields['videojuego'].queryset = videojuegos_queryset
+        ###
+        contenido = lista.contenido.all()[:3]
+        context['user_session'] = usuario
+        context['lista'] = lista
+        context['contenidos'] = contenido
+        context['estaEn_form'] = self.second_form_class
+        context['update'] = True
+        return context
+    
+    def post(self, request, *args, **kwargs):
+        lista_form = self.get_form()
+        lista_id = self.kwargs.get('pk')
+
+        post_data = request.POST.copy()
+        post_data['lista_id'] = lista_id
+        esta_en_form = self.second_form_class(post_data)
+        try:
+            if lista_form.is_valid() and esta_en_form.is_valid():
+                return self.form_valid(lista_form, esta_en_form)
+            else:
+                return self.form_invalid(lista_form)
+        except forms.ValidationError as e:
+            lista_form.add_error(None, str(e))
+            return self.form_invalid(lista_form)
+        except ValueError as e:
+            lista_form.add_error(None, str(e))
+            return self.form_invalid(lista_form)
+        
+    def form_valid(self, lista_form, esta_en_form):
+        lista_id = self.kwargs.get('pk')
+        lista = ListaDeJuegos.objects.get(id=lista_id)
+        nombre = lista_form.cleaned_data['name']
+        descripcion = lista_form.cleaned_data['descripcion']
+        creator = Usuario.objects.get_user_from_request(self.request)
+        ListaDeJuegos.objects.update_lista_de_juegos(lista, nombre, descripcion, creator)
+        videojuego = esta_en_form.cleaned_data['videojuego'] 
+        if videojuego:
+            EstaEn.objects.create(videojuego=videojuego, lista=lista)
         return redirect(self.success_url)
-
+                  
     def form_invalid(self, lista_form):
         return self.render_to_response(
             self.get_context_data(form=lista_form)
@@ -366,18 +406,14 @@ class SeguidoresController(TemplateView):
         context = super().get_context_data(**kwargs)
         user_id = self.kwargs.get('id')  
         usuario = Usuario.objects.get(id=user_id)
-        session = Usuario.objects.get_user_from_request(self.request)
-        context['myuser'] = session
+        user_session = Usuario.objects.get_user_from_request(self.request)
+        context['user_session'] = user_session
         context['userinfo'] = usuario
-        #Cambiar por sesion_perfil_match
-        user_session = False
-        if session:
-            user_session = user_id == session.id
-        #Cambiar
+        session = Usuario.objects.sesion_perfil_match(user_session,usuario)
         seguidores_relacion = usuario.seguido_por.all()  # Obtener todas las instancias de Siguen relacionadas con el usuario
         seguidores = [relacion.seguidor for relacion in seguidores_relacion]  # Extraer los seguidores de esas instancias
         context['seguidores'] = seguidores
-        context['session'] = user_session
+        context['session'] = session
         return context
         
 class SeguidosController(TemplateView):
@@ -387,16 +423,56 @@ class SeguidosController(TemplateView):
         context = super().get_context_data(**kwargs)
         user_id = self.kwargs.get('id')  
         usuario = Usuario.objects.get(id=user_id)
-        session = Usuario.objects.get_user_from_request(self.request)
-        context['myuser'] = session
+        user_session = Usuario.objects.get_user_from_request(self.request)
+        context['user_session'] = user_session
         context['userinfo'] = usuario
-        #Cambiar por sesion_perfil_match
-        user_session = False
-        if session:
-            user_session = user_id == session.id
         context['session'] = user_session
         seguidos_relacion = usuario.sigue_a.all()  
         seguidos = [relacion.seguido for relacion in seguidos_relacion] 
         context['seguidos'] = seguidos
         return context
-    
+
+class MeGustaListaController(TemplateView):
+    template_name="list/listContent.html"
+    def post(self, request, *args, **kwargs):
+        lista_id = kwargs['id']  
+        lista_actual = ListaDeJuegos.objects.get(id=lista_id)
+        usuario_session = Usuario.objects.get_user_from_request(self.request)
+        LeGusta.objects.create(usuario=usuario_session, lista=lista_actual)
+        return redirect('listContent', id=lista_id)
+
+class QuitarMeGustaListaController(TemplateView):
+    template_name="list/listContent.html"
+    def post(self, request, *args, **kwargs):
+        lista_id = kwargs['id']
+        lista_actual = ListaDeJuegos.objects.get(id=lista_id)
+        usuario_session = Usuario.objects.get_user_from_request(self.request)
+        like = LeGusta.objects.filter(usuario=usuario_session, lista=lista_actual)
+        like.delete()
+        return redirect('listContent', id=lista_id)
+
+def search_view(request):
+    if request.method == 'POST':
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            query = form.cleaned_data['query']
+            search_type = form.cleaned_data['search_type']
+            games_results = []
+            users_results = []
+            lists_results = []
+            user_session = Usuario.objects.get_user_from_request(request)
+            if search_type == 'games':
+                games_results = Videojuego.objects.filter(name__icontains=query)
+            elif search_type == 'users':
+                users_results = Usuario.objects.filter(nickname__icontains=query)
+            elif search_type == 'game_lists':
+                lists_results = ListaDeJuegos.objects.filter(name__icontains=query)
+            else:
+                games_results = Videojuego.objects.filter(name__icontains=query)
+                users_results = Usuario.objects.filter(nickname__icontains=query)
+                lists_results = ListaDeJuegos.objects.filter(name__icontains=query)
+            return render(request, 'search_results.html', 
+                          {'games' : games_results,
+                           'users' : users_results,
+                           'lists' : lists_results,
+                           'user_session': user_session })

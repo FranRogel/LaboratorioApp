@@ -12,9 +12,9 @@
     <img src="{{ x.foto.url }}" alt="{{ x.nickname }} foto">
    {% endif %}
     <a href="{% url 'profile' id=x.id %}">{{ x.nickname }}</a>
-    <a>juegos jugados: {{x.cantJuegosJugados}}</a>
-    <a href="{% url 'profile' id=x.id %}">listas: {{x.cantListasDeJuegos}}</a>
-    <a>Seguidores {{x.cantSeguidores}}</a>
+    <a>juegos jugados: {{x.cant_juegos_jugados}}</a>
+    <a href="{% url 'profile' id=x.id %}">listas: {{x.cant_listas_de_juegos}}</a>
+    <a>Seguidores {{x.cant_seguidores}}</a>
     <ul>
       {% for reseña in x.reseñas.all|slice:":3" %}
       <li>{{reseña.game.name}}: {{ reseña.title }}</li>
@@ -26,8 +26,8 @@
   {% for x in usuarios  %}
     <li>
         <a href="{% url 'profile' id=x.id %}">{{ x.nickname }}</a>
-        <a>juegos jugados: {{x.cantJuegosJugados}}</a>
-        <a href="{% url 'profile' id=x.id %}">listas: {{x.cantListasDeJuegos}}</a>
+        <a>juegos jugados: {{x.cant_juegos_jugados}}</a>
+        <a href="{% url 'profile' id=x.id %}">listas: {{x.cant_listas_de_juegos}}</a>
     </li>
   {% endfor %}
 

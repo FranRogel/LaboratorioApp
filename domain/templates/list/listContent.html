@@ -6,6 +6,17 @@
 <p>Lista por: {{myList.creator}}</p>
 <p>Me gustan: {{myList.cantMeGustan}}</p>
 <h2>{{myList.name}}</h2>
+{% if not like %}
+  <form method="post" action="{% url 'like' id=myList.id %}">
+    {% csrf_token %}
+    <button type="submit">Me Gusta</button>
+  </form>
+{% else %}
+<form method="post" action="{% url 'unlike' id=myList.id %}">
+  {% csrf_token %}
+  <button type="submit">Quitar Me Gusta</button>
+</form>
+{% endif %}
 <p>{{myList.descripcion}}</p>
 <ul>
   {% for contenido in myList.contenido.all %}
