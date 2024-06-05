@@ -4,36 +4,42 @@
 
     {% block content %}
     <h2>Populares</h2>
-    <ul>
+    <div class="row justify-content-center">
       {% for lista in top_listas %}
-        {% for contenido in lista.contenido.all|slice:":3" %}
-        <img src="{{ contenido.videojuego.portada.url}}" alt="Portada de {{ contenido.videojuego.name }}" 
-        style="width: 200px; height: auto;">
-      
-        {% endfor %}
-      <li>
-       <a href="{% url 'listContent' id=lista.id %}">{{lista.name}}</a> 
-      </li>
-      <li>
-        Creador: {{lista.creator}} Likes:{{lista.cantMeGustan}}
-      </li>
-      {% endfor %}
-    </ul>
-    
-    <h3>Al azar</h3>
-    <ul>
-        {% for lista in listas %}
-          {% for contenido in lista.contenido.all|slice:":3" %}
-          <img src="{{ contenido.videojuego.portada.url}}" alt="Portada de {{ contenido.videojuego.name }}" 
-          style="width: 200px; height: auto;">
+      <div class="col-md-3 mb-4">
+        <div class="card">
+          {% for contenido in lista.contenido.all|slice:":1" %}
+          <a href="{% url 'listContent' id=lista.id %}">
+          <img src="{{ contenido.videojuego.portada.url}}" class="card-img-top" alt="Portada de {{ contenido.videojuego.name }}" 
+          style="height: 200px; object-fit: cover;"></a>
           {% endfor %}
-        <li>
-         <a href="{% url 'listContent' id=lista.id %}">{{lista.name}}</a> 
-        </li>
-        <li>
-          Creador: {{lista.creator}} Likes:{{lista.cantMeGustan}}
-        </li>
+          <div class="card-body">
+            <h5 class="card-title">{{ lista.name }}</h5>
+            <p class="card-text" style="font-size: 14px;">Creador: {{ lista.creator }}</p>
+            <p class="card-text" style="font-size: 14px;">{{ lista.descripcion }}</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    <h3>Al azar</h3>
+        {% for lista in listas %}
+        <div class="col-md-5 mb-4">
+          <div class="card">
+            {% for contenido in lista.contenido.all|slice:":1" %}
+            <a href="{% url 'listContent' id=lista.id %}">
+            <img src="{{ contenido.videojuego.portada.url}}" class="card-img-top" alt="Portada de {{ contenido.videojuego.name }}" 
+            style="height: 200px; object-fit: cover;"></a>
+            {% endfor %}
+            <div class="card-body">
+              <a href="{% url 'listContent' id=lista.id %}">
+              <h5 class="card-title">{{ lista.name }}</h5>
+              </a>
+              <p class="card-text" style="font-size: 14px;">Creador: {{ lista.creator }}</p>
+              <p class="card-text" style="font-size: 14px;">{{ lista.descripcion }}</p>
+            </div>
+          </div>
+        </div>
         {% endfor %}
-      </ul>
+    </div>
       {% endblock %}
 </html>

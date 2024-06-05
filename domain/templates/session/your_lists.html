@@ -4,23 +4,40 @@
 {% block profile %}
     {{ block.super }}
 {% endblock %}
-{% block content%}
-<h1>Listas</h1>
-<ul>
-{% for item in listas %}
-  <a href="{% url 'listContent' id=item.id %}">
-    <img src="{{ item.imagen_url }}" alt="{{ item.nombre_videojuego }}" style="width: 200px; height: auto;">
-  </a>
-  <a a href="{% url 'listContent' id=item.id %}">
-    <li>{{ item.name }}</li>
-  </a>
+{% block content %}
+<div class="container mt-5">
+  <h1>Listas</h1>
+  <ul class="list-group">
+    {% for item in listas %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <!-- Parte 1: Imágenes -->
+        <div class="d-flex align-items-center">
+          {% for relacion in item.juegos|slice:"4" %}
+            <a href="{% url 'listContent' id=item.id %}">
+              <img src="{{ relacion.videojuego.portada.url }}" alt="{{ relacion.videojuego.name }}" class="img-thumbnail" style="width: 100px; height: 100px;">
+            </a>
+          {% endfor %}
+        </div>
+        <!-- Parte 2: Nombre de la lista y cantidad de juegos -->
+        <div class="d-flex flex-column align-items-start ml-3">
+          <a href="{% url 'listContent' id=item.id %}" class="text-decoration-none">
+            <h5>{{ item.name }}</h5>
+          </a>
+          <span class="badge rounded-pill bg-primary mt-1">Juegos: {{ item.cant_juegos }}</span>
+          <span class="badge rounded-pill bg-primary mt-1">👍: {{ item.cantMeGustan }}</span>
+          {% if session %}
+            <a href="{% url 'listFormEdit' pk=item.id %}" class="btn btn-primary btn-sm mt-1">Editar</a>
+          {% endif %}
+        </div>
+        <!-- Parte 3: Vacía -->
+        <div class="flex-grow-1"></div>
+      </li>
+    {% endfor %}
+  </ul>
   {% if session %}
-  <li><a href="{% url 'listFormEdit' pk=item.id %}">editar</a></li>
+    <p><a href="{% url 'listForm' %}" class="btn btn-success mt-3">Crear una nueva lista</a></p>
   {% endif %}
-{% endfor %}
-</ul>
-{% if session %}
-<p><a href="{% url 'listForm' %}">Crear una nueva lista</a></p>
-{% endif %}
+</div>
 {% endblock %}
+
 </html>

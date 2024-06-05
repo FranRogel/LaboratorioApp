@@ -178,9 +178,9 @@ class GameInfoAndReseñaController(View):
             
             try:
                 reseña_existente = Reseña.objects.get(game=game, writer=usuario)
-                Reseña.objects.update_reseña(reseña_existente, titulo,contenido,puntuacion,tag)
+                Reseña.objects.update_reseña(reseña_existente, titulo,puntuacion,tag,contenido)
             except Reseña.DoesNotExist:
-                Reseña.objects.create_reseña(titulo, contenido, puntuacion, tag, usuario, game)
+                Reseña.objects.create_reseña(titulo, puntuacion, tag, usuario, game, contenido)
                 
         return self.render_with_form(request, reseña_form)
 
@@ -218,10 +218,12 @@ class YourGamesController(TemplateView):
     user_session = Usuario.objects.get_user_from_request(self.request)
     session = Usuario.objects.sesion_perfil_match(user_session,usuario)
     juegos = Videojuego.objects.filter(reseñas__writer=usuario)
+    loSigue = Siguen.objects.filter(seguidor=user_session, seguido=usuario).exists()
     context['juegos'] = juegos
     context['userinfo'] = usuario
     context['user_session'] = user_session
     context['session'] = session
+    context['loSigue'] = loSigue
     return context
 
 class YourListController(TemplateView):
@@ -234,11 +236,13 @@ class YourListController(TemplateView):
         user_session = Usuario.objects.get_user_from_request(self.request)
         session = Usuario.objects.sesion_perfil_match(user_session,usuario)
         listas = usuario.listas_de_juegos.all()
+        loSigue = Siguen.objects.filter(seguidor=user_session, seguido=usuario).exists()
         #lista_con_contenido = self.get_lista_con_contenido(listas)
         context['user_session'] = user_session
         context['userinfo'] = usuario
         context['listas'] = listas
         context['session'] = session
+        context['losigue'] = loSigue
         return context
 
     def get_lista_con_contenido(self,listas):
@@ -248,7 +252,7 @@ class YourListController(TemplateView):
             if contenido:  # Verificar si hay contenido
                 lista_con_contenido.append({
                     'lista': lista,
-                    'imagen_url': contenido.videojuego.portada.url,
+                    'imagen': contenido.videojuego.portada,
                     'nombre_videojuego': contenido.videojuego.name,
                 })
         print(lista_con_contenido)
@@ -372,13 +376,22 @@ class ListaDeleteFormController(FormView):
 
 class SiguenController(FormView):
     template_name = "accounts/profile.html"
+
     def post(self, request, *args, **kwargs):
+        usuario_session = Usuario.objects.get_user_from_request(self.request)
+        if not usuario_session:
+            return redirect('login')
         usuario_id = kwargs['usuario_id']  # ID del usuario que se está siguiendo
         usuario_a_seguir = Usuario.objects.get(id=usuario_id)
-        usuario_session = Usuario.objects.get_user_from_request(self.request)
         # Crear una instancia en el modelo Siguen
         Siguen.objects.create(seguidor=usuario_session, seguido=usuario_a_seguir)
-        return redirect('profile', id=usuario_id)
+        
+        # Verificar si hay un parámetro 'next' en la solicitud
+        next_url = request.GET.get('next')
+        if next_url:
+            return redirect(next_url)  # Redirigir al usuario a la URL almacenada en 'next'
+        else:
+            return redirect('profile', id=usuario_id)
     
 class DejarDeSeguirController(FormView):
     template_name = "accounts/profile.html"
@@ -389,7 +402,12 @@ class DejarDeSeguirController(FormView):
         # Borra la instancia del modelo Siguen
         follow = Siguen.objects.filter(seguidor=usuario_session, seguido=usuario_a_seguir)
         follow.delete()
-        return redirect('profile', id=usuario_id)
+                # Verificar si hay un parámetro 'next' en la solicitud
+        next_url = request.GET.get('next')
+        if next_url:
+            return redirect(next_url)  # Redirigir al usuario a la URL almacenada en 'next'
+        else:
+            return redirect('profile', id=usuario_id)
 
 class BorrarReseñaController(FormView):
     template_name = 'games/gameInfo.html'
@@ -407,14 +425,29 @@ class SeguidoresController(TemplateView):
         user_id = self.kwargs.get('id')  
         usuario = Usuario.objects.get(id=user_id)
         user_session = Usuario.objects.get_user_from_request(self.request)
-        context['user_session'] = user_session
-        context['userinfo'] = usuario
+        loSigue = Siguen.objects.filter(seguidor=user_session, seguido=usuario).exists()
         session = Usuario.objects.sesion_perfil_match(user_session,usuario)
-        seguidores_relacion = usuario.seguido_por.all()  # Obtener todas las instancias de Siguen relacionadas con el usuario
-        seguidores = [relacion.seguidor for relacion in seguidores_relacion]  # Extraer los seguidores de esas instancias
+        seguidores_relacion = usuario.seguido_por.all()
+        seguidores = [relacion.seguidor for relacion in seguidores_relacion]
+        follows = self.get_seguidores_con_follow_session(seguidores, user_session)
         context['seguidores'] = seguidores
         context['session'] = session
+        context['losigue'] = loSigue
+        context['follows'] = follows
+        context['user_session'] = user_session
+        context['userinfo'] = usuario
         return context
+    
+    def get_seguidores_con_follow_session(self,seguidores,user_session):
+        follows = []
+        for seguidor in seguidores:
+            follow = Siguen.objects.filter(seguidor=user_session, seguido=seguidor).exists() 
+            follows.append({
+                    'seguidor' : seguidor,
+                    'follow': follow
+                })
+        print(follows)
+        return follows
         
 class SeguidosController(TemplateView):
     template_name = "accounts/seguidos.html"
@@ -424,14 +457,28 @@ class SeguidosController(TemplateView):
         user_id = self.kwargs.get('id')  
         usuario = Usuario.objects.get(id=user_id)
         user_session = Usuario.objects.get_user_from_request(self.request)
-        context['user_session'] = user_session
-        context['userinfo'] = usuario
-        context['session'] = user_session
+        loSigue = Siguen.objects.filter(seguidor=user_session, seguido=usuario).exists()
         seguidos_relacion = usuario.sigue_a.all()  
         seguidos = [relacion.seguido for relacion in seguidos_relacion] 
-        context['seguidos'] = seguidos
+        follows = self.get_seguidores_con_follow_session(seguidos, user_session)
+        context['seguidos'] = follows
+        context['losigue'] = loSigue
+        context['user_session'] = user_session
+        context['userinfo'] = usuario
+        context['session'] = Usuario.objects.sesion_perfil_match(user_session,usuario)
         return context
 
+    def get_seguidores_con_follow_session(self,seguidos,user_session):
+        follows = []
+        for seguidor in seguidos:
+            follow = Siguen.objects.filter(seguidor=user_session, seguido=seguidor).exists() 
+            follows.append({
+                    'user' : seguidor,
+                    'follow': follow
+                })
+        print(follows)
+        return follows
+    
 class MeGustaListaController(TemplateView):
     template_name="list/listContent.html"
     def post(self, request, *args, **kwargs):

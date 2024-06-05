@@ -4,35 +4,78 @@
     <meta charset="UTF-8">
 </head>
 <body>
-    {% if session %}
-    <h2>{{ userinfo.nickname }}</h2>
-      <ul>
-        <li><a href="{% url 'yourGames' id_usuario=user_session.id %}">Juegos:{{ userinfo.cant_juegos_jugados }}</a></li>
-        <li><a href="{% url 'yourLists' id_usuario=user_session.id %}">Listas:{{ userinfo.cant_listas_de_juegos }}</a></li>
-        <a href="{% url 'followers' id=user_session.id %}"><li>Seguidores:{{userinfo.cant_seguidores}}</li></a>
-        <a href="{% url 'follow' id=user_session.id %}"><li>Seguidos:{{userinfo.cant_seguidos}}</li></a>
-      </ul>
-    {% else %}
-    <h2>{{ userinfo.nickname }}</h2>
-    {% if request.user.is_authenticated %}
-      {% if not losigue %}
-      <form method="post" action="{% url 'seguir_usuario' usuario_id=userinfo.id %}">
-        {% csrf_token %}
-        <button type="submit">Seguir</button>
-      </form>
+<div class="container">
+    <br>
+    <ul class="nav justify-content-center">
+      {% if session %}
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page">
+          <span class="fs-5">{{ userinfo }}</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="{% url 'yourGames' id_usuario=user_session.id %}">
+          <span class="fs-5">Juegos: {{ userinfo.cant_juegos_jugados }}</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'yourLists' id_usuario=user_session.id %}">
+          <span class="fs-5">Listas: {{ userinfo.cant_listas_de_juegos }}</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'followers' id=user_session.id %}">
+          <span class="fs-5">Seguidores: {{ userinfo.cant_seguidores }}</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'follow' id=user_session.id %}">
+          <span class="fs-5">Seguidos: {{ userinfo.cant_seguidos }}</span>
+        </a>
+      </li>
       {% else %}
-      <form method="post" action="{% url 'dejarSeguirUsuario' usuario_id=userinfo.id %}">
-        {% csrf_token %}
-        <button type="submit">Dejar De Seguir</button>
-      </form>
+      {% if request.user.is_authenticated %}
+      <div class="text-center mb-3">
+        {% if not losigue %}
+        <form method="post" action="{% url 'seguir_usuario' usuario_id=userinfo.id %}">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-primary">Seguir</button>
+        </form>
+        {% else %}
+        <form method="post" action="{% url 'dejarSeguirUsuario' usuario_id=userinfo.id %}">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-secondary">Dejar De Seguir</button>
+        </form>
+        {% endif %}
+      </div>
       {% endif %}
-    {% endif %}
-    <ul>
-      <li><a href="{% url 'yourGames' id_usuario=userinfo.id %}">Juegos:{{ userinfo.cant_juegos_jugados }}</a></li>
-      <li><a href="{% url 'yourLists' id_usuario=userinfo.id %}">Listas:{{ userinfo.cant_listas_de_juegos }}</a></li>
-      <a href="{% url 'followers' id=userinfo.id %}"><li>Seguidores:{{userinfo.cant_seguidores}}</li></a>
-      <a href="{% url 'follow' id=userinfo.id %}"><li>Seguidos:{{userinfo.cant_seguidos}}</li></a>
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page">
+          <span class="fs-5">{{ userinfo }}</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'yourGames' id_usuario=userinfo.id %}">
+          <span class="fs-5">Juegos: {{ userinfo.cant_juegos_jugados }}</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'yourLists' id_usuario=userinfo.id %}">
+          <span class="fs-5">Listas: {{ userinfo.cant_listas_de_juegos }}</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'followers' id=userinfo.id %}">
+          <span class="fs-5">Seguidores: {{ userinfo.cant_seguidores }}</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'follow' id=userinfo.id %}">
+          <span class="fs-5">Seguidos: {{ userinfo.cant_seguidos }}</span>
+        </a>
+      </li>
+      {% endif %}
     </ul>
-    {% endif %}
+</div>
 </body>
 </html>

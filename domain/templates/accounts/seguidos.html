@@ -1,21 +1,47 @@
 <!DOCTYPE html>
 {% extends 'accounts/profile.html' %}
-{% block content%}
-<table>
-    <tr>
-        <th>Nombre</th>
-        <th>Juegos</th>
-        <th>Listas</th>
-    </tr>
-    {% for seguido in seguidos %}
-    <tr>
-       <td>
-       <a href="{% url 'profile' id=seguido.id %}">{{ seguido.nickname }}</a>
-       </td>
-        <td>{{ seguido.cant_juegos_jugados }}</td>
-        <td>{{ seguido.cant_listas_de_juegos }}</td>
-    </tr>
-    {% endfor %}
-</table>
+{% block content %}
+<div class="container">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Nombre</th>
+        <th scope="col">Juegos</th>
+        <th scope="col">Listas</th>
+        {% if request.user.is_authenticated %}
+        <th scope="col"></th>
+        {% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for seguido in seguidos %}
+      <tr>
+        <td>
+          <a href="{% url 'profile' id=seguido.user.id %}">{{ seguido.user.nickname }}</a>
+        </td>
+        <td>{{ seguido.user.cant_juegos_jugados }}</td>
+        <td>{{ seguido.user.cant_listas_de_juegos }}</td>
+        {% if request.user.is_authenticated %}
+        <td>
+          <div class="text-center mb-3">
+            {% if not seguido.follow %}
+            <form method="post" action="{% url 'seguir_usuario' usuario_id=seguido.user.id %}?next={{ request.path }}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-primary">Seguir</button>
+            </form>
+            {% else %}
+            <form method="post" action="{% url 'dejarSeguirUsuario' usuario_id=seguido.user.id %}?next={{ request.path }}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-secondary">Dejar De Seguir</button>
+            </form>
+            {% endif %}
+          </div>
+        </td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 {% endblock %}
 </html>

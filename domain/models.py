@@ -103,6 +103,12 @@ class Usuario(models.Model):
     def __str__(self):
         return self.nickname
     
+    def juegos_favoritos(self):
+        reseñas = Reseña.objects.order_by('puntuacion')
+        reseñas_usuarios = reseñas.filter(writer=self)
+        print(reseñas_usuarios)
+        return reseñas_usuarios
+    
     def cant_listas_de_juegos(self):
         return self.listas_de_juegos.count()
 
@@ -154,14 +160,13 @@ class Videojuego(models.Model):
     def puntuacion_promedio(self):
         puntuacion_total = sum(reseña.puntuacion for reseña in self.reseñas.all())
         reseña_count = self.reseñas.count()
-        return puntuacion_total / reseña_count if reseña_count != 0 else 0
+        return round(puntuacion_total / reseña_count) if reseña_count != 0 else 0
     
     def cant_apariciones_lista(self):
         return self.listas.count()
     
     def cant_jugadores(self):
         return self.reseñas.count()
-
 
     def __str__(self):
         return self.name
@@ -236,6 +241,14 @@ class ListaDeJuegos(models.Model):
     def cantMeGustan(self):
         return self.me_gustan.count()
     
+    def cant_juegos(self):
+        return self.contenido.count()
+
+    def juegos(self):
+        relacion = self.contenido.all()
+        print(relacion)
+        return relacion
+
     def primer_juego(self): 
         primer_contenido = self.contenido.first()
         if primer_contenido:
@@ -262,35 +275,32 @@ class ReseñaManager(models.Manager):
         else:
             return False
 
-    def create_reseña(self,titulo,contenido,puntuacion,tag,escritor,juego):
-        if self.verificar_titulo(titulo):
-            raise('Titulo debe tener entre 2 y 30 caracteres')
-        if self.verificar_contenido(self,contenido):
-            raise('Contenido no puede sobrepasar los 500 caracteres')
-        if self.verificar_puntuacion(puntuacion):
-            raise('Puntuacion debe ser un numero entre 1 y 5')
-        
-        if not contenido:
-            contenido = ""
-        
-        reseña = self.model(
-            title = titulo,
-            content = contenido,
-            tag = tag,
-            writer = escritor,
-            game = juego
-        )
-        reseña.save()
-
-    def update_reseña(self,reseña,titulo,contenido,puntuacion,tag):
+    def create_reseña(self,titulo,puntuacion,tag,escritor,juego,contenido=""):
         if self.verificar_titulo(titulo):
             raise('Titulo debe tener entre 2 y 30 caracteres')
         if self.verificar_contenido(contenido):
             raise('Contenido no puede sobrepasar los 500 caracteres')
         if self.verificar_puntuacion(puntuacion):
             raise('Puntuacion debe ser un numero entre 1 y 5')
-        if not contenido:
-            contenido = ""
+        
+        reseña = self.model(
+            title = titulo,
+            content = contenido,
+            puntuacion=puntuacion,
+            tag = tag,
+            writer = escritor,
+            game = juego
+        )
+        reseña.save()
+
+    def update_reseña(self,reseña,titulo,puntuacion,tag,contenido=""):
+        if self.verificar_titulo(titulo):
+            raise('Titulo debe tener entre 2 y 30 caracteres')
+        if self.verificar_contenido(contenido):
+            raise('Contenido no puede sobrepasar los 500 caracteres')
+        if self.verificar_puntuacion(puntuacion):
+            raise('Puntuacion debe ser un numero entre 1 y 5')
+        
         reseña.title=titulo
         reseña.content=contenido
         reseña.puntuacion=puntuacion

@@ -5,27 +5,32 @@
 {% block profile %}
     {{ block.super }}
 {% endblock %}
-{% block content%}
+{% block content %}
 <h2>Llena tu lista</h2>
-    <form method="post">
+    <form method="post" class="mb-3">
         {% csrf_token %}
-        {{ form.as_p }}  
-{% if not update %}  
-    <button type="submit">Crear</button>
-{% endif %}
-{% if update %}
-    <p>Agregar juegos</p>
-    {% for contenido in contenidos %}
-    <img src="{{ contenido.videojuego.portada.url }}" alt="{{contenido.videojuego.name}}"  style="width: 200px; height: auto;"> 
-  {% endfor %}
-    {{ estaEn_form.as_p }}
-    <button type="submit">Editar</button>
+        <div class="mb-3">
+            {{ form.as_p}}
+        </div>
+        {% if not update %}  
+            <button type="submit" class="btn btn-primary">Crear</button>
+        {% endif %}
+        {% if update %}
+            <p>Agregar juegos:</p>
+            {% for contenido in contenidos %}
+                <img src="{{ contenido.videojuego.portada.url }}" alt="{{ contenido.videojuego.name }}"  style="width: 200px; height: auto;"> 
+            {% endfor %}
+            <div class="mb-3">
+                {{ estaEn_form.as_p }}
+            </div>
+            <button type="submit" class="btn btn-primary">Editar</button>
+        {% endif %}
     </form>
-    <br>
-    <form method="post" action="{% url 'borrarlista' lista_id=lista.id %}">
-    {% csrf_token %}
-        <button type="submit">Borrar</button>
-    </form>
-{% endif %}
+    {% if update %}
+        <form method="post" action="{% url 'borrarlista' lista_id=lista.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Borrar</button>
+        </form>
+    {% endif %}
 {% endblock %}
 </html>

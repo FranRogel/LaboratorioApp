@@ -5,22 +5,48 @@
     <title>Crear Reseña</title>
 </head>
 <body>
-    <!-- Formulario para crear reseña -->
-    <h2>Agrega tu reseña</h2>
-    {% if form.field.errors %}
-    <div class="error">{{ form.field.errors }}</div>
-    {% endif %}
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Enviar reseña</button>
-    </form>
-    <br>
-    {% if existe%}
-    <form method="post" action="{% url 'borrarReseña' id=myGame.id %}">
-        {% csrf_token %}
-        <button type="submit">Borrar reseña</button>
-    </form>
-    {% endif %}
+<!-- Formulario para crear reseña -->
+<h2>Agrega tu reseña</h2>
+{% if form.errors %}
+<div class="alert alert-danger">
+    {% for field in form %}
+    {% for error in field.errors %}
+    <p>{{ error }}</p>
+    {% endfor %}
+    {% endfor %}
+</div>
+{% endif %}
+<form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="id_title" class="form-label">Título</label>
+        {{ form.title }}
+        <div class="form-text">Ingresa un título de 2 a 30 caracteres.</div>
+    </div>
+    <div class="mb-3">
+        <label for="id_content" class="form-label">Contenido</label>
+        {{ form.content }}
+        <div class="form-text">Escribe tu reseña (máximo 500 caracteres).</div>
+    </div>
+    <div class="mb-3">
+        <label for="id_tag" class="form-label">Tag</label>
+        {{ form.tag }}
+        <div class="form-text">Ingresa una etiqueta.</div>
+    </div>
+    <div class="mb-3">
+        <label for="id_puntuacion" class="form-label">Puntuación</label>
+        {{ form.puntuacion }}
+        <div class="form-text">Ingresa una puntuación entre 1 y 5.</div>
+    </div>
+    <button type="submit" class="btn btn-primary">Enviar reseña</button>
+</form>
+<br>
+{% if existe %}
+<form method="post" action="{% url 'borrarReseña' id=myGame.id %}">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Borrar reseña</button>
+</form>
+{% endif %}
+
 </body>
 </html>

@@ -1,34 +1,44 @@
 <!DOCTYPE html>
 <html>
 {% extends "main.html"%}
-{% block content%}
-    <h1>{{ myGame }} </h1>
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">{{ myGame.name }}</h1>
 
-    <img src="{{ myGame.portada.url}}" alt="Portada de {{ myGame.name }}" style="width: 200px; height: auto;">
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <img src="{{ myGame.portada.url }}" alt="Portada de {{ myGame.name }}" class="img-fluid img-thumbnail">
+        </div>
+        <div class="col-md-8">
+            <p>{{ myGame.descripcion }}</p>
+        </div>
+    </div>
 
-    <p>{{myGame.descripcion}}</p>
-
-    <p>Details</p>
-    <ul>
-        <li>{{ myGame.name}}</li>
-        <li>{{ myGame.producer }}</li>
-        <li>{{ myGame.publisher }}</li>
-        <li>{{ myGame.release_Date }}</li>
-        <li>{{ myGame.plataforms }}</li>
+    <h3 class="mb-3">Detalles</h3>
+    <ul class="list-group mb-4">
+        <li class="list-group-item"><strong>Nombre:</strong> {{ myGame.name }}</li>
+        <li class="list-group-item"><strong>Productor:</strong> {{ myGame.producer }}</li>
+        <li class="list-group-item"><strong>Editor:</strong> {{ myGame.publisher }}</li>
+        <li class="list-group-item"><strong>Fecha de lanzamiento:</strong> {{ myGame.release_Date }}</li>
+        <li class="list-group-item"><strong>Plataformas:</strong> {{ myGame.plataforms }}</li>
     </ul>
-    <p>Reseñas</p>
-    <ul>
+
+    <h3 class="mb-3">Reseñas</h3>
+    <ul class="list-group mb-4">
         {% for x in reseñas %}
-        <li>{{ x.title }}</li>
-        <p>{{x.writer}} tag {{x.tag}}</p>
-        <p>{{ x.content }}</p>
+        <li class="list-group-item">
+            <h5 class="mb-1">{{ x.title }}: {{ x.puntuacion }}</h5>
+            <p class="mb-1">{{ x.writer }} tag {{ x.tag }}</p>
+            <p>{{ x.content }}</p>
+        </li>
         {% endfor %}
-    </ul>    
+    </ul>
+
     {% if request.user.is_authenticated %}
-    {% include "forms/crear_reseña.html" %}
+    <div class="mb-4">
+        {% include "forms/crear_reseña.html" %}
+    </div>
     {% endif %}
-    <p>Back to <a href="/users">Users</a></p>
-    <p>Back to <a href="/games">Games</a></p> 
-    
+</div>
 {% endblock %}
 </html>

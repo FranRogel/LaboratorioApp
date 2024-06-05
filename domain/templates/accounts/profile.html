@@ -1,28 +1,35 @@
 <!DOCTYPE html>
 <html>
 {% extends "main.html"%}
-
-{%block profile%}
+{% block profile %}
 {% include "navs/profile_nav.html" %}
-{% endblock %}
+{%endblock%}
 
 {% block content%}
-<p>Juegos Favoritos</p>
-<ul>
-  {% for juego in juegosFavoritos %}
-    <li><img src="{{ juego.game.portada.url}}" alt="Portada de {{ juego.game.name }}" style="width: 200px; height: auto;"></li>
-    <li><a href="{% url 'game' id=juego.game.id %}">{{ juego.game }}</a></li>
-  {% endfor %}
-</ul>
-<p>Reseñas</p>
-<ul>
-  {% for reseña in reseñas%}
-  <li>{{reseña.game}} : {{reseña.title}}</li>
-  <li>{{reseña.puntuacion}}</li>
-  {% endfor %}
-</ul>
+<div class="container mt-4">
+  <h5>Juegos Favoritos</h5>
+  <div class="row">
+    {% for juego in juegosFavoritos %}
+      <div class="col-md-4 mb-3">
+        <div class="card"  style="min-height: 200px;">
+          <img src="{{ juego.game.portada.url }}" class="card-img-top" alt="Portada de {{ juego.game.name }}" style="height: 400px; object-fit: cover;">
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+<div class="row">
+  <h5>Reseñas</h5>
+  <ul class="list-group">
+    {% for reseña in reseñas %}
+      <li class="list-group-item">
+        <h6>{{ reseña.game }} : {{ reseña.title }}</h6>
+        <p>Puntuación: {{ reseña.puntuacion }}</p>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+</div>
 
-<p>Back to <a href="/users">Users</a></p>
 {% endblock %}
 
 </html>

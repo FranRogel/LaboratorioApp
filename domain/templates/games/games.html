@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 {% extends 'main.html' %}
-
 {% block content%}
 <h2>JUEGOS</h2>
 <h3>Populares</h3>
@@ -29,7 +28,7 @@
           {% for juego in videojuegos %}
           <div class="carousel-item {% if forloop.first %}active{% endif %}">
               <a href="{% url 'game' id=juego.id %}">
-                  <img src="{{ juego.portada.url }}" class="d-block w-100" alt="Portada de {{ juego.name }} ">
+                  <img src="{{ juego.portada.url }}" class="img-fluid" alt="Portada de {{ juego.name }} ">
               </a>
               <div class="carousel-caption d-none d-md-block">
                   <h5>{{ juego.name }}</h5>
@@ -48,5 +47,4 @@
     </div>
   </div>
 {% endblock %}
-
 </html>
