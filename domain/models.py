@@ -27,11 +27,13 @@ class CuentaManager(BaseUserManager):
 
         return self.create_user(email_Address, password, **extra_fields)
     
-    def verificar_email(email_Address):
-        return email_Address.len() > 2
     
-    def verificar_contraseña(password):
-        return ((password > 8) and (password < 30))
+    def verificar_email(self,email_Address):
+        return len(email_Address) > 2
+    
+    
+    def verificar_contraseña(self,password):
+        return len(password) > 8 and len(password) < 30
 
 class Cuenta(AbstractBaseUser, PermissionsMixin):
     email_Address = models.EmailField(max_length=255, unique=True)
@@ -89,14 +91,14 @@ class UsuarioManager(models.Manager):
         return session
     
     def verificar_nickname_unico(self, nickname):
-        return not self.filter(nickname=nickname).exists()
+        return self.filter(nickname=nickname).exists()
 
     def verificar_nickname_length(self,nickname):
         return not ((len(nickname) > 2) and (len(nickname) <= 30))
     
 class Usuario(models.Model):
     nickname = models.CharField(max_length=30, unique=True)
-    foto = models.FileField(upload_to="media/uploads/", null=True, default="media/usuarios/yu_foto_perfil.jpg")
+    foto = models.FileField(upload_to="media/uploads/", null=True, default="media/usuarios/generica.jpg")
     cuenta = models.OneToOneField(Cuenta, on_delete=models.CASCADE)
     objects = UsuarioManager()
 
