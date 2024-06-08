@@ -102,6 +102,158 @@
         "descripcion": "Lista de juegos indie favoritos.",
         "creator": 13
       }
+    },
+    {
+      "model": "domain.ListaDeJuegos",
+      "fields": {
+          "name": "Juegos de Terror",
+          "descripcion": "Lista de juegos de terror.",
+          "creator": 14
+      }
+  },
+  {
+      "model": "domain.ListaDeJuegos",
+      "fields": {
+          "name": "Juegos para la Noche",
+          "descripcion": "Lista de juegos para jugar por la noche.",
+          "creator": 15
+      }
+  },
+  {
+      "model": "domain.ListaDeJuegos",
+      "fields": {
+          "name": "Juegos Retro",
+          "descripcion": "Lista de juegos retro.",
+          "creator": 16
+      }
+  },
+  {
+      "model": "domain.ListaDeJuegos",
+      "fields": {
+          "name": "Juegos de Mundo Abierto",
+          "descripcion": "Lista de juegos de mundo abierto.",
+          "creator": 17
+      }
+  },
+  {
+      "model": "domain.ListaDeJuegos",
+      "fields": {
+          "name": "Juegos para Multijugador Local",
+          "descripcion": "Lista de juegos para jugar en modo multijugador local.",
+          "creator": 18
+      }
+  },
+  {
+      "model": "domain.ListaDeJuegos",
+      "fields": {
+          "name": "Juegos de Carreras",
+          "descripcion": "Lista de juegos de carreras.",
+          "creator": 19
+      }
+  },
+  {
+    "model": "domain.ListaDeJuegos",
+    "fields": {
+        "name": "Juegos de Rol Clásicos",
+        "descripcion": "Lista de juegos de rol clásicos.",
+        "creator": 1
     }
+},
+{
+    "model": "domain.ListaDeJuegos",
+    "fields": {
+        "name": "Juegos de Sigilo",
+        "descripcion": "Lista de juegos de sigilo.",
+        "creator": 2
+    }
+},
+{
+    "model": "domain.ListaDeJuegos",
+    "fields": {
+        "name": "Juegos de Acción y Aventuras",
+        "descripcion": "Lista de juegos de acción y aventuras.",
+        "creator": 3
+    }
+},
+{
+    "model": "domain.ListaDeJuegos",
+    "fields": {
+        "name": "Juegos de Lucha",
+        "descripcion": "Lista de juegos de lucha.",
+        "creator": 4
+    }
+},
+{
+    "model": "domain.ListaDeJuegos",
+    "fields": {
+        "name": "Juegos de Estrategia en Tiempo Real (RTS)",
+        "descripcion": "Lista de juegos de estrategia en tiempo real (RTS).",
+        "creator": 5
+    }
+},
+{
+    "model": "domain.ListaDeJuegos",
+    "fields": {
+        "name": "Juegos de Simulación",
+        "descripcion": "Lista de juegos de simulación.",
+        "creator": 6
+    }
+},
+{
+    "model": "domain.ListaDeJuegos",
+    "fields": {
+        "name": "Juegos de Mundo Virtual",
+        "descripcion": "Lista de juegos de mundo virtual.",
+        "creator": 7
+    }
+},
+{
+    "model": "domain.ListaDeJuegos",
+    "fields": {
+        "name": "Juegos de Estrategia por Turnos",
+        "descripcion": "Lista de juegos de estrategia por turnos.",
+        "creator": 8
+    }
+},
+{
+    "model": "domain.ListaDeJuegos",
+    "fields": {
+        "name": "Juegos de Deportes",
+        "descripcion": "Lista de juegos de deportes.",
+        "creator": 9
+    }
+},
+{
+    "model": "domain.ListaDeJuegos",
+    "fields": {
+        "name": "Juegos de Supervivencia",
+        "descripcion": "Lista de juegos de supervivencia.",
+        "creator": 10
+    }
+},
+{
+    "model": "domain.ListaDeJuegos",
+    "fields": {
+        "name": "Juegos de Puzzle",
+        "descripcion": "Lista de juegos de puzzle.",
+        "creator": 11
+    }
+},
+{
+    "model": "domain.ListaDeJuegos",
+    "fields": {
+        "name": "Juegos de Cartas",
+        "descripcion": "Lista de juegos de cartas.",
+        "creator": 12
+    }
+},
+{
+    "model": "domain.ListaDeJuegos",
+    "fields": {
+        "name": "Juegos de Mundo Abierto",
+        "descripcion": "Lista de juegos de mundo abierto.",
+        "creator": 13
+    }
+}
   ]
   
