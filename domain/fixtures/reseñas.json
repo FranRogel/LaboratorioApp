@@ -18,7 +18,7 @@
       "tag": "P",
       "puntuacion": 4,
       "writer": 2,
-      "game": 1
+      "game": 21
     }
   },
   {
@@ -29,7 +29,7 @@
       "tag": "D",
       "puntuacion": 3,
       "writer": 3,
-      "game": 2
+      "game": 22
     }
   },
   {
@@ -40,7 +40,7 @@
       "tag": "C",
       "puntuacion": 5,
       "writer": 4,
-      "game": 3
+      "game": 23
     }
   },
   {
@@ -51,7 +51,7 @@
       "tag": "P",
       "puntuacion": 5,
       "writer": 5,
-      "game": 4
+      "game": 24
     }
   },
   {
@@ -62,7 +62,7 @@
       "tag": "D",
       "puntuacion": 2,
       "writer": 6,
-      "game": 4
+      "game": 25
     }
   },
   {
@@ -73,7 +73,7 @@
       "tag": "C",
       "puntuacion": 4,
       "writer": 7,
-      "game": 5
+      "game": 26
     }
   },
   {
@@ -84,7 +84,7 @@
       "tag": "P",
       "puntuacion": 3,
       "writer": 8,
-      "game": 5
+      "game": 27
     }
   },
   {
@@ -95,7 +95,7 @@
       "tag": "C",
       "puntuacion": 5,
       "writer": 9,
-      "game": 6
+      "game": 28
     }
   },
   {
@@ -106,7 +106,7 @@
       "tag": "P",
       "puntuacion": 4,
       "writer": 10,
-      "game": 7
+      "game": 29
     }
   },
   {
@@ -117,7 +117,7 @@
       "tag": "D",
       "puntuacion": 2,
       "writer": 11,
-      "game": 8
+      "game": 30
     }
   },
   {
@@ -128,7 +128,7 @@
       "tag": "C",
       "puntuacion": 5,
       "writer": 12,
-      "game": 9
+      "game": 31
     }
   },
   {
@@ -139,7 +139,7 @@
       "tag": "P",
       "puntuacion": 4,
       "writer": 13,
-      "game": 9
+      "game": 32
     }
   },
   {
@@ -149,8 +149,8 @@
       "content": "La historia del juego es buena, pero los gráficos son bastante pobres en comparación con otros juegos.",
       "tag": "D",
       "puntuacion": 3,
-      "writer": 1,
-      "game": 10
+      "writer": 14,
+      "game": 33
     }
   },
   {
@@ -160,8 +160,8 @@
       "content": "Este juego se convertirá en un clásico. La jugabilidad es excelente y la historia es cautivadora.",
       "tag": "C",
       "puntuacion": 5,
-      "writer": 2,
-      "game": 11
+      "writer": 15,
+      "game": 34
     }
   },
   {
@@ -171,8 +171,8 @@
       "content": "Este juego es garantía de diversión. ¡No puedo esperar para jugarlo de nuevo!",
       "tag": "P",
       "puntuacion": 4,
-      "writer": 3,
-      "game": 11
+      "writer": 16,
+      "game": 35
     }
   },
   {
@@ -182,8 +182,8 @@
       "content": "Este juego superó mis expectativas. ¡Definitivamente vale la pena jugarlo!",
       "tag": "C",
       "puntuacion": 5,
-      "writer": 4,
-      "game": 12
+      "writer": 17,
+      "game": 36
     }
   },
   {
@@ -193,8 +193,8 @@
       "content": "El juego es divertido al principio, pero se vuelve repetitivo después de un tiempo.",
       "tag": "P",
       "puntuacion": 3,
-      "writer": 5,
-      "game": 12
+      "writer": 18,
+      "game": 37
     }
   },
   {
@@ -204,8 +204,8 @@
       "content": "La jugabilidad es sólida, pero los gráficos podrían ser mejores.",
       "tag": "D",
       "puntuacion": 3,
-      "writer": 6,
-      "game": 13
+      "writer": 19,
+      "game": 38
     }
   },
   {
@@ -215,8 +215,217 @@
       "content": "Este juego es una obra maestra. Todo, desde la historia hasta los gráficos, es excepcional.",
       "tag": "C",
       "puntuacion": 5,
+      "writer": 1,
+      "game": 39
+    }
+  },
+  {
+    "model": "domain.reseña",
+    "fields": {
+      "title": "Interesante pero aburrido",
+      "content": "La premisa del juego es interesante, pero la ejecución es aburrida.",
+      "tag": "D",
+      "puntuacion": 2,
+      "writer": 2,
+      "game": 40
+    }
+  },
+  {
+    "model": "domain.reseña",
+    "fields": {
+      "title": "Gran diseño de niveles",
+      "content": "Los niveles de este juego están diseñados maravillosamente. Disfruté cada momento.",
+      "tag": "C",
+      "puntuacion": 4,
+      "writer": 3,
+      "game": 41
+    }
+  },
+  {
+    "model": "domain.reseña",
+    "fields": {
+      "title": "No es lo que esperaba",
+      "content": "Este juego no cumplió con mis expectativas. Me aburrió rápidamente.",
+      "tag": "D",
+      "puntuacion": 2,
+      "writer": 4,
+      "game": 42
+    }
+  },
+  {
+    "model": "domain.reseña",
+    "fields": {
+      "title": "Increíble banda sonora",
+      "content": "La banda sonora de este juego es increíble. Realmente mejora la experiencia.",
+      "tag": "P",
+      "puntuacion": 4,
+      "writer": 5,
+      "game": 43
+    }
+  },
+  {
+    "model": "domain.reseña",
+    "fields": {
+      "title": "Juego decente, buenos gráficos",
+      "content": "El juego es decente, pero lo que realmente destaca son los gráficos.",
+      "tag": "P",
+      "puntuacion": 3,
+      "writer": 6,
+      "game": 44
+    }
+  },
+  {
+    "model": "domain.reseña",
+    "fields": {
+      "title": "Simplemente el mejor",
+      "content": "Este es el mejor juego que he jugado en años. Lo recomiendo totalmente.",
+      "tag": "C",
+      "puntuacion": 5,
       "writer": 7,
-      "game": 13
+      "game": 45
+    }
+  },
+  {
+    "model": "domain.reseña",
+    "fields": {
+      "title": "Podría ser mejor",
+      "content": "El juego tiene potencial, pero hay muchos aspectos que necesitan mejorar.",
+      "tag": "P",
+      "puntuacion": 3,
+      "writer": 8,
+      "game": 46
+    }
+  },
+  {
+    "model": "domain.reseña",
+    "fields": {
+      "title": "Juego muy divertido",
+      "content": "Este juego es muy divertido. Me hizo pasar un buen rato.",
+      "tag": "C",
+      "puntuacion": 4,
+      "writer": 9,
+      "game": 47
+    }
+  },
+  {
+    "model": "domain.reseña",
+    "fields": {
+      "title": "Repetitivo y aburrido",
+      "content": "El juego es repetitivo y se vuelve aburrido después de un tiempo.",
+      "tag": "D",
+      "puntuacion": 2,
+      "writer": 10,
+      "game": 48
+    }
+  },
+  {
+    "model": "domain.reseña",
+    "fields": {
+      "title": "Divertido en grupo",
+      "content": "Este juego es muy divertido cuando se juega en grupo. Recomendado para jugar con amigos.",
+      "tag": "C",
+      "puntuacion": 4,
+      "writer": 11,
+      "game": 49
+    }
+  },
+  {
+    "model": "domain.reseña",
+    "fields": {
+      "title": "Gran historia",
+      "content": "La historia de este juego es excelente. Me mantuvo enganchado hasta el final.",
+      "tag": "C",
+      "puntuacion": 5,
+      "writer": 12,
+      "game": 50
+    }
+  },
+  {
+    "model": "domain.reseña",
+    "fields": {
+      "title": "Esperaba más",
+      "content": "El juego tiene buenos elementos, pero esperaba mucho más.",
+      "tag": "P",
+      "puntuacion": 3,
+      "writer": 13,
+      "game": 1
+    }
+  },
+  {
+    "model": "domain.reseña",
+    "fields": {
+      "title": "Impresionante jugabilidad",
+      "content": "La jugabilidad de este juego es impresionante. Muy recomendado.",
+      "tag": "C",
+      "puntuacion": 5,
+      "writer": 14,
+      "game": 21
+    }
+  },
+  {
+    "model": "domain.reseña",
+    "fields": {
+      "title": "Juego decente",
+      "content": "Es un juego decente, pero no tiene nada que lo haga destacar demasiado.",
+      "tag": "P",
+      "puntuacion": 3,
+      "writer": 15,
+      "game": 22
+    }
+  },
+  {
+    "model": "domain.reseña",
+    "fields": {
+      "title": "Muy entretenido",
+      "content": "El juego es muy entretenido. Me hizo pasar un buen rato.",
+      "tag": "C",
+      "puntuacion": 4,
+      "writer": 16,
+      "game": 23
+    }
+  },
+  {
+    "model": "domain.reseña",
+    "fields": {
+      "title": "Necesita mejoras",
+      "content": "El juego necesita varias mejoras para ser verdaderamente bueno.",
+      "tag": "P",
+      "puntuacion": 3,
+      "writer": 17,
+      "game": 24
+    }
+  },
+  {
+    "model": "domain.reseña",
+    "fields": {
+      "title": "Muy repetitivo",
+      "content": "El juego se vuelve muy repetitivo después de un tiempo.",
+      "tag": "D",
+      "puntuacion": 2,
+      "writer": 18,
+      "game": 25
+    }
+  },
+  {
+    "model": "domain.reseña",
+    "fields": {
+      "title": "Excelente música",
+      "content": "La música de este juego es excelente. Disfruté cada momento.",
+      "tag": "C",
+      "puntuacion": 5,
+      "writer": 19,
+      "game": 26
+    }
+  },
+  {
+    "model": "domain.reseña",
+    "fields": {
+      "title": "Mecánicas interesantes",
+      "content": "El juego tiene mecánicas interesantes que lo hacen único.",
+      "tag": "C",
+      "puntuacion": 4,
+      "writer": 1,
+      "game": 27
     }
   }
 ]

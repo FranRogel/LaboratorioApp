@@ -220,7 +220,7 @@ class YourGamesController(TemplateView):
     context['userinfo'] = usuario
     context['user_session'] = user_session
     context['session'] = session
-    context['loSigue'] = loSigue
+    context['losigue'] = loSigue
     return context
 
 class YourListController(TemplateView):
