@@ -10,43 +10,33 @@ import random
 from django.contrib.auth.views import LogoutView
 from django.contrib.messages.views import SuccessMessageMixin
 
-
 class RegistroView(FormView):
     template_name = 'accounts/register.html'
-    form_class = CuentaForm
-    second_form_class = UsuarioForm
+    form_class = UsuarioForm
     success_url = reverse_lazy('login')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['usuario_form'] = self.second_form_class()
         return context
 
     def post(self, request, *args, **kwargs):
-        self.object = None
         cuenta_form = self.get_form()
-        usuario_form = self.second_form_class(request.POST, request.FILES)
-        if cuenta_form.is_valid() and usuario_form.is_valid():
-            return self.form_valid(cuenta_form, usuario_form)
+        if cuenta_form.is_valid():
+            return self.form_valid(cuenta_form)
         else:
-            return self.form_invalid(cuenta_form, usuario_form)
+            return self.form_invalid(cuenta_form)
 
-    def form_valid(self, cuenta_form, usuario_form):
-        # Crear y guardar la cuenta
-        cuenta = cuenta_form.save(commit=False)
-        cuenta.set_password(cuenta_form.cleaned_data['password'])  # Usar set_password para hashear
-        cuenta.save()
-        
-        # Crear y guardar el usuario
-        usuario = usuario_form.save(commit=False)
-        usuario.cuenta = cuenta
-        usuario.save()
-        
+    def form_valid(self, cuenta_form):
+        nickname = cuenta_form.cleaned_data['nickname']
+        foto = cuenta_form.cleaned_data['foto']
+        email = cuenta_form.cleaned_data['email_address']
+        contraseña = cuenta_form.cleaned_data['password']
+        Usuario.objects.create_user(nickname,email,contraseña,foto)
         return redirect(self.success_url)
 
-    def form_invalid(self, cuenta_form, usuario_form):
+    def form_invalid(self, cuenta_form):
         return self.render_to_response(
-            self.get_context_data(form=cuenta_form, usuario_form=usuario_form)
+            self.get_context_data(form=cuenta_form)
         )
     
 class LoginView(FormView):
@@ -58,13 +48,16 @@ class LoginView(FormView):
         email_Address = form.cleaned_data['email_Address']
         password = form.cleaned_data['password']
         try:
-            cuenta = Cuenta.objects.get(email_Address=email_Address)
-            if check_password(password, cuenta.password):
-                login(self.request, cuenta)  # Aquí usamos cuenta ya que hereda de AbstractBaseUser
+            usuario = Usuario.objects.get(cuenta__email=email_Address)
+            if check_password(password, usuario.cuenta.password):
+                print("entre al if")
+                login(self.request, usuario.cuenta)  
                 return redirect(self.get_success_url())
             else:
+                print("fallo el login")
                 return self.form_invalid(form)
-        except Cuenta.DoesNotExist:
+        except Usuario.DoesNotExist:
+            print("fallo el formulario")
             return self.form_invalid(form)
 
 class CustomLogoutView(SuccessMessageMixin, LogoutView):
@@ -76,12 +69,16 @@ class MainController(TemplateView):
     template_name = 'main.html'
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['user_session'] = Usuario.objects.get_user_from_request(self.request)
+        user_session = Usuario.objects.get_user_from_request(self.request)
+        context['user_session'] = user_session
         context['usuariosCount'] = Usuario.objects.count()
         context['juegosCount'] = Videojuego.objects.count()
         context['listasCount'] = ListaDeJuegos.objects.count()
         context['juegos'] = Videojuego.objects.get_random_juegos()[:5]
-        context['usuarios'] = Usuario.objects.get_random_usuarios()[:5]
+        if user_session:
+            context['usuarios'] = Usuario.objects.get_random_usuarios_exclude(user_session.id)[:5]
+        else:
+            context['usuarios'] = Usuario.objects.get_random_usuarios()[:5]
         context['listas'] = ListaDeJuegos.objects.get_random_listas()[:5]
         context['reseñas'] = Reseña.objects.get_random_reseñas()[:5]
         return context

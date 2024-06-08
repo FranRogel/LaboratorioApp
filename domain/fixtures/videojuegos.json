@@ -1,0 +1,363 @@
+[
+    {
+        "model": "domain.Videojuego",
+        "fields": {
+            "name": "Persona 5 Royal",
+            "producer": "Atlus",
+            "publisher": "Sega",
+            "release_Date": "2019-10-31",
+            "plataforms": "Playstation 3, Playstation 4, Playstation 5, PC",
+            "portada": "https://image.api.playstation.com/vulcan/img/rnd/202010/2711/QWj5YXnTXzGA3DZy1WwC5cNH.png", 
+            "descripcion": "Persona 5 Royal es un videojuego de rol desarrollado por Atlus y publicado por Sega. Es una versión mejorada y ampliada del Persona 5 original. El jugador controla a un estudiante de secundaria que lleva una doble vida como miembro de los Phantom Thieves, un grupo de vigilantes que explora el Metaverso, una dimensión sobrenatural creada por los deseos de la humanidad, para cambiar los corazones corruptos de los adultos."
+        }
+    },
+    {
+        "model": "domain.Videojuego",
+        "fields": {
+            "name": "The Legend of Zelda: Breath of the Wild",
+            "producer": "Nintendo",
+            "publisher": "Nintendo",
+            "release_Date": "2017-03-03",
+            "plataforms": "Nintendo Switch, Wii U",
+            "portada": "https://upload.wikimedia.org/wikipedia/en/5/5d/The_Legend_of_Zelda_Breath_of_the_Wild.jpg",
+            "descripcion": "The Legend of Zelda: Breath of the Wild es un videojuego de acción y aventuras desarrollado y publicado por Nintendo. El juego se desarrolla en un vasto mundo abierto en el que el jugador controla a Link, quien despierta de un largo sueño y debe derrotar a Calamity Ganon antes de que destruya el reino de Hyrule."
+        }
+    },
+    {
+        "model": "domain.Videojuego",
+        "fields": {
+            "name": "Red Dead Redemption 2",
+            "producer": "Rockstar Games",
+            "publisher": "Rockstar Games",
+            "release_Date": "2018-10-26",
+            "plataforms": "Playstation 4, Xbox One, PC",
+            "portada": "https://upload.wikimedia.org/wikipedia/en/4/44/Red_Dead_Redemption_II.jpg",
+            "descripcion": "Red Dead Redemption 2 es un videojuego de acción y aventuras desarrollado y publicado por Rockstar Games. Es la tercera entrega de la serie Red Dead y una precuela de Red Dead Redemption. El juego se desarrolla en un entorno de mundo abierto en el Salvaje Oeste y sigue a Arthur Morgan, un forajido y miembro de la banda de Van der Linde."
+        }
+    },
+    {
+        "model": "domain.Videojuego",
+        "fields": {
+            "name": "The Witcher 3: Wild Hunt",
+            "producer": "CD Projekt Red",
+            "publisher": "CD Projekt",
+            "release_Date": "2015-05-19",
+            "plataforms": "Playstation 4, Xbox One, PC, Nintendo Switch",
+            "portada": "https://upload.wikimedia.org/wikipedia/en/0/0c/Witcher_3_cover_art.jpg",
+            "descripcion": "The Witcher 3: Wild Hunt es un videojuego de rol desarrollado y publicado por CD Projekt. Es la tercera entrega de la serie de videojuegos The Witcher, basada en la serie de libros del mismo nombre del autor polaco Andrzej Sapkowski. El jugador controla a Geralt de Rivia, un cazador de monstruos conocido como un brujo, que busca a su hija adoptiva, que está huyendo de la Cacería Salvaje."
+        }
+    },
+    {
+        "model": "domain.Videojuego",
+        "fields": {
+            "name": "God of War",
+            "producer": "Santa Monica Studio",
+            "publisher": "Sony Interactive Entertainment",
+            "release_Date": "2018-04-20",
+            "plataforms": "Playstation 4, PC",
+            "portada": "https://upload.wikimedia.org/wikipedia/en/a/a7/God_of_War_4_cover.jpg",
+            "descripcion": "God of War es un videojuego de acción y aventuras desarrollado por Santa Monica Studio y publicado por Sony Interactive Entertainment. Es la octava entrega de la serie God of War, y la secuela de God of War III. El juego se basa libremente en la mitología nórdica y está ambientado en la antigua Noruega. El jugador controla a Kratos, el ex dios de la guerra griego, y a su hijo Atreus."
+        }
+    },
+    {
+        "model": "domain.Videojuego",
+        "fields": {
+            "name": "Horizon Zero Dawn",
+            "producer": "Guerrilla Games",
+            "publisher": "Sony Interactive Entertainment",
+            "release_Date": "2017-02-28",
+            "plataforms": "Playstation 4, PC",
+            "portada": "https://upload.wikimedia.org/wikipedia/en/0/02/Horizon_Zero_Dawn.jpg",
+            "descripcion": "Horizon Zero Dawn es un videojuego de rol de acción desarrollado por Guerrilla Games y publicado por Sony Interactive Entertainment. El juego está ambientado en un mundo post-apocalíptico dominado por máquinas. El jugador controla a Aloy, una cazadora que emprende un viaje para descubrir su pasado y el origen de las máquinas."
+        }
+    },
+    {
+        "model": "domain.Videojuego",
+        "fields": {
+            "name": "Cyberpunk 2077",
+            "producer": "CD Projekt Red",
+            "publisher": "CD Projekt",
+            "release_Date": "2020-12-10",
+            "plataforms": "Playstation 4, Xbox One, PC, Stadia",
+            "portada": "https://upload.wikimedia.org/wikipedia/en/9/9f/Cyberpunk_2077_box_art.jpg",
+            "descripcion": "Cyberpunk 2077 es un videojuego de rol de acción desarrollado y publicado por CD Projekt. El juego está ambientado en Night City, un mundo abierto con seis regiones distintas. El jugador asume el papel de V, un mercenario que puede adquirir habilidades de hackeo y maquinaria con opciones de combate cuerpo a cuerpo y a distancia."
+        }
+    },
+    {
+        "model": "domain.Videojuego",
+        "fields": {
+            "name": "Final Fantasy VII Remake",
+            "producer": "Square Enix",
+            "publisher": "Square Enix",
+            "release_Date": "2020-04-10",
+            "plataforms": "Playstation 4, Playstation 5, PC",
+            "portada": "https://upload.wikimedia.org/wikipedia/en/4/4a/Final_Fantasy_VII_Remake_cover_art.jpg",
+            "descripcion": "Final Fantasy VII Remake es un videojuego de rol de acción desarrollado y publicado por Square Enix. Es una nueva versión del videojuego Final Fantasy VII de 1997. El jugador controla a Cloud Strife, un ex-soldado que se une a un grupo ecoterrorista para luchar contra una megacorporación que está drenando la energía vital del planeta."
+        }
+    },
+    {
+        "model": "domain.Videojuego",
+        "fields": {
+            "name": "Ghost of Tsushima",
+            "producer": "Sucker Punch Productions",
+            "publisher": "Sony Interactive Entertainment",
+            "release_Date": "2020-07-17",
+            "plataforms": "Playstation 4, Playstation 5",
+            "portada": "https://upload.wikimedia.org/wikipedia/en/a/a0/Ghost_of_Tsushima.jpg",
+            "descripcion": "Ghost of Tsushima es un videojuego de acción y aventuras desarrollado por Sucker Punch Productions y publicado por Sony Interactive Entertainment. El juego está ambientado en el Japón feudal durante la primera invasión mongola de Japón en 1274. El jugador controla a Jin Sakai, un samurái que debe proteger a la isla de Tsushima del ejército mongol."
+        }
+    },
+    {
+        "model": "domain.Videojuego",
+        "fields": {
+            "name": "Sekiro: Shadows Die Twice",
+            "producer": "FromSoftware",
+            "publisher": "Activision",
+            "release_Date": "2019-03-22",
+            "plataforms": "Playstation 4, Xbox One, PC",
+            "portada": "https://upload.wikimedia.org/wikipedia/en/2/2a/Sekiro_cover_art.jpg",
+            "descripcion": "Sekiro: Shadows Die Twice es un videojuego de acción y aventuras desarrollado por FromSoftware y publicado por Activision. El juego está ambientado en un Japón ficticio durante el período Sengoku, y el jugador controla a un shinobi conocido como Wolf mientras intenta vengarse de un samurái que lo atacó y secuestró a su señor."
+        }
+    },
+    {
+        "model": "domain.Videojuego",
+        "fields": {
+            "name": "Animal Crossing: New Horizons",
+            "producer": "Nintendo",
+            "publisher": "Nintendo",
+            "release_Date": "2020-03-20",
+            "plataforms": "Nintendo Switch",
+            "portada": "https://upload.wikimedia.org/wikipedia/en/6/6d/Animal_Crossing_New_Horizons.jpg",
+            "descripcion": "Animal Crossing: New Horizons es un videojuego de simulación de vida desarrollado y publicado por Nintendo. En el juego, el jugador controla a un personaje personalizable que se muda a una isla desierta tras comprar un paquete de vacaciones de Tom Nook, y desde allí explora la isla y desarrolla una comunidad de animales antropomorfos."
+        }
+    },
+    {
+        "model": "domain.Videojuego",
+        "fields": {
+            "name": "Doom Eternal",
+            "producer": "id Software",
+            "publisher": "Bethesda Softworks",
+            "release_Date": "2020-03-20",
+            "plataforms": "Playstation 4, Xbox One, PC, Stadia, Nintendo Switch",
+            "portada": "https://upload.wikimedia.org/wikipedia/en/8/8f/Doom_Eternal.jpg",
+            "descripcion": "Doom Eternal es un videojuego de disparos en primera persona desarrollado por id Software y publicado por Bethesda Softworks. Es la secuela directa del juego Doom de 2016. Los jugadores asumen el control del Doom Slayer, un antiguo guerrero que lucha contra las fuerzas demoníacas del infierno."
+        }
+    },
+    {
+        "model": "domain.Videojuego",
+        "fields": {
+            "name": "Spider-Man: Miles Morales",
+            "producer": "Insomniac Games",
+            "publisher": "Sony Interactive Entertainment",
+            "release_Date": "2020-11-12",
+            "plataforms": "Playstation 4, Playstation 5",
+            "portada": "https://upload.wikimedia.org/wikipedia/en/9/90/Spider-Man_Miles_Morales.jpg",
+            "descripcion": "Spider-Man: Miles Morales es un videojuego de acción y aventuras desarrollado por Insomniac Games y publicado por Sony Interactive Entertainment. Basado en el superhéroe de Marvel Comics Miles Morales, es una secuela del Spider-Man de 2018. El jugador controla a Miles Morales mientras intenta equilibrar su vida como civil y su papel como Spider-Man."
+        }
+    },
+    {
+        "model": "domain.Videojuego",
+        "fields": {
+            "name": "Assassin's Creed Valhalla",
+            "producer": "Ubisoft Montreal",
+            "publisher": "Ubisoft",
+            "release_Date": "2020-11-10",
+            "plataforms": "Playstation 4, Playstation 5, Xbox One, Xbox Series X/S, PC, Stadia",
+            "portada": "https://upload.wikimedia.org/wikipedia/en/a/a7/Assassin%27s_Creed_Valhalla_cover.jpg",
+            "descripcion": "Assassin's Creed Valhalla es un videojuego de rol de acción desarrollado por Ubisoft Montreal y publicado por Ubisoft. Es la duodécima entrega principal de la serie Assassin's Creed. El jugador controla a Eivor, un vikingo que lidera su clan contra las fuerzas anglosajonas en la Inglaterra del siglo IX."
+        }
+    },
+    {
+        "model": "domain.Videojuego",
+        "fields": {
+            "name": "Genshin Impact",
+            "producer": "miHoYo",
+            "publisher": "miHoYo",
+            "release_Date": "2020-09-28",
+            "plataforms": "Playstation 4, Playstation 5, PC, iOS, Android",
+            "portada": "https://upload.wikimedia.org/wikipedia/en/9/99/Genshin_Impact_cover.jpg",
+            "descripcion": "Genshin Impact es un videojuego de rol de acción desarrollado y publicado por miHoYo. El juego se desarrolla en el mundo de Teyvat, donde los jugadores controlan a un viajero que busca a su hermano perdido y se involucra en los asuntos de los siete reinos elementales de Teyvat."
+        }
+    },
+    {
+        "model": "domain.Videojuego",
+        "fields": {
+            "name": "Resident Evil Village",
+            "producer": "Capcom",
+            "publisher": "Capcom",
+            "release_Date": "2021-05-07",
+            "plataforms": "Playstation 4, Playstation 5, Xbox One, Xbox Series X/S, PC, Stadia",
+            "portada": "https://upload.wikimedia.org/wikipedia/en/5/50/Resident_Evil_Village.png",
+            "descripcion": "Resident Evil Village es un videojuego de terror de supervivencia desarrollado y publicado por Capcom. Es la décima entrega principal de la serie Resident Evil, y es una secuela directa de Resident Evil 7: Biohazard. El jugador controla a Ethan Winters, quien busca a su hija secuestrada en un pueblo lleno de criaturas mutantes."
+        }
+    },
+    {
+        "model": "domain.Videojuego",
+        "fields": {
+            "name": "Demon's Souls",
+            "producer": "Bluepoint Games",
+            "publisher": "Sony Interactive Entertainment",
+            "release_Date": "2020-11-12",
+            "plataforms": "Playstation 5",
+            "portada": "https://upload.wikimedia.org/wikipedia/en/4/4d/Demon%27s_Souls_%282020%29.jpg",
+            "descripcion": "Demon's Souls es un videojuego de rol de acción desarrollado por Bluepoint Games y publicado por Sony Interactive Entertainment. Es una nueva versión del juego del mismo nombre de 2009, originalmente desarrollado por FromSoftware. El jugador controla a un guerrero que debe atravesar el reino de Boletaria y derrotar a sus demonios."
+        }
+    },
+    {
+        "model": "domain.Videojuego",
+        "fields": {
+            "name": "Hades",
+            "producer": "Supergiant Games",
+            "publisher": "Supergiant Games",
+            "release_Date": "2020-09-17",
+            "plataforms": "PC, Nintendo Switch, Playstation 4, Playstation 5, Xbox One, Xbox Series X/S",
+            "portada": "https://upload.wikimedia.org/wikipedia/en/e/ed/Hades_cover_art.jpg",
+            "descripcion": "Hades es un videojuego de rol de acción desarrollado y publicado por Supergiant Games. El jugador controla a Zagreus, el hijo de Hades, mientras intenta escapar del inframundo para llegar al Monte Olimpo, a menudo recibiendo asistencia de otros dioses olímpicos. Cada intento de escape ofrece diferentes desafíos y recompensas."
+        }
+    },
+    {
+        "model": "domain.Videojuego",
+        "fields": {
+            "name": "Ori and the Will of the Wisps",
+            "producer": "Moon Studios",
+            "publisher": "Xbox Game Studios",
+            "release_Date": "2020-03-11",
+            "plataforms": "Xbox One, Xbox Series X/S, PC, Nintendo Switch",
+            "portada": "https://upload.wikimedia.org/wikipedia/en/8/8e/Ori_and_the_Will_of_the_Wisps.jpg",
+            "descripcion": "Ori and the Will of the Wisps es un videojuego de plataformas y metroidvania desarrollado por Moon Studios y publicado por Xbox Game Studios. Es la secuela de Ori and the Blind Forest. El jugador controla a Ori, un espíritu guardián blanco, y debe resolver acertijos y desafíos mientras explora un mundo encantador y peligroso."
+        }
+    },
+    {
+        "model": "domain.Videojuego",
+        "fields": {
+            "name": "World of Warcraft",
+            "producer": "Blizzard Entertainment",
+            "publisher": "Blizzard Entertainment",
+            "release_Date": "2004-11-23",
+            "plataforms": "PC",
+            "portada": "https://upload.wikimedia.org/wikipedia/en/9/91/WoW_Box_Art1.jpg",
+            "descripcion": "World of Warcraft es un videojuego de rol multijugador masivo en línea desarrollado y publicado por Blizzard Entertainment. Ambientado en el mundo de fantasía de Azeroth, los jugadores crean un personaje y exploran el mundo, completando misiones, derrotando enemigos y participando en actividades sociales como mazmorras y combates jugador contra jugador."
+        }
+    },
+    {
+        "model": "domain.Videojuego",
+        "fields": {
+            "name": "Counter-Strike: Global Offensive",
+            "producer": "Valve Corporation",
+            "publisher": "Valve Corporation",
+            "release_Date": "2012-08-21",
+            "plataforms": "PC, Playstation 3, Xbox 360",
+            "portada": "https://upload.wikimedia.org/wikipedia/en/3/30/CSGO_2018.jpg",
+            "descripcion": "Counter-Strike: Global Offensive es un videojuego de disparos en primera persona multijugador desarrollado por Valve Corporation y Hidden Path Entertainment. En el juego, dos equipos, los terroristas y los antiterroristas, compiten en varios modos de juego para completar objetivos, como plantar bombas o rescatar rehenes."
+        }
+    },
+    {
+        "model": "domain.Videojuego",
+        "fields": {
+            "name": "Valorant",
+            "producer": "Riot Games",
+            "publisher": "Riot Games",
+            "release_Date": "2020-06-02",
+            "plataforms": "PC",
+            "portada": "https://upload.wikimedia.org/wikipedia/en/5/54/Valorant_artwork.jpg",
+            "descripcion": "Valorant es un videojuego de disparos táctico multijugador en línea desarrollado y publicado por Riot Games. Los jugadores controlan agentes, cada uno con habilidades únicas, y compiten en partidas de cinco contra cinco, con un equipo defendiendo bombas y el otro intentando plantarlas."
+        }
+    },
+    {
+        "model": "domain.Videojuego",
+        "fields": {
+            "name": "Rocket League",
+            "producer": "Psyonix",
+            "publisher": "Psyonix",
+            "release_Date": "2015-07-07",
+            "plataforms": "PC, Playstation 4, Xbox One, Nintendo Switch",
+            "portada": "https://upload.wikimedia.org/wikipedia/en/7/7d/Rocket_League_cover_art.jpg",
+            "descripcion": "Rocket League es un videojuego de fútbol y conducción desarrollado y publicado por Psyonix. En el juego, los jugadores controlan coches que pueden golpear una pelota gigante hacia la portería del equipo contrario para marcar goles. El juego es conocido por su jugabilidad frenética y su comunidad activa."
+        }
+    },
+    {
+        "model": "domain.Videojuego",
+        "fields": {
+            "name": "Death Stranding",
+            "producer": "Kojima Productions",
+            "publisher": "Sony Interactive Entertainment",
+            "release_Date": "2019-11-08",
+            "plataforms": "Playstation 4, PC",
+            "portada": "https://upload.wikimedia.org/wikipedia/en/8/83/Death_Stranding.jpg",
+            "descripcion": "Death Stranding es un videojuego de acción y aventuras desarrollado por Kojima Productions y publicado por Sony Interactive Entertainment. El juego se desarrolla en un mundo post-apocalíptico donde los jugadores controlan a Sam Porter Bridges, quien debe recorrer el país para reconectar a las personas aisladas."
+        }
+    },
+    {
+        "model": "domain.Videojuego",
+        "fields": {
+            "name": "NieR: Automata",
+            "producer": "PlatinumGames",
+            "publisher": "Square Enix",
+            "release_Date": "2017-02-23",
+            "plataforms": "Playstation 4, Xbox One, PC",
+            "portada": "https://upload.wikimedia.org/wikipedia/en/a/af/Nier_Automata_cover_art.jpg",
+            "descripcion": "NieR: Automata es un videojuego de rol de acción desarrollado por PlatinumGames y publicado por Square Enix. Ambientado en un futuro distópico, el juego sigue a los androides de combate 2B, 9S y A2 mientras luchan para reclamar la Tierra para la humanidad y enfrentan a las máquinas enemigas."
+        }
+    },
+    {
+        "model": "domain.Videojuego",
+        "fields": {
+            "name": "Minecraft",
+            "producer": "Mojang Studios",
+            "publisher": "Mojang Studios",
+            "release_Date": "2011-11-18",
+            "plataforms": "PC, Xbox 360, Xbox One, Playstation 3, Playstation 4, Nintendo Switch, iOS, Android",
+            "portada": "https://upload.wikimedia.org/wikipedia/en/9/95/Minecraft_cover.png",
+            "descripcion": "Minecraft es un videojuego de construcción y aventuras desarrollado por Mojang Studios. Los jugadores exploran un mundo abierto generado aleatoriamente y pueden construir estructuras con bloques cúbicos. El juego ofrece múltiples modos de juego, incluyendo supervivencia, creativo y multijugador."
+        }
+    },
+    {
+        "model": "domain.Videojuego",
+        "fields": {
+            "name": "The Last of Us Part II",
+            "producer": "Naughty Dog",
+            "publisher": "Sony Interactive Entertainment",
+            "release_Date": "2020-06-19",
+            "plataforms": "Playstation 4, Playstation 5",
+            "portada": "https://upload.wikimedia.org/wikipedia/en/0/03/The_Last_of_Us_Part_II.png",
+            "descripcion": "The Last of Us Part II es un videojuego de acción y aventuras desarrollado por Naughty Dog y publicado por Sony Interactive Entertainment. Es la secuela de The Last of Us y sigue a Ellie, una joven que busca venganza en un mundo post-apocalíptico devastado por una pandemia fungosa."
+        }
+    },
+    {
+        "model": "domain.Videojuego",
+        "fields": {
+            "name": "Bloodborne",
+            "producer": "FromSoftware",
+            "publisher": "Sony Interactive Entertainment",
+            "release_Date": "2015-03-24",
+            "plataforms": "Playstation 4",
+            "portada": "https://upload.wikimedia.org/wikipedia/en/0/07/BloodborneCoverArt.jpg",
+            "descripcion": "Bloodborne es un videojuego de rol de acción desarrollado por FromSoftware y publicado por Sony Interactive Entertainment. Ambientado en la ciudad gótica de Yharnam, el jugador controla a un cazador que busca una cura para una enfermedad que ha infestado la ciudad."
+        }
+    },
+    {
+        "model": "domain.Videojuego",
+        "fields": {
+            "name": "Among Us",
+            "producer": "InnerSloth",
+            "publisher": "InnerSloth",
+            "release_Date": "2018-06-15",
+            "plataforms": "PC, iOS, Android",
+            "portada": "https://upload.wikimedia.org/wikipedia/en/6/62/Among_Us_cover_art.jpg",
+            "descripcion": "Among Us es un videojuego en línea de deducción social desarrollado y publicado por InnerSloth. Los jugadores trabajan juntos en una nave espacial, pero algunos de ellos son impostores cuyo objetivo es sabotear la nave y eliminar a la tripulación. Los otros jugadores deben descubrir quiénes son los impostores y expulsarlos de la nave."
+        }
+    },
+    {
+        "model": "domain.Videojuego",
+        "fields": {
+            "name": "Fortnite",
+            "producer": "Epic Games",
+            "publisher": "Epic Games",
+            "release_Date": "2017-07-25",
+            "plataforms": "PC, Playstation 4, Xbox One, Nintendo Switch, iOS, Android",
+            "portada": "https://upload.wikimedia.org/wikipedia/en/0/07/Fortnite-box-art.jpg",
+            "descripcion": "Fortnite es un videojuego de supervivencia y construcción desarrollado y publicado por Epic Games. El juego presenta dos modos principales: Salvar el mundo, donde los jugadores luchan contra zombis y construyen fortificaciones para defenderse, y Battle Royale, un juego de batalla campal en el que los jugadores luchan hasta que solo queda uno en pie."
+        }
+    }
+    
+]

@@ -1,61 +1,21 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import User
 from django.db.models import Count
 from django.db.models.functions import Random
-
-class CuentaManager(BaseUserManager):
-    def create_user(self, email_Address, password, **extra_fields):
-        if not self.verificar_email(email_Address):
-            raise ValueError('El Email debe tener mas de 2 caracteres')
-        email_Address = self.normalize_email(email_Address)
-        if not self.verificar_contraseña(password):
-            raise ValueError('La contraseña debe tener entre 8 y 30 caracteres')
-        user = self.model(email_Address=email_Address, **extra_fields)
-        user.set_password(password)  
-        user.save(using=self._db)
-        return user
-
-    def create_superuser(self, email_Address, password=None, **extra_fields):
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
-
-        if extra_fields.get('is_staff') is not True:
-            raise ValueError('El superusuario debe tener is_staff=True.')
-        if extra_fields.get('is_superuser') is not True:
-            raise ValueError('El superusuario debe tener is_superuser=True.')
-
-        return self.create_user(email_Address, password, **extra_fields)
-    
-    
-    def verificar_email(self,email_Address):
-        return len(email_Address) > 2
-    
-    
-    def verificar_contraseña(self,password):
-        return len(password) > 8 and len(password) < 30
-
-class Cuenta(AbstractBaseUser, PermissionsMixin):
-    email_Address = models.EmailField(max_length=255, unique=True)
-    is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
-
-    objects = CuentaManager()
-
-    USERNAME_FIELD = 'email_Address'
-    REQUIRED_FIELDS = []
-
-    def __str__(self):
-        return self.email_Address
+from django.contrib.auth.hashers import make_password
 
 class UsuarioManager(models.Manager):
-    def create_user(self, nickname, cuenta, foto):
+    def create_user(self, nickname, email,password, foto):
         if self.verificar_nickname_unico(nickname):
             raise ValueError("Ya existe un usuario con ese nombre")
         
         if self.verificar_nickname_length(nickname):
             raise ValueError("El nombre debe tener de 2 a 30 caracteres")
         
+        passwordhash = make_password(password)
+        cuenta = User.objects.create(username=nickname,email=email,contraseña=passwordhash)
+
         usuario = self.model(
             nickname=nickname,
             cuenta=cuenta,
@@ -80,6 +40,9 @@ class UsuarioManager(models.Manager):
     def get_random_usuarios(self):
         return self.order_by(Random())
 
+    def get_random_usuarios_exclude(self, id_session):
+        return self.order_by(Random()).exclude(id=id_session)
+
     def get_remaining_random_usuarios(self, exclude_queryset):
         exclude_ids = exclude_queryset.values_list('id', flat=True)
         return self.get_random_usuarios().exclude(id__in=exclude_ids)
@@ -98,8 +61,8 @@ class UsuarioManager(models.Manager):
     
 class Usuario(models.Model):
     nickname = models.CharField(max_length=30, unique=True)
-    foto = models.FileField(upload_to="media/uploads/", null=True, default="media/usuarios/generica.jpg")
-    cuenta = models.OneToOneField(Cuenta, on_delete=models.CASCADE)
+    foto = models.ImageField(upload_to="media/usuarios/", default="media/usuarios/generica.jpg")
+    cuenta = models.OneToOneField(User, on_delete=models.CASCADE)
     objects = UsuarioManager()
 
     def __str__(self):
@@ -155,8 +118,8 @@ class Videojuego(models.Model):
     publisher = models.CharField(max_length=30) 
     release_Date = models.DateField()
     plataforms = models.CharField(max_length=250) 
-    portada = models.FileField(upload_to="media/uploads/",null=True)
-    descripcion = models.CharField(max_length=1500, null=True)
+    portada = models.FileField(upload_to="media/uploads/")
+    descripcion = models.CharField(max_length=1500)
     objects = VideojuegoManager()
 
     def puntuacion_promedio(self):

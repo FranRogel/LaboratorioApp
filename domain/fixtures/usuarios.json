@@ -1,0 +1,346 @@
+[
+{
+    "model": "domain.Usuario",
+    "pk": 3,
+    "fields": {
+        "nickname": "LiamCai",
+        "foto": "media/usuarios/usuario3.jpg",
+        "cuenta": 3
+    }
+},
+{
+    "model": "auth.User",
+    "pk": 3,
+    "fields": {
+        "username": "LiamCai",
+        "email": "usuario1@example.com",
+        "password": "pbkdf2_sha256$180000$8gD1mVn3W9vZ$zBWlxYx4fyz8L6PXt17PbPU7CqiAitofFfE9JKaYBe8=",
+        "is_active": true,
+        "is_staff": false,
+        "is_superuser": false
+    }
+},
+{
+    "model": "domain.Usuario",
+    "pk": 4,
+    "fields": {
+        "nickname": "JohnDoe",
+        "foto": "media/usuarios/usuario4.jpg",
+        "cuenta": 4
+    }
+},
+{
+    "model": "auth.User",
+    "pk": 4,
+    "fields": {
+        "username": "JohnDoe",
+        "email": "usuario2@example.com",
+        "password": "pbkdf2_sha256$180000$Xi19KcR2ddZ3$scAfEFrxvBlnV5pmJZZ6gC4P7dIohTw9d7YbQ33k3sI=",
+        "is_active": true,
+        "is_staff": false,
+        "is_superuser": false
+    }
+},
+{
+    "model": "domain.Usuario",
+    "pk": 5,
+    "fields": {
+        "nickname": "EmmaSmith",
+        "foto": "media/usuarios/usuario5.jpg",
+        "cuenta": 5
+    }
+},
+{
+    "model": "auth.User",
+    "pk": 5,
+    "fields": {
+        "username": "EmmaSmith",
+        "email": "usuario3@example.com",
+        "password": "pbkdf2_sha256$180000$83ab8I54nIxy$tk/8LtUn1mDpNfcW2ddzrVkK5GqKxQxgX9FhbttZl28=",
+        "is_active": true,
+        "is_staff": false,
+        "is_superuser": false
+    }
+},
+{
+    "model": "domain.Usuario",
+    "pk": 6,
+    "fields": {
+        "nickname": "OliverJohnson",
+        "foto": "media/usuarios/usuario6.jpg",
+        "cuenta": 6
+    }
+},
+{
+    "model": "auth.User",
+    "pk": 6,
+    "fields": {
+        "username": "OliverJohnson",
+        "email": "usuario4@example.com",
+        "password": "pbkdf2_sha256$180000$7hH5UDbAi4Xl$clJLFmLdxLHElwsHrmdqORh7O+k/yFVQlrru+qzVzAc=",
+        "is_active": true,
+        "is_staff": false,
+        "is_superuser": false
+    }
+},
+{
+    "model": "domain.Usuario",
+    "pk": 7,
+    "fields": {
+        "nickname": "AvaBrown",
+        "foto": "media/usuarios/usuario7.jpg",
+        "cuenta": 7
+    }
+},
+{
+    "model": "domain.Usuario",
+    "pk": 8,
+    "fields": {
+        "nickname": "WilliamMiller",
+        "foto": "media/usuarios/usuario8.jpg",
+        "cuenta": 8
+    }
+},
+{
+    "model": "auth.User",
+    "pk": 8,
+    "fields": {
+        "username": "WilliamMiller",
+        "email": "usuario6@example.com",
+        "password": "pbkdf2_sha256$180000$mnC9DfZYOflO$Bzc4yZu+ueWT+/F1pZtVrkcTkWSD9AcgI1odl2RZ6iI=",
+        "is_active": true,
+        "is_staff": false,
+        "is_superuser": false
+    }
+},
+{
+    "model": "domain.Usuario",
+    "pk": 9,
+    "fields": {
+        "nickname": "SophiaTaylor",
+        "foto": "media/usuarios/usuario9.jpg",
+        "cuenta": 9
+    }
+},
+{
+    "model": "auth.User",
+    "pk": 9,
+    "fields": {
+        "username": "SophiaTaylor",
+        "email": "usuario7@example.com",
+        "password": "pbkdf2_sha256$180000$UxHsKjQvLYxU$ZzVfGRkIecrQ/OiEBPf88TF9m7Rg3rNqSV6F+uFyTFA=",
+        "is_active": true,
+        "is_staff": false,
+        "is_superuser": false
+    }
+},
+{
+    "model": "domain.Usuario",
+    "pk": 10,
+    "fields": {
+        "nickname": "AmeliaKing",
+        "foto": "media/usuarios/usuario10.jpg",
+        "cuenta": 10
+    }
+},
+{
+    "model": "auth.User",
+    "pk": 10,
+    "fields": {
+        "username": "AmeliaKing",
+        "email": "usuario8@example.com",
+        "password": "pbkdf2_sha256$180000$33VcQcFqJ8lc$88NnZ06U4D3bMmNDtAzTbw5vXZ4hCbFlTIDc/B5BryA=",
+        "is_active": true,
+        "is_staff": false,
+        "is_superuser": false
+    }
+},
+{
+    "model": "domain.Usuario",
+    "pk": 11,
+    "fields": {
+        "nickname": "JamesAnderson",
+        "foto": "media/usuarios/usuario11.jpg",
+        "cuenta": 11
+    }
+},
+{
+    "model": "auth.User",
+    "pk": 11,
+    "fields": {
+        "username": "JamesAnderson",
+        "email": "usuario9@example.com",
+        "password": "pbkdf2_sha256$180000$plbPt5XKQG2A$BVj7QvMNSzK4/eDFT4xswf+51Zwv05LmND4RA0hqAsE=",
+        "is_active": true,
+        "is_staff": false,
+        "is_superuser": false
+    }
+},
+{
+    "model": "domain.Usuario",
+    "pk": 12,
+    "fields": {
+        "nickname": "OliviaHernandez",
+        "foto": "media/usuarios/usuario12.jpg",
+        "cuenta": 12
+    }
+},
+{
+    "model": "auth.User",
+    "pk": 12,
+    "fields": {
+        "username": "OliviaHernandez",
+        "email": "usuario10@example.com",
+        "password": "pbkdf2_sha256$180000$XawRM5ls/mZa$ZShHB/RVNdXFln+YFzX3TlPnDge+Nci4tNSvnUj/NI4=",
+        "is_active": true,
+        "is_staff": false,
+        "is_superuser": false
+    }
+},
+{
+    "model": "domain.Usuario",
+    "pk": 13,
+    "fields": {
+        "nickname": "ElijahYoung",
+        "foto": "media/usuarios/usuario13.jpg",
+        "cuenta": 13
+    }
+},
+{
+    "model": "auth.User",
+    "pk": 13,
+    "fields": {
+        "username": "ElijahYoung",
+        "email": "usuario11@example.com",
+        "password": "pbkdf2_sha256$180000$AY60LhzlF60y$uDPHVsTku8IV1RlAK01N+vCnqSZXjdpGxIyueHDDq0E=",
+        "is_active": true,
+        "is_staff": false,
+        "is_superuser": false
+    }
+},
+{
+    "model": "domain.Usuario",
+    "pk": 14,
+    "fields": {
+        "nickname": "IsabellaLee",
+        "foto": "media/usuarios/usuario14.jpg",
+        "cuenta": 14
+    }
+},
+{
+    "model": "auth.User",
+    "pk": 14,
+    "fields": {
+        "username": "IsabellaLee",
+        "email": "usuario12@example.com",
+        "password": "pbkdf2_sha256$180000$usv5JNBQGJAU$NG0A68HE6V7VvUDYQc/0Vt05exSQxKZs9OowxssJuIA=",
+        "is_active": true,
+        "is_staff": false,
+        "is_superuser": false
+    }
+},
+{
+    "model": "domain.Usuario",
+    "pk": 15,
+    "fields": {
+        "nickname": "AlexanderLewis",
+        "foto": "media/usuarios/usuario15.jpg",
+        "cuenta": 15
+    }
+},
+{
+    "model": "auth.User",
+    "pk": 15,
+    "fields": {
+        "username": "AlexanderLewis",
+        "email": "usuario13@example.com",
+        "password": "pbkdf2_sha256$180000$QdPxGdZBCjLF$nyukUsOo2Pz5O2AxL/OyRPjY3rwZ5vc8eABUJte8JnM=",
+        "is_active": true,
+        "is_staff": false,
+        "is_superuser": false
+    }
+},
+{
+    "model": "domain.Usuario",
+    "pk": 16,
+    "fields": {
+        "nickname": "CharlotteWalker",
+        "foto": "media/usuarios/usuario16.jpg",
+        "cuenta": 16
+    }
+},
+{
+    "model": "auth.User",
+    "pk": 16,
+    "fields": {
+        "username": "CharlotteWalker",
+        "email": "usuario14@example.com",
+        "password": "pbkdf2_sha256$180000$uL4qPpH9Lqyv$qAojhRqTqnpnN+KwTl3Qu7gVKg4C6MdBCDnG4ZmL7JA=",
+        "is_active": true,
+        "is_staff": false,
+        "is_superuser": false
+    }
+},
+{
+    "model": "domain.Usuario",
+    "pk": 17,
+    "fields": {
+        "nickname": "BenjaminPerez",
+        "foto": "media/usuarios/usuario17.jpg",
+        "cuenta": 17
+    }
+},
+{
+    "model": "auth.User",
+    "pk": 17,
+    "fields": {
+        "username": "BenjaminPerez",
+        "email": "usuario15@example.com",
+        "password": "pbkdf2_sha256$180000$1bA3v0bBSntv$33BRpEm9bP8jnR9C6U7KvqphBd4cMfByBRGLM7nhHuQ=",
+        "is_active": true,
+        "is_staff": false,
+        "is_superuser": false
+    }
+},    {
+    "model": "domain.Usuario",
+    "pk": 18,
+    "fields": {
+        "nickname": "EmilyTaylor",
+        "foto": "media/usuarios/usuario18.jpg",
+        "cuenta": 18
+    }
+},
+{
+    "model": "auth.User",
+    "pk": 18,
+    "fields": {
+        "username": "EmilyTaylor",
+        "email": "usuario16@example.com",
+        "password": "pbkdf2_sha256$180000$yVu2SD9sZxln$W/h44bq22Ik6bkB5m/t+7YstVq8vmPOYdNlXwPrAxZw=",
+        "is_active": true,
+        "is_staff": false,
+        "is_superuser": false
+    }
+},
+{
+    "model": "domain.Usuario",
+    "pk": 19,
+    "fields": {
+        "nickname": "LucasAnderson",
+        "foto": "media/usuarios/usuario19.jpg",
+        "cuenta": 19
+    }
+},
+{
+    "model": "auth.User",
+    "pk": 19,
+    "fields": {
+        "username": "LucasAnderson",
+        "email": "usuario17@example.com",
+        "password": "pbkdf2_sha256$180000$RDZ4SIoyZlzk$tkbEMdOrtRz7wA46lBFZlCX6fh/Jy8IulBFYrCn28pE=",
+        "is_active": true,
+        "is_staff": false,
+        "is_superuser": false
+    }
+}
+]
