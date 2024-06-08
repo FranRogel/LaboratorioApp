@@ -93,6 +93,18 @@
     }
 },
 {
+    "model": "auth.User",
+    "pk": 7,
+    "fields": {
+        "username": "AvaBrown",
+        "email": "usuario5@example.com",
+        "password": "pbkdf2_sha256$180000$BbemTR3N8MmQ$oKVi8Ipr4oA6W4gFnhWU5IG/b+4xHbDjFK9vtE+haV8=",
+        "is_active": true,
+        "is_staff": false,
+        "is_superuser": false
+    }
+},
+{
     "model": "domain.Usuario",
     "pk": 8,
     "fields": {
