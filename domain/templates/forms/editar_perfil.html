@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+{% extends "main.html" %}
+{% block profile %}
+{% include "navs/profile_nav.html" %}
+{%endblock%}
+
+{% block content %}
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <div class="mb-3">
+        <label for="{{ form.email_address.id_for_label }}" class="form-label">{{ form.email_address.label }}</label>
+        {{ form.email_address }}
+        {% if form.email_address.errors %}
+            <div class="text-danger">
+                {{ form.email_address.errors }}
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        <label for="{{ form.nickname.id_for_label }}" class="form-label">{{ form.nickname.label }}</label>
+        {{ form.nickname }}
+        {% if form.nickname.errors %}
+            <div class="text-danger">
+                {{ form.nickname.errors }}
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        <label for="{{ form.foto.id_for_label }}" class="form-label">{{ form.foto.label }}</label>
+        {{ form.foto }}
+        {% if form.foto.errors %}
+            <div class="text-danger">
+                {{ form.foto.errors }}
+            </div>
+        {% endif %}
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Guardar</button>
+</form>
+{% endblock %}
+
+</html>

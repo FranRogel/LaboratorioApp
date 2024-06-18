@@ -6,12 +6,26 @@ class LoginForm(forms.Form):
     email_Address = forms.EmailField(label='Correo Electrónico')
     password = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
 
-class UsuarioForm(forms.ModelForm):
+class UsuarioForm(forms.Form):
     email_address = forms.EmailField(label='Correo Electrónico')
+    nickname = forms.CharField(label='Apodo')
     password = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
-    class Meta:
-        model = Usuario
-        fields = ['nickname','foto']
+    foto = forms.ImageField(label='Foto', required=False)
+
+    def clean_nickname(self):
+        nickname = self.data['nickname']       
+        if not ((len(nickname) > 2) and (len(nickname) <= 30)):
+            raise ValueError("El nombre debe tener de 2 a 30 caracteres")
+
+class UsuarioEditForm(forms.Form):
+    email_address = forms.EmailField(label='Correo Electrónico')
+    nickname = forms.CharField(label='Apodo')
+    foto = forms.ImageField(label='Foto', required=False)
+
+    def clean_nickname(self):
+        nickname = self.data['nickname']       
+        if not ((len(nickname) > 2) and (len(nickname) <= 30)):
+            raise ValueError("El nombre debe tener de 2 a 30 caracteres")
 
 class ReseñaForm(forms.ModelForm):
     content = forms.CharField(required=False, widget=forms.Textarea)

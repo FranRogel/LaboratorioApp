@@ -2,6 +2,7 @@ from .models import *
 from django.views.generic.base import *
 from django.views.generic import FormView
 from .forms import *
+from django.core.paginator import Paginator, Page
 from django.urls import reverse_lazy
 from django.contrib.auth import login
 from django.contrib.auth.hashers import check_password
@@ -95,15 +96,24 @@ class GamesController(TemplateView):
     return context
 
 class UsersController(TemplateView):
-  template_name = 'accounts/allUsers.html'
-  def get_context_data(self, **kwargs):
-    context = super().get_context_data(**kwargs)
-    usuarios_populares = Usuario.objects.get_usuarios_populares()[:3]
-    usuarios = Usuario.objects.get_remaining_random_usuarios(usuarios_populares)[:10]
-    context['top_usuarios'] = usuarios_populares
-    context['usuarios'] = usuarios
-    context['user_session'] = Usuario.objects.get_user_from_request(self.request)
-    return context
+    template_name = 'accounts/allUsers.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        usuarios_populares = Usuario.objects.get_usuarios_populares()[:3]
+        usuarios = Usuario.objects.get_remaining_random_usuarios(usuarios_populares)
+
+        # Configurar la paginación
+        paginator = Paginator(usuarios, 5)  # Mostrar 10 usuarios por página
+        page_number = self.request.GET.get('page')  # Obtener el número de página desde la URL
+
+        # Obtener la página actual
+        page_obj = paginator.get_page(page_number)
+
+        context['top_usuarios'] = usuarios_populares
+        context['usuarios'] = page_obj  # Pasar la página de usuarios en lugar de la lista completa
+        context['user_session'] = Usuario.objects.get_user_from_request(self.request)
+        return context
 
 class ProfileController(TemplateView):
   template_name = 'accounts/profile.html'
@@ -134,10 +144,14 @@ class ListController(TemplateView):
    def get_context_data(self, **kwargs):
       context = super().get_context_data(**kwargs)
       listas_sorted = ListaDeJuegos.objects.get_listas_populares()[:4]
-      random_listas = ListaDeJuegos.objects.get_remaining_random_listas(listas_sorted)[:10]
+      listas = ListaDeJuegos.objects.all()
+      paginator = Paginator(listas, 4) 
+      page_number = self.request.GET.get('page')  # Obtener el número de página desde la URL
+     # Obtener la página actual
+      page_obj = paginator.get_page(page_number)
       context['user_session'] = Usuario.objects.get_user_from_request(self.request)
       context['top_listas'] = listas_sorted
-      context['listas'] = random_listas
+      context['listas'] = page_obj
       return context
 
 class ListInfoController(TemplateView):
@@ -520,3 +534,58 @@ def search_view(request):
                            'users' : users_results,
                            'lists' : lists_results,
                            'user_session': user_session })
+    
+class EditarPerfilController(FormView):
+    template_name = 'forms/editar_perfil.html'
+    form_class = UsuarioEditForm
+    
+    def get_initial(self):
+        initial = super().get_initial()
+        usuario = Usuario.objects.get_user_from_request(self.request)
+        initial['nickname'] = usuario.nickname
+        initial['email_address'] = usuario.cuenta.email
+        initial['foto'] = usuario.foto
+        self.success_url = reverse_lazy('profile', kwargs={'id': usuario.id})
+        return initial
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        usuario = Usuario.objects.get_user_from_request(self.request)
+        context['user_session'] = usuario
+        context['session'] = True
+        return context
+    
+    def post(self, request, *args, **kwargs):
+        profile_form = self.get_form()
+        try:
+            print("entro al try")
+            print(profile_form.data['email_address'])
+            print(profile_form.data['nickname'])
+ 
+            if profile_form.is_valid():
+                print("entro al if")
+                return self.form_valid(profile_form)
+            else:
+                ('entro al else')
+                return self.form_invalid(profile_form)
+        except forms.ValidationError as e:
+            print(e)
+            profile_form.add_error(None, str(e))
+            return self.form_invalid(profile_form)
+        except ValueError as e:
+            print(e)
+            profile_form.add_error(None, str(e))
+            return self.form_invalid(profile_form)
+        
+    def form_valid(self, profile_form):
+        usuario = Usuario.objects.get_user_from_request(self.request)
+        email = profile_form.data['email_address']
+        nickname = profile_form.data['nickname']
+        foto = self.request.FILES.get('foto')
+        Usuario.objects.edit_user(usuario,nickname,email,foto)
+        return redirect(self.success_url)
+                  
+    def form_invalid(self, profile_form):
+        return self.render_to_response(
+            self.get_context_data(form=profile_form)
+        )

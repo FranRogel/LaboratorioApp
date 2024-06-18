@@ -1,45 +1,77 @@
 <!DOCTYPE html>
 <html>
-    {% extends "main.html"%}
+    {% extends "main.html" %}
 
     {% block content %}
     <h2>Populares</h2>
     <div class="row justify-content-center">
-      {% for lista in top_listas %}
-      <div class="col-md-3 mb-4">
-        <div class="card">
-          {% for contenido in lista.contenido.all|slice:":1" %}
-          <a href="{% url 'listContent' id=lista.id %}">
-          <img src="{{ contenido.videojuego.portada.url}}" class="card-img-top" alt="Portada de {{ contenido.videojuego.name }}" 
-          style="height: 200px; object-fit: cover;"></a>
-          {% endfor %}
-          <div class="card-body">
-            <h5 class="card-title">{{ lista.name }}</h5>
-            <p class="card-text" style="font-size: 14px;">Creador: {{ lista.creator }}</p>
-            <p class="card-text" style="font-size: 14px;">{{ lista.descripcion }}</p>
-          </div>
-        </div>
-      </div>
-      {% endfor %}
-    <h3>Al azar</h3>
-        {% for lista in listas %}
-        <div class="col-md-5 mb-4">
-          <div class="card">
-            {% for contenido in lista.contenido.all|slice:":1" %}
-            <a href="{% url 'listContent' id=lista.id %}">
-            <img src="{{ contenido.videojuego.portada.url}}" class="card-img-top" alt="Portada de {{ contenido.videojuego.name }}" 
-            style="height: 200px; object-fit: cover;"></a>
-            {% endfor %}
-            <div class="card-body">
-              <a href="{% url 'listContent' id=lista.id %}">
-              <h5 class="card-title">{{ lista.name }}</h5>
-              </a>
-              <p class="card-text" style="font-size: 14px;">Creador: {{ lista.creator }}</p>
-              <p class="card-text" style="font-size: 14px;">{{ lista.descripcion }}</p>
+        {% for lista in top_listas %}
+        <div class="col-md-3 mb-4">
+            <div class="card">
+                {% for contenido in lista.contenido.all|slice:":1" %}
+                <a href="{% url 'listContent' id=lista.id %}">
+                    <img src="{{ contenido.videojuego.portada.url }}" class="card-img-top" alt="Portada de {{ contenido.videojuego.name }}" style="height: 200px; object-fit: cover;">
+                </a>
+                {% endfor %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ lista.name }}</h5>
+                    <p class="card-text" style="font-size: 14px;">Creador: {{ lista.creator }}</p>
+                    <p class="card-text" style="font-size: 14px;">{{ lista.descripcion }}</p>
+                </div>
             </div>
-          </div>
         </div>
         {% endfor %}
     </div>
-      {% endblock %}
+    
+    <h3>Otras Listas</h3>
+    <div class="row justify-content-center">
+        {% for lista in listas %}
+        <div class="col-md-5 mb-4">
+            <div class="card">
+                {% for contenido in lista.contenido.all|slice:":1" %}
+                <a href="{% url 'listContent' id=lista.id %}">
+                    <img src="{{ contenido.videojuego.portada.url }}" class="card-img-top" alt="Portada de {{ contenido.videojuego.name }}" style="height: 200px; object-fit: cover;">
+                </a>
+                {% endfor %}
+                <div class="card-body">
+                    <a href="{% url 'listContent' id=lista.id %}">
+                        <h5 class="card-title">{{ lista.name }}</h5>
+                    </a>
+                    <p class="card-text" style="font-size: 14px;">Creador: {{ lista.creator }}</p>
+                    <p class="card-text" style="font-size: 14px;">{{ lista.descripcion }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <!-- Paginación -->
+    <div class="row justify-content-center">
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                {% if listas.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ listas.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                {% endif %}
+                
+                {% for num in listas.paginator.page_range %}
+                <li class="page-item {% if listas.number == num %}active{% endif %}">
+                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                </li>
+                {% endfor %}
+                
+                {% if listas.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ listas.next_page_number }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+    {% endblock %}
 </html>

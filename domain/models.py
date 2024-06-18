@@ -15,15 +15,41 @@ class UsuarioManager(models.Manager):
         
         passwordhash = make_password(password)
         cuenta = User.objects.create(username=nickname,email=email,contraseña=passwordhash)
-
-        usuario = self.model(
+        if foto:
+            usuario = self.model(
             nickname=nickname,
             cuenta=cuenta,
             foto=foto
-        )
+            )
+        else:
+            usuario = self.model(
+            nickname=nickname,
+            cuenta=cuenta
+            )
 
         usuario.save(using=self._db)
         return usuario
+
+    def edit_user(self, user, nickname, email, foto):
+        if (not self.verificar_nickname_unico(nickname)) and (user.nickname == nickname):
+            raise ValueError("Ya existe un usuario con ese nombre")
+        
+        if not self.verificar_nickname_length(nickname):
+            raise ValueError("El nombre debe tener de 2 a 30 caracteres")
+        
+        # Actualizar los campos del modelo Usuario
+        user.nickname = nickname
+        if foto:
+            user.foto = foto
+        user.save(using=self._db)
+        
+        # Actualizar los campos de la cuenta asociada (User)
+        cuenta = user.cuenta
+        cuenta.username = nickname
+        cuenta.email = email
+        cuenta.save(using=self._db)
+
+        return user
 
     def get_user_from_request(self, request):
         if request.user.is_authenticated:
@@ -57,7 +83,7 @@ class UsuarioManager(models.Manager):
         return self.filter(nickname=nickname).exists()
 
     def verificar_nickname_length(self,nickname):
-        return not ((len(nickname) > 2) and (len(nickname) <= 30))
+        return ((len(nickname) > 2) and (len(nickname) <= 30))
     
 class Usuario(models.Model):
     nickname = models.CharField(max_length=30, unique=True)
@@ -113,7 +139,7 @@ class VideojuegoManager(models.Manager):
         return videojuego.listas.count()
     
 class Videojuego(models.Model):
-    name = models.CharField(max_length=30, unique=True)
+    name = models.CharField(max_length=100, unique=True)
     producer = models.CharField(max_length=30)
     publisher = models.CharField(max_length=30) 
     release_Date = models.DateField()
