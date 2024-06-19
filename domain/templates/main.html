@@ -1,23 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}LaboratorioApp{% endblock %}</title>
-    <!-- Enlace al archivo CSS de Bootstrap 5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .carousel-item img {
-            width: 100%;
-            height: auto; /* Ajusta la altura automáticamente para mantener la proporción */
-            object-fit: cover; /* Para asegurarte de que las imágenes se cubran completamente en el contenedor */
-          }
-          .carousel-inner {
-            max-height: 500px; /* Ajusta la altura máxima del carrusel según tus necesidades */
-            overflow: hidden; /* Oculta cualquier desbordamiento de imágenes grandes */
-          }
-    </style>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}LaboratorioApp{% endblock %}</title>
+        <!-- Enlace al archivo CSS de Bootstrap 5 -->
+        {% load static %}
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="{% static 'domain/styles.css' %}">
+    </head>
 <body>
     {% block nav %}
     <header class="bg-dark text-light py-4">
@@ -80,92 +71,78 @@
 {%endblock%}
 
 <div class="container mt-4">
-{% block content %}
-        <div class="row ">
-            <div class="col-md-4 mb-4">
-                <p>JUEGOS REGISTRADOS</p>
-                <p>{{juegosCount}}</p>
-            </div>
-            <div class="col-md-4 mb-4">
-                <p>USUARIOS REGISTRADOS</p>
-                <p>{{usuariosCount}}</p>
-            </div>
-            <div class="col-md-4 mb-4">
-                <p>LISTAS CREADAS</p>
-                <p>{{listasCount}}</p>
-            </div>
+    {% block content %}
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <p>JUEGOS REGISTRADOS</p>
+            <p>{{ juegosCount }}</p>
         </div>
-            <h2>JUEGOS</h2>
-            <p>Que quizas te gusten</p>
-        <div class="row justify-content-center">
-            {% for juego in juegos %}
-            <div class="col-md-2 mb-4">
-                    <div class="card">
-                    <a href="{% url 'game' id=juego.id %}">
-                    <img src="{{ juego.portada.url }}" class="card-img-top" alt="Portada de {{ juego.name }}" 
-                    style="height: 200px; object-fit: cover;"></a>
-                    <div class="card-body">
-                        <h5 class="card-title">{{ juego.name }}</h5>
-                        <p class="card-text" style="font-size: 14px;">Jugadores: {{ juego.cant_jugadores }}</p>
-                        <p class="card-text" style="font-size: 14px;">Puntuacion: {{ juego.puntuacion_promedio }}</p>
-                        <p class="card-text" style="font-size: 14px;">Apariciones en listas: {{ juego.cant_apariciones_lista }}</p>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
+        <div class="col-md-4 mb-4">
+            <p>USUARIOS REGISTRADOS</p>
+            <p>{{ usuariosCount }}</p>
         </div>
-        <h2>USUARIOS</h2>
-        <p>Conocelos</p>
-        <div class="row justify-content-center">
-            {% for usuario in usuarios %}
-            <div class="col-md-2 mb-4">
-                <div class="card">
-                    <a href="{% url 'profile' id=usuario.id %}"><img src="{{ usuario.foto.url }}" class="card-img-top" alt="{{ usuario.nickname }} foto" 
-                    style="height: 200px; object-fit: cover;"></a>
-                    <div class="card-body">
-                        <h5 class="card-title">{{ usuario.nickname }}</h5>
-                        <p class="card-text" style="font-size: 14px;" >Juegos jugados: {{ usuario.cant_juegos_jugados }}</p>
-                        <p class="card-text" style="font-size: 14px;" >Listas: {{ usuario.cant_listas_de_juegos }}</p>
-                        <p class="card-text" style="font-size: 14px;" >Seguidores: {{ usuario.cant_seguidores }}</p>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
+        <div class="col-md-4 mb-4">
+            <p>LISTAS CREADAS</p>
+            <p>{{ listasCount }}</p>
         </div>
-        <h2>RESEÑAS</h2>
-        <p>Opiniones interesantes🧐</p>
-        <div class="row justify-content-center">
-            {% for reseña in reseñas %}
-            <div class="col-md-2 mb-4">
-                <div class="card">
-                    <a href="{% url 'game' id=reseña.game.id %}">
-                    <img src="{{ reseña.game.portada.url }}" class="card-img-top" alt="Portada de {{ reseña.game.name }}"
-                    style="height: 200px; object-fit: cover;">
-                    <a/>
-                    <div class="card-body">
-                        <h5 class="card-title">{{ reseña.game.name }}</h5>
-                        <p class="card-text" style="font-size: 14px;" ><a href="{% url 'profile' id=reseña.writer.id %}">{{ reseña.writer }}</a></p>
-                        <p class="card-text" style="font-size: 14px;" >{{ reseña.content }}</p>
-                        <p class="card-text" style="font-size: 14px;" >Puntuacion: {{ reseña.puntuacion }}</p>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-        {% endblock %}
     </div>
-    {% block footer%}
-    <footer class="bg-dark text-light py-4 mt-auto">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <h5>Contacto</h5>
-                    <p>Correo electrónico: info@laboratorioapp.com</p>
-                    <p>Teléfono: +1234567890</p>
+    <h2>JUEGOS</h2>
+    <p>Que quizás te gusten</p>
+    <div class="row justify-content-center">
+        {% for juego in juegos %}
+        <div class="col-md-2 mb-4">
+            <div class="card">
+                <a href="{% url 'game' id=juego.id %}">
+                    <img src="{{ juego.portada.url }}" class="card-img-top" alt="Portada de {{ juego.name }}">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">{{ juego.name }}</h5>
+                    <p class="card-text" style="font-size: 14px;">Jugadores: {{ juego.cant_jugadores }}</p>
+                    <p class="card-text" style="font-size: 14px;">Puntuación: {{ juego.puntuacion_promedio }}</p>
+                    <p class="card-text" style="font-size: 14px;">Apariciones en listas: {{ juego.cant_apariciones_lista }}</p>
                 </div>
             </div>
         </div>
-    </footer>
+        {% endfor %}
+    </div>
+    <h2>USUARIOS</h2>
+    <p>Conócelos</p>
+    <div class="row justify-content-center">
+        {% for usuario in usuarios %}
+        <div class="col-md-2 mb-4">
+            <div class="card">
+                <a href="{% url 'profile' id=usuario.id %}">
+                    <img src="{{ usuario.foto.url }}" class="card-img-top" alt="{{ usuario.nickname }} foto">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">{{ usuario.nickname }}</h5>
+                    <p class="card-text" style="font-size: 14px;">Juegos jugados: {{ usuario.cant_juegos_jugados }}</p>
+                    <p class="card-text" style="font-size: 14px;">Listas: {{ usuario.cant_listas_de_juegos }}</p>
+                    <p class="card-text" style="font-size: 14px;">Seguidores: {{ usuario.cant_seguidores }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <h2>RESEÑAS</h2>
+    <p>Opiniones interesantes 🧐</p>
+    <div class="row justify-content-center">
+        {% for reseña in reseñas %}
+        <div class="col-md-2 mb-4">
+            <div class="card">
+                <a href="{% url 'game' id=reseña.game.id %}">
+                    <img src="{{ reseña.game.portada.url }}" class="card-img-top" alt="Portada de {{ reseña.game.name }}">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">{{ reseña.game.name }}</h5>
+                    <p class="card-text" style="font-size: 14px;"><a href="{% url 'profile' id=reseña.writer.id %}">{{ reseña.writer }}</a></p>
+                    <p class="card-text" style="font-size: 14px;">{{ reseña.content }}</p>
+                    <p class="card-text" style="font-size: 14px;">Puntuación: {{ reseña.puntuacion }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
     {% endblock %}
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
