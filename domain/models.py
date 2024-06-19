@@ -227,7 +227,7 @@ class ListaDeJuegos(models.Model):
         unique_together = (('name', 'creator'))
 
     def __str__(self):
-        return self.name + " " + self.creator.nickname
+        return self.name
     
     def cantMeGustan(self):
         return self.me_gustan.count()
