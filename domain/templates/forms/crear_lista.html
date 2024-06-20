@@ -5,6 +5,7 @@
 {% block profile %}
     {{ block.super }}
 {% endblock %}
+
 {% block content %}
 <h2>Llena tu lista</h2>
     <form method="post" class="mb-3">
@@ -18,7 +19,7 @@
         {% if update %}
             <p>Agregar juegos:</p>
             {% for contenido in contenidos %}
-                <img src="{{ contenido.videojuego.portada.url }}" alt="{{ contenido.videojuego.name }}"  style="width: 200px; height: auto;"> 
+                <img src="{{ contenido.videojuego.portada.url }}" alt="{{ contenido.videojuego.name }}" class="img-thumbnail"> 
             {% endfor %}
             <div class="mb-3">
                 {{ estaEn_form.as_p }}

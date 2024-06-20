@@ -6,14 +6,14 @@
     {{ block.super }}
 {% endblock %}
 
-{% block content%}
+{% block content %}
 <h1>JUEGOS</h1>
 <div class="container mt-4">
   <div class="row">
     {% for juego in juegos %}
       <div class="col-md-2 mb-3">
-        <div class="card" stle="">
-          <img src="{{ juego.portada.url }}" class="card-img-top" alt="Portada de {{ juego.name }}" style="height: 200px; object-fit: cover;">
+        <div class="card">
+          <img src="{{ juego.portada.url }}" class="card-img-top" alt="Portada de {{ juego.name }}">
           <div class="card-body">
             <h6 class="card-title">⭐{{ juego.puntuacion_promedio }}</h5>
           </div>

@@ -1,50 +1,52 @@
 <!DOCTYPE html>
 <html>
 {% extends 'main.html' %}
-{% block content%}
+{% block content %}
 <h2>JUEGOS</h2>
 <h3>Populares</h3>
-  <div class="row justify-content-center">
-        {% for juego in top_videojuegos %}
+<div class="row justify-content-center">
+    {% for juego in top_videojuegos %}
     <div class="col-md-3 mb-4">
-      <div class="card">
-          <a href="{% url 'game' id=juego.id %}">
-          <img src="{{ juego.portada.url }}" class="card-img-top" alt="Portada de {{ juego.name }}" 
-          style="height: 200px; object-fit: cover;"></a>
-          <div class="card-body">
-              <h5 class="card-title">{{ juego.name }}</h5>
-              <p class="card-text" style="font-size: 14px;">Jugadores: {{ juego.cant_jugadores }}</p>
-              <p class="card-text" style="font-size: 14px;">Puntuacion: {{ juego.puntuacion_promedio }}</p>
-              <p class="card-text" style="font-size: 14px;">Apariciones en listas: {{ juego.cant_apariciones_lista }}</p>
-          </div>
-      </div>
+        <div class="card">
+            <a href="{% url 'game' id=juego.id %}">
+                <img src="{{ juego.portada.url }}" class="card-img-top" alt="Portada de {{ juego.name }}">
+            </a>
+            <div class="card-body">
+                <h5 class="card-title">{{ juego.name }}</h5>
+                <p class="card-text" style="font-size: 14px;">Jugadores: {{ juego.cant_jugadores }}</p>
+                <p class="card-text" style="font-size: 14px;">Puntuacion: {{ juego.puntuacion_promedio }}</p>
+                <p class="card-text" style="font-size: 14px;">Apariciones en listas: {{ juego.cant_apariciones_lista }}</p>
+            </div>
+        </div>
     </div>
-        {% endfor %}
-  </div>
+    {% endfor %}
+</div>
 <h3>Al azar</h3>
-  <div class="row">
+<div class="row">
     <div id="carouselExampleControls" class="carousel slide mb-5" data-bs-ride="carousel">
-      <div class="carousel-inner">
-          {% for juego in videojuegos %}
-          <div class="carousel-item {% if forloop.first %}active{% endif %}">
-              <a href="{% url 'game' id=juego.id %}">
-                  <img src="{{ juego.portada.url }}" class="img-fluid" alt="Portada de {{ juego.name }} ">
-              </a>
-              <div class="carousel-caption d-none d-md-block">
-                  <h5>{{ juego.name }}</h5>
-              </div>
-          </div>
-          {% endfor %}
-      </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-      </button>
+        <div class="carousel-inner">
+            {% for juego in videojuegos %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                <a href="{% url 'game' id=juego.id %}">
+                    <img src="{{ juego.portada.url }}" class="img-fluid" alt="Portada de {{ juego.name }} ">
+                </a>
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>{{ juego.name }}</h5>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
     </div>
-  </div>
+</div>
 {% endblock %}
 </html>

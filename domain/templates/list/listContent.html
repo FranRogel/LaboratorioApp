@@ -30,8 +30,7 @@
             <a href="{% url 'game' id=contenido.videojuego.id %}">
               <img src="{{ contenido.videojuego.portada.url }}" 
                    alt="Portada de {{ contenido.videojuego.name }}" 
-                   class="img-fluid rounded" 
-                   style="width: 100%; height: auto;">
+                   class="img-fluid rounded">
             </a>
           </div>
         {% endfor %}
@@ -41,3 +40,4 @@
 </div>
 {% endblock %}
 </html>
+

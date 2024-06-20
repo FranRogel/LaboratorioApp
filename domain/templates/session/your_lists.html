@@ -14,7 +14,7 @@
         <div class="d-flex align-items-center">
           {% for relacion in item.juegos|slice:"4" %}
             <a href="{% url 'listContent' id=item.id %}">
-              <img src="{{ relacion.videojuego.portada.url }}" alt="{{ relacion.videojuego.name }}" class="img-thumbnail" style="width: 100px; height: 100px;">
+              <img src="{{ relacion.videojuego.portada.url }}" alt="{{ relacion.videojuego.name }}" class="img-thumbnail">
             </a>
           {% endfor %}
         </div>

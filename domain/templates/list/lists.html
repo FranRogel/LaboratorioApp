@@ -10,7 +10,7 @@
             <div class="card">
                 {% for contenido in lista.contenido.all|slice:":1" %}
                 <a href="{% url 'listContent' id=lista.id %}">
-                    <img src="{{ contenido.videojuego.portada.url }}" class="card-img-top" alt="Portada de {{ contenido.videojuego.name }}" style="height: 200px; object-fit: cover;">
+                    <img src="{{ contenido.videojuego.portada.url }}" class="card-img-top" alt="Portada de {{ contenido.videojuego.name }}">
                 </a>
                 {% endfor %}
                 <div class="card-body">
@@ -30,7 +30,7 @@
             <div class="card">
                 {% for contenido in lista.contenido.all|slice:":1" %}
                 <a href="{% url 'listContent' id=lista.id %}">
-                    <img src="{{ contenido.videojuego.portada.url }}" class="card-img-top" alt="Portada de {{ contenido.videojuego.name }}" style="height: 200px; object-fit: cover;">
+                    <img src="{{ contenido.videojuego.portada.url }}" class="card-img-top" alt="Portada de {{ contenido.videojuego.name }}">
                 </a>
                 {% endfor %}
                 <div class="card-body">
