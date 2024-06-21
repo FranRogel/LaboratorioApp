@@ -103,5 +103,10 @@ class SearchForm(forms.Form):
     }))
     search_type = forms.ChoiceField(choices=SEARCH_CHOICES, required=True)
 
+    #def clean_query(self):
+    #   query = self.data['query']
+    #   if query == '':
+    #       raise ValueError("Ingrese algo que buscar") 
+
 
 

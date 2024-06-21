@@ -1,5 +1,5 @@
 img {
-  width: 100%;
+  width: 200px;
   height: 200px;
   object-fit: contain; /* O 'contain' según tus necesidades */
 }
@@ -7,8 +7,15 @@ img {
 .img-thumbnail {
   width: 100%;
   height: 200px;
-  object-fit: contain; /* O 'contain' según tus necesidades */
+  object-fit: cover; /* O 'contain' según tus necesidades */
 }
+
+.rounded-circle{
+  width: 50px; 
+  height: 50px;
+  object-fit: cover; /* O 'contain' según tus necesidades */
+}
+
 
 /* Estilo específico para imágenes en tarjetas */
 .card-img-top {

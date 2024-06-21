@@ -1,43 +1,68 @@
 <!DOCTYPE html>
 <html>
-{% extends "main.html"%}
+{% extends "main.html" %}
 {% block content %}
 <div class="container mt-5">
     <h2 class="mb-4">Resultados de búsqueda</h2>
     
-    {% if games %}
+    {% if games_page_obj %}
     <h3 class="mb-3">Juegos</h3>
     <div class="list-group">
-        {% for resultado_juego in games %}
+        {% for resultado_juego in games_page_obj %}
         <div class="list-group-item d-flex justify-content-between align-items-center">
             <!-- Parte 1: Imagen del juego -->
             <a href="{% url 'game' id=resultado_juego.id %}">
-                <img src="{{ resultado_juego.portada.url }}" alt="Portada de {{ resultado_juego.name }}" class="img-thumbnail">
+                <img src="{{ resultado_juego.portada.url }}" alt="Portada de {{ resultado_juego.name }}" class="img">
             </a>
+            <div style="width: 20px;"></div> 
             <!-- Parte 2: Información del juego -->
             <div class="d-flex flex-column align-items-start ml-3">
                 <h5>{{ resultado_juego.name }}</h5>
                 <small>{{ resultado_juego.release_Date }}</small>
-                <small>{{ resultado_juego.producer}}. {{ resultado_juego.publisher}}</small>
+                <small>{{ resultado_juego.producer }}. {{ resultado_juego.publisher }}</small>
             </div>
             <!-- Parte 3: Espacio en blanco -->
             <div class="flex-grow-1"></div>
         </div>
         {% endfor %}
     </div>
+    <div class="mt-4">
+        <nav>
+            <ul class="pagination">
+                {% if games_page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?games_page={{ games_page_obj.previous_page_number }}">Anterior</a>
+                </li>
+                {% endif %}
+                {% for num in games_page_obj.paginator.page_range %}
+                <li class="page-item {% if games_page_obj.number == num %}active{% endif %}">
+                    <a class="page-link" href="?games_page={{ num }}">{{ num }}</a>
+                </li>
+                {% endfor %}
+                {% if games_page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?games_page={{ games_page_obj.next_page_number }}">Siguiente</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
     {% endif %}
     
-    {% if users %}
+    {% if users_page_obj %}
     <h3 class="mt-5 mb-3">Usuarios</h3>
     <div class="list-group">
-        {% for resultado_usuario in users %}
-        <div class="list-group-item d-flex justify-content-between align-items-center">
+        {% for resultado_usuario in users_page_obj %}
+        <div class="list-group-item d-flex justify-content-start align-items-center">
             <!-- Parte 1: Foto de perfil del usuario -->
             {% if resultado_usuario.foto %}
-                <img src="{{ resultado_usuario.foto.url }}" alt="Foto de perfil de {{ resultado_usuario.nickname }}" class="img-thumbnail rounded-circle">
+            <div class="mr-3">
+                <img src="{{ resultado_usuario.foto.url }}" alt="Foto de perfil de {{ resultado_usuario.nickname }}" class="rounded-circle">
+            </div>
             {% endif %}
+            <div style="width: 20px;"></div> 
             <!-- Parte 2: Información del usuario -->
-            <div class="d-flex flex-column align-items-start ml-3">
+            <div class="d-flex flex-column align-items-start">
                 <h5>{{ resultado_usuario.nickname }}</h5>
             </div>
             <!-- Parte 3: Espacio en blanco -->
@@ -45,28 +70,69 @@
         </div>
         {% endfor %}
     </div>
+    <div class="mt-4">
+        <nav>
+            <ul class="pagination">
+                {% if users_page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?users_page={{ users_page_obj.previous_page_number }}">Anterior</a>
+                </li>
+                {% endif %}
+                {% for num in users_page_obj.paginator.page_range %}
+                <li class="page-item {% if users_page_obj.number == num %}active{% endif %}">
+                    <a class="page-link" href="?users_page={{ num }}">{{ num }}</a>
+                </li>
+                {% endfor %}
+                {% if users_page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?users_page={{ users_page_obj.next_page_number }}">Siguiente</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
     {% endif %}
     
-    {% if lists %}
+    {% if lists_page_obj %}
     <h3 class="mt-5 mb-3">Listas de juegos</h3>
     <div class="list-group">
-        {% for resultado_lista in lists %}
-        <div class="list-group-item d-flex justify-content-between align-items-center">
+        {% for resultado_lista in lists_page_obj %}
+        <div class="list-group-item d-flex justify-content-start align-items-center">
             <!-- Parte 1: Imagen de la lista -->
-            <img src="{{ resultado_lista.primer_juego.portada.url }}" alt="Juego en {{ resultado_lista.name }}" class="img-thumbnail rounded-circle">
-            <!-- Parte 2: Información de la lista -->
+            <img src="{{ resultado_lista.primer_juego.portada.url }}" alt="Juego en {{ resultado_lista.name }}" class="rounded-circle">
+            <!-- Parte 2: Espacio entre imagen y nombre de lista -->
+            <div style="width: 20px;"></div> <!-- Espacio ajustable -->
+            <!-- Parte 3: Información de la lista -->
             <div class="d-flex flex-column align-items-start ml-3">
                 <h5>{{ resultado_lista.name }}</h5>
             </div>
-            <!-- Parte 3: Espacio en blanco -->
+            <!-- Parte 4: Espacio en blanco -->
             <div class="flex-grow-1"></div>
         </div>
         {% endfor %}
+    </div>
+    <div class="mt-4">
+        <nav>
+            <ul class="pagination">
+                {% if lists_page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?lists_page={{ lists_page_obj.previous_page_number }}">Anterior</a>
+                </li>
+                {% endif %}
+                {% for num in lists_page_obj.paginator.page_range %}
+                <li class="page-item {% if lists_page_obj.number == num %}active{% endif %}">
+                    <a class="page-link" href="?lists_page={{ num }}">{{ num }}</a>
+                </li>
+                {% endfor %}
+                {% if lists_page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?lists_page={{ lists_page_obj.next_page_number }}">Siguiente</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
     </div>
     {% endif %}
 </div>
 {% endblock %}
 </html>
-
-
-

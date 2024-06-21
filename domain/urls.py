@@ -26,6 +26,6 @@ urlpatterns = [
     path('followers/<int:id>', SeguidoresController.as_view(), name="followers"),
     path('follow/<int:id>', SeguidosController.as_view(),name='follow'),
     path('editar/', EditarPerfilController.as_view(), name='edit_profile'),
-    path('search/', views.search_view, name='search_view'),
+    path('search/', SearchController.as_view(), name='search_view'),
     
 ]

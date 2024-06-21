@@ -84,15 +84,19 @@ class MainController(TemplateView):
         context['reseñas'] = Reseña.objects.get_random_reseñas()[:5]
         return context
 
-class GamesController(TemplateView):
+class GamesController(TemplateView): 
    template_name = 'games/games.html'
    def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
     games_sorted =  Videojuego.objects.get_juegos_populares()[:3]
     games_random = Videojuego.objects.get_remaining_random_juegos(games_sorted)
+    paginator = Paginator(games_random, 5)  # Mostrar 5 juegos por página
+    page_number = self.request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+        
     context['user_session'] = Usuario.objects.get_user_from_request(self.request)
     context['top_videojuegos'] = games_sorted
-    context['videojuegos'] = games_random
+    context['page_obj'] = page_obj
     return context
 
 class UsersController(TemplateView):
@@ -509,31 +513,97 @@ class QuitarMeGustaListaController(TemplateView):
         like.delete()
         return redirect('listContent', id=lista_id)
 
-def search_view(request):
-    if request.method == 'POST':
-        form = SearchForm(request.POST)
+class SearchController(View):
+    form = SearchForm
+    query = ""
+    def post(self, request):
+        form = self.form(request.POST)
         if form.is_valid():
             query = form.cleaned_data['query']
+            self.query = query
             search_type = form.cleaned_data['search_type']
-            games_results = []
-            users_results = []
-            lists_results = []
             user_session = Usuario.objects.get_user_from_request(request)
+            
+            # Resultados de la búsqueda
+            games_page_obj = []
+            users_page_obj = []
+            lists_page_obj = []
+            
             if search_type == 'games':
-                games_results = Videojuego.objects.filter(name__icontains=query)
+                games_page_obj = self.search_games(query,1)
+                return render(request, 'search_results.html', {
+                'games_page_obj': games_page_obj,
+                'user_session': user_session,
+                })
             elif search_type == 'users':
-                users_results = Usuario.objects.filter(nickname__icontains=query)
+                users_page_obj = self.search_users(query,1)
+                return render(request, 'search_results.html', {
+                'users_page_obj': users_page_obj,
+                'user_session': user_session,
+                })
             elif search_type == 'game_lists':
-                lists_results = ListaDeJuegos.objects.filter(name__icontains=query)
+                lists_page_obj = self.search_lists(query,1)
+                return render(request, 'search_results.html', {
+                'lists_page_obj': lists_page_obj,
+                'user_session': user_session,
+                })
             else:
-                games_results = Videojuego.objects.filter(name__icontains=query)
-                users_results = Usuario.objects.filter(nickname__icontains=query)
-                lists_results = ListaDeJuegos.objects.filter(name__icontains=query)
-            return render(request, 'search_results.html', 
-                          {'games' : games_results,
-                           'users' : users_results,
-                           'lists' : lists_results,
-                           'user_session': user_session })
+                games_page_obj = self.search_games(query,1)
+                users_page_obj = self.search_users(query,1)
+                lists_page_obj = self.search_lists(query,1)
+                return render(request, 'search_results.html', {
+                'games_page_obj': games_page_obj,
+                'users_page_obj': users_page_obj,
+                'lists_page_obj': lists_page_obj,
+                'user_session': user_session,
+                })
+
+    def get(self, request):
+        games_page_number = request.GET.get('games_page')
+        users_page_number = request.GET.get('users_page')
+        lists_page_number = request.GET.get('lists_page')
+        user_session = Usuario.objects.get_user_from_request(request)
+        query = self.query
+        games_page_obj = []
+        users_page_obj = []
+        lists_page_obj = []            
+        if games_page_number:
+                games_page_obj = self.search_games(query,games_page_number)
+                return render(request, 'search_results.html', {
+                'games_page_obj': games_page_obj,
+                'user_session': user_session,
+                })
+        elif users_page_number:
+                users_page_obj = self.search_users(query,users_page_number)
+                return render(request, 'search_results.html', {
+                'users_page_obj': users_page_obj,
+                'user_session': user_session,
+                })
+        elif lists_page_number:
+                lists_page_obj = self.search_lists(query,lists_page_number)
+                return render(request, 'search_results.html', {
+                'lists_page_obj': lists_page_obj,
+                'user_session': user_session,
+                })
+
+      
+    def search_games(self, query, page):
+        games_results = Videojuego.objects.filter(name__icontains=query)
+        games_paginator = Paginator(games_results, 10)
+        games_page_obj = games_paginator.get_page(page)
+        return games_page_obj
+
+    def search_users(self, query, page):
+        users_results = Usuario.objects.filter(nickname__icontains=query)
+        users_paginator = Paginator(users_results, 10)
+        users_page_obj = users_paginator.get_page(page)
+        return users_page_obj
+
+    def search_lists(self, query, page):
+        lists_results = ListaDeJuegos.objects.filter(name__icontains=query)
+        lists_paginator = Paginator(lists_results, 10)
+        lists_page_obj = lists_paginator.get_page(page)
+        return lists_page_obj
     
 class EditarPerfilController(FormView):
     template_name = 'forms/editar_perfil.html'

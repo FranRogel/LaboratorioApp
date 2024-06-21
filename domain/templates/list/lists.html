@@ -24,26 +24,39 @@
     </div>
     
     <h3>Otras Listas</h3>
-    <div class="row justify-content-center">
-        {% for lista in listas %}
-        <div class="col-md-5 mb-4">
-            <div class="card">
-                {% for contenido in lista.contenido.all|slice:":1" %}
-                <a href="{% url 'listContent' id=lista.id %}">
-                    <img src="{{ contenido.videojuego.portada.url }}" class="card-img-top" alt="Portada de {{ contenido.videojuego.name }}">
-                </a>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Creador</th>
+                    <th scope="col">Cantidad de Juegos</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for lista in listas %}
+                <tr>
+                    <td>
+                        {% for contenido in lista.contenido.all|slice:":3" %}
+                        <a href="{% url 'listContent' id=lista.id %}">
+                            <img src="{{ contenido.videojuego.portada.url }}" class="img" alt="Portada de {{ contenido.videojuego.name }}">
+                        </a>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <a href="{% url 'listContent' id=lista.id %}">
+                            {{ lista.name }}
+                        </a>
+                    </td>
+                    <td>{{ lista.creator }}</td>
+                    <td>{{ lista.contenido.count }}</td>
+                </tr>
                 {% endfor %}
-                <div class="card-body">
-                    <a href="{% url 'listContent' id=lista.id %}">
-                        <h5 class="card-title">{{ lista.name }}</h5>
-                    </a>
-                    <p class="card-text" style="font-size: 14px;">Creador: {{ lista.creator }}</p>
-                    <p class="card-text" style="font-size: 14px;">{{ lista.descripcion }}</p>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
+            </tbody>
+        </table>
     </div>
+    
     
     <!-- Paginación -->
     <div class="row justify-content-center">
