@@ -18,9 +18,13 @@
         {% endif %}
         {% if update %}
             <p>Agregar juegos:</p>
-            {% for contenido in contenidos %}
-                <img src="{{ contenido.videojuego.portada.url }}" alt="{{ contenido.videojuego.name }}" class="img-thumbnail"> 
-            {% endfor %}
+            <ul class="list-inline">
+                {% for contenido in contenidos %}
+                    <li class="list-inline-item mb-4">
+                        <img src="{{ contenido.videojuego.portada.url }}" alt="{{ contenido.videojuego.name }}" class="img-thumbnail">
+                    </li>
+                {% endfor %}
+            </ul>
             <div class="mb-3">
                 {{ estaEn_form.as_p }}
             </div>

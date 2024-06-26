@@ -260,8 +260,9 @@ class ReseñaManager(models.Manager):
     def verificar_puntuacion(self,puntuacion):
         return puntuacion < 1 or puntuacion > 5 
     
-    def usuario_le_gusta_lista(self,lista,usuario):
-        if LeGusta.objects.filter(usuario=usuario, lista=lista):
+    def usuario_le_gusta_lista(self,request,lista):
+        user = Usuario.objects.get_user_from_request(request)
+        if LeGusta.objects.filter(usuario=user, lista=lista):
             return True
         else:
             return False

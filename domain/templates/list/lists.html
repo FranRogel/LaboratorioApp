@@ -40,7 +40,7 @@
                     <td>
                         {% for contenido in lista.contenido.all|slice:":3" %}
                         <a href="{% url 'listContent' id=lista.id %}">
-                            <img src="{{ contenido.videojuego.portada.url }}" class="img" alt="Portada de {{ contenido.videojuego.name }}">
+                            <img src="{{ contenido.videojuego.portada.url }}" class="img-thumbnail" alt="Portada de {{ contenido.videojuego.name }}">
                         </a>
                         {% endfor %}
                     </td>

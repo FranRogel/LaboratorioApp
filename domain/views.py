@@ -71,7 +71,6 @@ class MainController(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user_session = Usuario.objects.get_user_from_request(self.request)
-        context['user_session'] = user_session
         context['usuariosCount'] = Usuario.objects.count()
         context['juegosCount'] = Videojuego.objects.count()
         context['listasCount'] = ListaDeJuegos.objects.count()
@@ -93,8 +92,6 @@ class GamesController(TemplateView):
     paginator = Paginator(games_random, 5)  # Mostrar 5 juegos por página
     page_number = self.request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-        
-    context['user_session'] = Usuario.objects.get_user_from_request(self.request)
     context['top_videojuegos'] = games_sorted
     context['page_obj'] = page_obj
     return context
@@ -116,7 +113,6 @@ class UsersController(TemplateView):
 
         context['top_usuarios'] = usuarios_populares
         context['usuarios'] = page_obj  # Pasar la página de usuarios en lugar de la lista completa
-        context['user_session'] = Usuario.objects.get_user_from_request(self.request)
         return context
 
 class ProfileController(TemplateView):
@@ -139,7 +135,6 @@ class ProfileController(TemplateView):
     context['myuser'] = myuser
     context['userinfo'] = myuser
     context['misListas'] = susListas
-    context['user_session'] = user_session
     context['losigue'] = loSigue
     return context
 
@@ -153,7 +148,6 @@ class ListController(TemplateView):
       page_number = self.request.GET.get('page')  # Obtener el número de página desde la URL
      # Obtener la página actual
       page_obj = paginator.get_page(page_number)
-      context['user_session'] = Usuario.objects.get_user_from_request(self.request)
       context['top_listas'] = listas_sorted
       context['listas'] = page_obj
       return context
@@ -165,11 +159,9 @@ class ListInfoController(TemplateView):
       list_id = self.kwargs.get('id')
       myList = ListaDeJuegos.objects.get(id=list_id)
       content = EstaEn.objects.filter(lista = myList.id)
-      user_session = Usuario.objects.get_user_from_request(self.request)
-      like = Reseña.objects.usuario_le_gusta_lista(myList,user_session)
+      like = Reseña.objects.usuario_le_gusta_lista(self.request, myList)
       context['myList'] = myList
       context['contenido'] = content
-      context['user_session'] = user_session
       context['like'] = like
       return context
 
@@ -215,7 +207,6 @@ class GameInfoAndReseñaController(View):
                 reseña_form = ReseñaForm()
                 
         context = {
-            'user_session': usuario,
             'myGame': game,
             'reseñas': reseñas,
             'form': reseña_form,
@@ -236,7 +227,6 @@ class YourGamesController(TemplateView):
     loSigue = Siguen.objects.filter(seguidor=user_session, seguido=usuario).exists()
     context['juegos'] = juegos
     context['userinfo'] = usuario
-    context['user_session'] = user_session
     context['session'] = session
     context['losigue'] = loSigue
     return context
@@ -252,27 +242,12 @@ class YourListController(TemplateView):
         session = Usuario.objects.sesion_perfil_match(user_session,usuario)
         listas = usuario.listas_de_juegos.all()
         loSigue = Siguen.objects.filter(seguidor=user_session, seguido=usuario).exists()
-        #lista_con_contenido = self.get_lista_con_contenido(listas)
-        context['user_session'] = user_session
         context['userinfo'] = usuario
         context['listas'] = listas
         context['session'] = session
         context['losigue'] = loSigue
         return context
-
-    def get_lista_con_contenido(self,listas):
-        lista_con_contenido = []
-        for lista in listas:
-            contenido = lista.contenido.first()  # Obtener el primer elemento de contenido
-            if contenido:  # Verificar si hay contenido
-                lista_con_contenido.append({
-                    'lista': lista,
-                    'imagen': contenido.videojuego.portada,
-                    'nombre_videojuego': contenido.videojuego.name,
-                })
-        print(lista_con_contenido)
-        return lista_con_contenido
-    
+  
 class ListCreateFormController(FormView):
     template_name = 'forms/crear_lista.html'
     form_class = ListaForm
@@ -281,7 +256,6 @@ class ListCreateFormController(FormView):
         context = super().get_context_data(**kwargs)
         usuario = Usuario.objects.get_user_from_request(self.request)
         self.success_url = reverse_lazy('yourList', kwargs={'id_usuario': usuario.id})
-        context['user_session'] = usuario
         context['update'] = False
         return context
     
@@ -337,7 +311,6 @@ class ListEditFormController(FormView):
         self.second_form_class.fields['videojuego'].queryset = videojuegos_queryset
         ###
         contenido = lista.contenido.all()[:3]
-        context['user_session'] = usuario
         context['lista'] = lista
         context['contenidos'] = contenido
         context['estaEn_form'] = self.second_form_class
@@ -449,7 +422,6 @@ class SeguidoresController(TemplateView):
         context['session'] = session
         context['losigue'] = loSigue
         context['follows'] = follows
-        context['user_session'] = user_session
         context['userinfo'] = usuario
         return context
     
@@ -478,7 +450,6 @@ class SeguidosController(TemplateView):
         follows = self.get_seguidores_con_follow_session(seguidos, user_session)
         context['seguidos'] = follows
         context['losigue'] = loSigue
-        context['user_session'] = user_session
         context['userinfo'] = usuario
         context['session'] = Usuario.objects.sesion_perfil_match(user_session,usuario)
         return context
@@ -522,7 +493,6 @@ class SearchController(View):
             query = form.cleaned_data['query']
             self.query = query
             search_type = form.cleaned_data['search_type']
-            user_session = Usuario.objects.get_user_from_request(request)
             
             # Resultados de la búsqueda
             games_page_obj = []
@@ -533,19 +503,16 @@ class SearchController(View):
                 games_page_obj = self.search_games(query,1)
                 return render(request, 'search_results.html', {
                 'games_page_obj': games_page_obj,
-                'user_session': user_session,
                 })
             elif search_type == 'users':
                 users_page_obj = self.search_users(query,1)
                 return render(request, 'search_results.html', {
                 'users_page_obj': users_page_obj,
-                'user_session': user_session,
                 })
             elif search_type == 'game_lists':
                 lists_page_obj = self.search_lists(query,1)
                 return render(request, 'search_results.html', {
                 'lists_page_obj': lists_page_obj,
-                'user_session': user_session,
                 })
             else:
                 games_page_obj = self.search_games(query,1)
@@ -555,14 +522,12 @@ class SearchController(View):
                 'games_page_obj': games_page_obj,
                 'users_page_obj': users_page_obj,
                 'lists_page_obj': lists_page_obj,
-                'user_session': user_session,
                 })
 
     def get(self, request):
         games_page_number = request.GET.get('games_page')
         users_page_number = request.GET.get('users_page')
         lists_page_number = request.GET.get('lists_page')
-        user_session = Usuario.objects.get_user_from_request(request)
         query = self.query
         games_page_obj = []
         users_page_obj = []
@@ -571,19 +536,16 @@ class SearchController(View):
                 games_page_obj = self.search_games(query,games_page_number)
                 return render(request, 'search_results.html', {
                 'games_page_obj': games_page_obj,
-                'user_session': user_session,
                 })
         elif users_page_number:
                 users_page_obj = self.search_users(query,users_page_number)
                 return render(request, 'search_results.html', {
                 'users_page_obj': users_page_obj,
-                'user_session': user_session,
                 })
         elif lists_page_number:
                 lists_page_obj = self.search_lists(query,lists_page_number)
                 return render(request, 'search_results.html', {
                 'lists_page_obj': lists_page_obj,
-                'user_session': user_session,
                 })
 
       
@@ -620,8 +582,6 @@ class EditarPerfilController(FormView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        usuario = Usuario.objects.get_user_from_request(self.request)
-        context['user_session'] = usuario
         context['session'] = True
         return context
     
