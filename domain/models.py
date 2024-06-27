@@ -4,17 +4,20 @@ from django.contrib.auth.models import User
 from django.db.models import Count
 from django.db.models.functions import Random
 from django.contrib.auth.hashers import make_password
+from io import BytesIO
+from django.core.files.uploadedfile import InMemoryUploadedFile
+import sys
 
 class UsuarioManager(models.Manager):
     def create_user(self, nickname, email,password, foto):
         if self.verificar_nickname_unico(nickname):
             raise ValueError("Ya existe un usuario con ese nombre")
         
-        if self.verificar_nickname_length(nickname):
+        if not self.verificar_nickname_length(nickname):
             raise ValueError("El nombre debe tener de 2 a 30 caracteres")
         
         passwordhash = make_password(password)
-        cuenta = User.objects.create(username=nickname,email=email,contraseña=passwordhash)
+        cuenta = User.objects.create(username=nickname,email=email,password=passwordhash)
         if foto:
             usuario = self.model(
             nickname=nickname,
@@ -144,7 +147,7 @@ class Videojuego(models.Model):
     publisher = models.CharField(max_length=30) 
     release_Date = models.DateField()
     plataforms = models.CharField(max_length=250) 
-    portada = models.FileField(upload_to="media/uploads/")
+    portada = models.ImageField(upload_to="media/uploads/")
     descripcion = models.CharField(max_length=1500)
     objects = VideojuegoManager()
 

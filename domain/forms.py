@@ -1,6 +1,6 @@
 from django import forms
 from .models import *
-
+from django.core.exceptions import ValidationError
 
 class LoginForm(forms.Form):
     email_Address = forms.EmailField(label='Correo Electrónico')
@@ -13,9 +13,10 @@ class UsuarioForm(forms.Form):
     foto = forms.ImageField(label='Foto', required=False)
 
     def clean_nickname(self):
-        nickname = self.data['nickname']       
+        nickname = self.cleaned_data.get('nickname')
         if not ((len(nickname) > 2) and (len(nickname) <= 30)):
-            raise ValueError("El nombre debe tener de 2 a 30 caracteres")
+            raise ValidationError("El nombre debe tener de 2 a 30 caracteres")
+        return nickname
 
 class UsuarioEditForm(forms.Form):
     email_address = forms.EmailField(label='Correo Electrónico')

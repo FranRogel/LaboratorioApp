@@ -5,13 +5,8 @@
 <h2>Registro</h2>
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    <h3 class="mt-4">Cuenta</h3>
     <div class="mb-3">
         {{ form.as_p }}
-    </div>
-    <h3 class="mt-4">Información de usuario</h3>
-    <div class="mb-3">
-        {{ usuario_form.as_p }}
     </div>
     <button type="submit" class="btn btn-primary">Registrarse</button>
 </form>

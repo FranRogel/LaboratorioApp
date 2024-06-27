@@ -22,17 +22,24 @@ class RegistroView(FormView):
 
     def post(self, request, *args, **kwargs):
         cuenta_form = self.get_form()
+        print(request.POST)
         if cuenta_form.is_valid():
             return self.form_valid(cuenta_form)
         else:
+            print(cuenta_form.errors)  # Imprime los errores del formulario
             return self.form_invalid(cuenta_form)
 
     def form_valid(self, cuenta_form):
-        nickname = cuenta_form.cleaned_data['nickname']
-        foto = cuenta_form.cleaned_data['foto']
-        email = cuenta_form.cleaned_data['email_address']
-        contraseña = cuenta_form.cleaned_data['password']
-        Usuario.objects.create_user(nickname,email,contraseña,foto)
+        print(cuenta_form.cleaned_data)  # Imprime todos los datos limpiados
+        nickname = cuenta_form.cleaned_data.get('nickname')
+        foto = cuenta_form.cleaned_data.get('foto')
+        email = cuenta_form.cleaned_data.get('email_address')
+        contraseña = cuenta_form.cleaned_data.get('password')
+        print(nickname)
+        print(foto)
+        print(email)
+        print(contraseña)
+        Usuario.objects.create_user(nickname, email, contraseña, foto)
         return redirect(self.success_url)
 
     def form_invalid(self, cuenta_form):
@@ -567,19 +574,19 @@ class SearchController(View):
       
     def search_games(self, query, page):
         games_results = Videojuego.objects.filter(name__icontains=query)
-        games_paginator = Paginator(games_results, 10)
+        games_paginator = Paginator(games_results, 5)
         games_page_obj = games_paginator.get_page(page)
         return games_page_obj
 
     def search_users(self, query, page):
         users_results = Usuario.objects.filter(nickname__icontains=query)
-        users_paginator = Paginator(users_results, 10)
+        users_paginator = Paginator(users_results, 5)
         users_page_obj = users_paginator.get_page(page)
         return users_page_obj
 
     def search_lists(self, query, page):
         lists_results = ListaDeJuegos.objects.filter(name__icontains=query)
-        lists_paginator = Paginator(lists_results, 10)
+        lists_paginator = Paginator(lists_results, 5)
         lists_page_obj = lists_paginator.get_page(page)
         return lists_page_obj
     

@@ -57,7 +57,9 @@
             <!-- Parte 1: Foto de perfil del usuario -->
             {% if resultado_usuario.foto %}
             <div class="mr-3">
+                <a href="{% url 'profile' id=resultado_usuario.id %}">
                 <img src="{{ resultado_usuario.foto.url }}" alt="Foto de perfil de {{ resultado_usuario.nickname }}" class="rounded-circle">
+                </a>    
             </div>
             {% endif %}
             <div style="width: 20px;"></div> 
@@ -99,7 +101,9 @@
         {% for resultado_lista in lists_page_obj %}
         <div class="list-group-item d-flex justify-content-start align-items-center">
             <!-- Parte 1: Imagen de la lista -->
+            <a href="{% url 'listContent' id=resultado_lista.id %}">
             <img src="{{ resultado_lista.primer_juego.portada.url }}" alt="Juego en {{ resultado_lista.name }}" class="rounded-circle">
+            </a>
             <!-- Parte 2: Espacio entre imagen y nombre de lista -->
             <div style="width: 20px;"></div> <!-- Espacio ajustable -->
             <!-- Parte 3: Información de la lista -->
