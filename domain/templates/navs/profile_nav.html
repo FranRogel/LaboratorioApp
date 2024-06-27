@@ -67,7 +67,7 @@
             {% if not losigue %}
             <form method="post" action="{% url 'seguir_usuario' usuario_id=userinfo.id %}">
                 {% csrf_token %}
-                <button type="submit" class="btn btn-primary">Seguir</button>
+                <button class="btn btn-primary" type="submit" >Seguir</button>
             </form>
             {% else %}
             <form method="post" action="{% url 'dejarSeguirUsuario' usuario_id=userinfo.id %}">

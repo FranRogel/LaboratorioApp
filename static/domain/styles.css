@@ -1,3 +1,20 @@
+.custom-bg {
+  background-color: #CC2329; /* Cambia este valor al color que desees */
+}
+
+html, body {
+height: 100%;
+}
+.wrapper {
+display: flex;
+flex-direction: column;
+min-height: 100vh;
+}
+.content {
+flex: 1;
+}
+
+
 img {
   width: 200px;
   height: auto;
@@ -36,14 +53,4 @@ img {
   object-fit: cover;
 }
 
-html, body {
-  height: 100%;
-}
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-.content {
-  flex: 1;
-}
+

@@ -18,7 +18,7 @@
         <div class="mt-3">
           <h6 class="card-subtitle mb-2 text-muted">Juegos Favoritos</h6>
           <div class="row">
-            {% for juego in usuario.juegos_favoritos %}
+            {% for juego in usuario.juegos_favoritos|slice:":3" %}
             <div class="col-4">
               <img src="{{ juego.game.portada.url }}" class="img-fluid" alt="{{ juego.game }} portada">
             </div>

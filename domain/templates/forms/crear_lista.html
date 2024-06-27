@@ -18,24 +18,34 @@
         {% endif %}
         {% if update %}
             <p>Agregar juegos:</p>
-            <ul class="list-inline">
-                {% for contenido in contenidos %}
-                    <li class="list-inline-item mb-4">
-                        <img src="{{ contenido.videojuego.portada.url }}" alt="{{ contenido.videojuego.name }}" class="img-thumbnail">
-                    </li>
-                {% endfor %}
-            </ul>
             <div class="mb-3">
                 {{ estaEn_form.as_p }}
             </div>
             <button type="submit" class="btn btn-primary">Editar</button>
+    </form>  
+        <ul class="list-inline">
+            {% for contenido in contenidos %}
+                <li class="list-inline-item mb-4">
+                    <div class="text-center">
+                        <img src="{{ contenido.videojuego.portada.url }}" alt="{{ contenido.videojuego.name }}" class="img-thumbnail">
+                        <!-- Formulario para eliminar juegos -->
+                        <form method="post" action="{% url 'deleteVideojuego' lista_id=lista.id %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="delete_videojuego_id" value="{{ contenido.videojuego.id }}">
+                            <button type="submit" class="btn btn-danger mt-2">Eliminar</button>
+                        </form>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+            <form method="post" action="{% url 'borrarlista' lista_id=lista.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Borrar</button>
+            </form>
         {% endif %}
-    </form>
-    {% if update %}
-        <form method="post" action="{% url 'borrarlista' lista_id=lista.id %}">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-danger">Borrar</button>
-        </form>
-    {% endif %}
 {% endblock %}
 </html>
+
+
+
+

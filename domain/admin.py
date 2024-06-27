@@ -6,7 +6,7 @@ from django.utils.html import format_html
 # Register your models here.
 
 class VideojuegoAdmin(admin.ModelAdmin):
-    list_display = ('mostrar_foto','name', 'producer', 'publisher', 'release_Date', 'plataforms','descripcion')
+    list_display = ('id','mostrar_foto','name', 'producer', 'publisher', 'release_Date', 'plataforms','descripcion')
     list_filter = ('name', 'producer')
     search_fields = ('name', 'producer')
 
@@ -49,27 +49,23 @@ admin.site.register(ListaDeJuegos, ListaDeJuegosAdmin)
 class ReseñaAdmin(admin.ModelAdmin):
     list_display = ('title', 'puntuacion', 'game','writer','tag','content')
     list_filter = ('title', 'puntuacion','game', 'writer','tag')
-    search_fields = ('title', 'puntuacion','game', 'writer','tag')
+    search_fields = ('title', 'puntuacion','tag')
 
 admin.site.register(Reseña, ReseñaAdmin)
 
 class SiguenAdmin(admin.ModelAdmin):
     list_display = ('seguidor','seguido')
     list_filter = ('seguidor','seguido')
-    search_fields = ('seguidor','seguido')
-
 admin.site.register(Siguen, SiguenAdmin)
 
 class EstaEnAdmin(admin.ModelAdmin):
     list_display = ('videojuego','lista')
     list_filter = ('videojuego','lista')
-    search_fields = ('videojuego','lista')
 
 admin.site.register(EstaEn, EstaEnAdmin)
 
 class LeGustaAdmin(admin.ModelAdmin):
     list_display = ('usuario','lista')
     list_filter = ('usuario','lista')
-    search_fields = ('usuario','lista')
 
 admin.site.register(LeGusta, LeGustaAdmin)

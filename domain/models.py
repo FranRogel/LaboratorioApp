@@ -323,7 +323,7 @@ class EstaEn(models.Model):
     lista = models.ForeignKey(ListaDeJuegos, on_delete=models.CASCADE,related_name='contenido')
 
     def __str__(self):
-        return self.lista.name +" "+  self.videojuego.name
+        return self.videojuego.name
     
     def existe_juego(self,juego,lista):
         return lista.contenido.videjuego.filter(id=juego.id)

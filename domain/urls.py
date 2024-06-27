@@ -15,6 +15,7 @@ urlpatterns = [
     path('yourList/<int:id_usuario>/', YourListController.as_view(),name='yourLists'),
     path('listForm/', ListCreateFormController.as_view(),name='listForm'),
     path('listForm/<int:pk>/', ListEditFormController.as_view(),name='listFormEdit'),
+    path('delete-videojuego/<int:lista_id>/', DeleteVideojuegoView.as_view(), name='deleteVideojuego'),
     path('profile/<int:id>', ProfileController.as_view(), name='profile'),
     path('seguir/<int:usuario_id>/', SiguenController.as_view(), name='seguir_usuario'),
     path('dejarDeSeguir/<int:usuario_id>/', DejarDeSeguirController.as_view(), name='dejarSeguirUsuario'),

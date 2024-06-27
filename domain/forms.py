@@ -80,15 +80,18 @@ class EstaEnForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['videojuego'].required = False
 
-    def clean(self):
-        cleaned_data = super().clean()
-        videojuego = cleaned_data.get('videojuego')
-        lista_id = cleaned_data.get('lista_id')
-        if lista_id and videojuego:
-            if EstaEn.objects.filter(videojuego=videojuego, lista_id=lista_id).exists():
-                print('entre al if')
-                raise forms.ValidationError("Ya existe una instancia de EstaEn con estos valores.")
-        return cleaned_data
+class EstaEnFormDeleteGame(forms.ModelForm):
+    lista_id = forms.IntegerField(widget=forms.HiddenInput(), required=False)
+    videojuego_delete = forms.ModelChoiceField(queryset=Videojuego.objects.all(), label='Videojuego a eliminar', required=False)
+    
+    class Meta:
+        model = EstaEn
+        fields = ['videojuego_delete', 'lista_id']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['videojuego_delete'].required = False
+
 
 class SearchForm(forms.Form):
     SEARCH_CHOICES = [

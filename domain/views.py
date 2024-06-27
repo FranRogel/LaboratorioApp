@@ -116,27 +116,32 @@ class UsersController(TemplateView):
         return context
 
 class ProfileController(TemplateView):
-  template_name = 'accounts/profile.html'
-  def get_context_data(self, **kwargs):
-    context = super().get_context_data(**kwargs)
-    id_usuario = kwargs.get("id")
-    myuser = Usuario.objects.get(id=id_usuario)
-    user_session = Usuario.objects.get_user_from_request(self.request)
-    session = Usuario.objects.sesion_perfil_match(user_session, myuser)
-    loSigue = Siguen.objects.filter(seguidor=user_session, seguido=myuser).exists()
-    susListas = myuser.listas_de_juegos.all()
-    reseñas = myuser.reseñas.all()
-    reseñas_sorted = random.sample(list(reseñas), min(5,reseñas.count()))
-    #Preguntar si estas cosas son mejor para el modelo o es muy especifico
-    juegosFavoritos = myuser.reseñas.filter(puntuacion__gte=3).order_by('-puntuacion')[:3]
-    context['reseñas'] = reseñas_sorted
-    context['juegosFavoritos'] = juegosFavoritos
-    context['session'] = session
-    context['myuser'] = myuser
-    context['userinfo'] = myuser
-    context['misListas'] = susListas
-    context['losigue'] = loSigue
-    return context
+    template_name = 'accounts/profile.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        id_usuario = kwargs.get("id")
+        myuser = Usuario.objects.get(id=id_usuario)
+        user_session = Usuario.objects.get_user_from_request(self.request)
+        session = Usuario.objects.sesion_perfil_match(user_session, myuser)
+        loSigue = Siguen.objects.filter(seguidor=user_session, seguido=myuser).exists()
+        susListas = myuser.listas_de_juegos.all()
+        reseñas = myuser.reseñas.all()
+
+        # Paginación
+        paginator = Paginator(reseñas, 5)  # 5 reseñas por página
+        page_number = self.request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
+        juegosFavoritos = myuser.reseñas.filter(puntuacion__gte=3).order_by('-puntuacion')[:3]
+        context['page_obj'] = page_obj
+        context['juegosFavoritos'] = juegosFavoritos
+        context['session'] = session
+        context['myuser'] = myuser
+        context['userinfo'] = myuser
+        context['misListas'] = susListas
+        context['losigue'] = loSigue
+        return context
 
 class ListController(TemplateView):
    template_name='list/lists.html'
@@ -310,7 +315,7 @@ class ListEditFormController(FormView):
         videojuegos_queryset = Videojuego.objects.exclude(id__in=videojuegos_excluidos)
         self.second_form_class.fields['videojuego'].queryset = videojuegos_queryset
         ###
-        contenido = lista.contenido.all()[:3]
+        contenido = lista.contenido.all()
         context['lista'] = lista
         context['contenidos'] = contenido
         context['estaEn_form'] = self.second_form_class
@@ -352,6 +357,17 @@ class ListEditFormController(FormView):
         return self.render_to_response(
             self.get_context_data(form=lista_form)
         )
+
+class DeleteVideojuegoView(View):
+    def post(self, request, *args, **kwargs):
+        lista_id = kwargs.get('lista_id')
+        videojuego_id = request.POST.get('delete_videojuego_id')
+        try:
+            esta_en = EstaEn.objects.get(videojuego_id=videojuego_id, lista_id=lista_id)
+            esta_en.delete()
+        except EstaEn.DoesNotExist:
+            pass
+        return redirect('listFormEdit', pk=lista_id)
 
 class ListaDeleteFormController(FormView):
     template_name = 'forms/crear_lista.html'
