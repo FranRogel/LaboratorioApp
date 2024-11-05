@@ -21,8 +21,9 @@ from django.contrib import admin
 from django.urls import include,path
 
 urlpatterns = [
-    path('', include('domain.urls')),  # Incluye las URLs de tu aplicación en la raíz
-    path('admin/', admin.site.urls),    # Panel de administración de Django
+    path('', include('domain.urls')),
+    path('admin/', admin.site.urls),
+    
 ]
 
 if settings.DEBUG:
