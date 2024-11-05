@@ -15,12 +15,7 @@ if path not in sys.path:
     sys.path.append(path)
 
 # Establece la variable de entorno para Django
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'integradorPrueba.settings')  # Cambié a setdefault para mayor robustez
+os.environ['DJANGO_SETTINGS_MODULE'] = 'integradorPrueba.settings'  # Asegúrate de que esto sea correcto
 
-# Asegúrate de que el entorno de Django esté configurado
-try:
-    from django.core.wsgi import get_wsgi_application
-    application = get_wsgi_application()
-except Exception as e:
-    # Esto puede ayudar a identificar problemas de configuración
-    raise RuntimeError("Error al inicializar la aplicación WSGI: " + str(e))
+from django.core.wsgi import get_wsgi_application
+application = get_wsgi_application()
