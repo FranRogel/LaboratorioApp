@@ -7,18 +7,19 @@
   <div class="card">
     <div class="card-body">
       <h2 class="card-title">{{ myList.name }}</h2>
-      
-      {% if not like %}
-        <form method="post" action="{% url 'like' id=myList.id %}">
-          {% csrf_token %}
-          <button type="submit" class="btn btn-primary">Me Gusta</button>
-        </form>
-      {% else %}
-        <form method="post" action="{% url 'unlike' id=myList.id %}">
-          {% csrf_token %}
-          <button type="submit" class="btn btn-danger">Quitar Me Gusta</button>
-        </form>
-      {% endif %}
+      {% if request.user.is_authenticated%}
+        {% if not like %}
+          <form method="post" action="{% url 'like' id=myList.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Me Gusta</button>
+          </form>
+        {% else %}
+          <form method="post" action="{% url 'unlike' id=myList.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Quitar Me Gusta</button>
+          </form>
+        {% endif %}
+      {% endif %}  
       
       <p class="card-text mt-3">{{ myList.descripcion }}</p>
       <p class="card-text">{{ myList.creator }}</p>
